@@ -1,0 +1,390 @@
+\documentclass[11pt,preprint]{elsarticle}
+
+\usepackage{lmodern}
+%%%% My spacing
+\usepackage{setspace}
+\setstretch{1.2}
+\DeclareMathSizes{12}{14}{10}{10}
+
+% Wrap around which gives all figures included the [H] command, or places it "here". This can be tedious to code in Rmarkdown.
+\usepackage{float}
+\let\origfigure\figure
+\let\endorigfigure\endfigure
+\renewenvironment{figure}[1][2] {
+    \expandafter\origfigure\expandafter[H]
+} {
+    \endorigfigure
+}
+
+\let\origtable\table
+\let\endorigtable\endtable
+\renewenvironment{table}[1][2] {
+    \expandafter\origtable\expandafter[H]
+} {
+    \endorigtable
+}
+
+
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+    \usepackage{xltxtra,xunicode}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+  \newcommand{\euro}{€}
+\fi
+
+\usepackage{amssymb, amsmath, amsthm, amsfonts}
+
+\def\bibsection{\section*{References}} %%% Make "References" appear before bibliography
+
+
+\usepackage[numbers]{natbib}
+
+\usepackage{longtable}
+\usepackage[margin=2.3cm,bottom=2cm,top=2.5cm, includefoot]{geometry}
+\usepackage{fancyhdr}
+\usepackage[bottom, hang, flushmargin]{footmisc}
+\usepackage{graphicx}
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+\numberwithin{table}{section}
+\setlength{\parindent}{0cm}
+\setlength{\parskip}{1.3ex plus 0.5ex minus 0.3ex}
+\usepackage{textcomp}
+\renewcommand{\headrulewidth}{0.2pt}
+\renewcommand{\footrulewidth}{0.3pt}
+
+\usepackage{array}
+\newcolumntype{x}[1]{>{\centering\arraybackslash\hspace{0pt}}p{#1}}
+
+%%%%  Remove the "preprint submitted to" part. Don't worry about this either, it just looks better without it:
+\makeatletter
+\def\ps@pprintTitle{%
+  \let\@oddhead\@empty
+  \let\@evenhead\@empty
+  \let\@oddfoot\@empty
+  \let\@evenfoot\@oddfoot
+}
+\makeatother
+
+ \def\tightlist{} % This allows for subbullets!
+
+\usepackage{hyperref}
+\hypersetup{breaklinks=true,
+            bookmarks=true,
+            colorlinks=true,
+            citecolor=blue,
+            urlcolor=blue,
+            linkcolor=blue,
+            pdfborder={0 0 0}}
+
+
+% The following packages allow huxtable to work:
+\usepackage{siunitx}
+\usepackage{multirow}
+\usepackage{hhline}
+\usepackage{calc}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{caption}
+
+
+\newenvironment{columns}[1][]{}{}
+
+\newenvironment{column}[1]{\begin{minipage}{#1}\ignorespaces}{%
+\end{minipage}
+\ifhmode\unskip\fi
+\aftergroup\useignorespacesandallpars}
+
+\def\useignorespacesandallpars#1\ignorespaces\fi{%
+#1\fi\ignorespacesandallpars}
+
+\makeatletter
+\def\ignorespacesandallpars{%
+  \@ifnextchar\par
+    {\expandafter\ignorespacesandallpars\@gobble}%
+    {}%
+}
+\makeatother
+
+
+% definitions for citeproc citations
+\NewDocumentCommand\citeproctext{}{}
+\NewDocumentCommand\citeproc{mm}{%
+\href{\#cite.\detokenize{#1}}{#2}\nocite{#1}}
+
+\makeatletter
+% allow citations to break across lines
+\let\@cite@ofmt\@firstofone
+% avoid brackets around text for \cite:
+\def\@biblabel#1{}
+\def\@cite#1#2{{#1\if@tempswa , #2\fi}}
+\makeatother
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newenvironment{CSLReferences}[2] % #1 hanging-indent, #2 entry-spacing
+{\begin{list}{}{%
+	\setlength{\itemindent}{0pt}
+	\setlength{\leftmargin}{0pt}
+	\setlength{\parsep}{0pt}
+	% turn on hanging indent if param 1 is 1
+	\ifodd #1
+	\setlength{\leftmargin}{\cslhangindent}
+	\setlength{\itemindent}{-1\cslhangindent}
+	\fi
+	% set entry spacing
+	\setlength{\itemsep}{#2\baselineskip}}}
+{\end{list}}
+
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{\hfill\break\parbox[t]{\linewidth}{\strut\ignorespaces#1\strut}}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+
+
+\urlstyle{same}  % don't use monospace font for urls
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\setcounter{secnumdepth}{5}
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+
+%%% Include extra packages specified by user
+
+%%% Hard setting column skips for reports - this ensures greater consistency and control over the length settings in the document.
+%% page layout
+%% paragraphs
+\setlength{\baselineskip}{12pt plus 0pt minus 0pt}
+\setlength{\parskip}{12pt plus 0pt minus 0pt}
+\setlength{\parindent}{0pt plus 0pt minus 0pt}
+%% floats
+\setlength{\floatsep}{12pt plus 0 pt minus 0pt}
+\setlength{\textfloatsep}{20pt plus 0pt minus 0pt}
+\setlength{\intextsep}{14pt plus 0pt minus 0pt}
+\setlength{\dbltextfloatsep}{20pt plus 0pt minus 0pt}
+\setlength{\dblfloatsep}{14pt plus 0pt minus 0pt}
+%% maths
+\setlength{\abovedisplayskip}{12pt plus 0pt minus 0pt}
+\setlength{\belowdisplayskip}{12pt plus 0pt minus 0pt}
+%% lists
+\setlength{\topsep}{10pt plus 0pt minus 0pt}
+\setlength{\partopsep}{3pt plus 0pt minus 0pt}
+\setlength{\itemsep}{5pt plus 0pt minus 0pt}
+\setlength{\labelsep}{8mm plus 0mm minus 0mm}
+\setlength{\parsep}{\the\parskip}
+\setlength{\listparindent}{\the\parindent}
+%% verbatim
+\setlength{\fboxsep}{5pt plus 0pt minus 0pt}
+
+
+
+\begin{document}
+
+
+
+\begin{frontmatter}  %
+
+\title{QUESTION 1: Baby Names}
+
+% Set to FALSE if wanting to remove title (for submission)
+
+
+
+
+\author[Add1]{Talyah Greyling\footnote{\textbf{Contributions:}
+  \newline \emph{The authors would like to thank the DNS server syncing
+  for taking its time so that she could finish her morning cup of coffee
+  before starting.}}}
+\ead{23761067@sun.ac.za}
+
+
+
+
+
+\address[Add1]{Stellenbosch University, Cape Town, South Africa}
+
+\cortext[cor]{Corresponding author: Talyah Greyling\footnote{\textbf{Contributions:}
+  \newline \emph{The authors would like to thank the DNS server syncing
+  for taking its time so that she could finish her morning cup of coffee
+  before starting.}}}
+
+\begin{abstract}
+\small{
+This report is a concise analysis of baby naming trends in the US
+through the years utilising graphs, tables and bullet summaries to
+explain the findings to the client, a New York based kids' toy design
+agency.
+}
+\end{abstract}
+
+\vspace{1cm}
+
+
+
+
+
+\vspace{0.5cm}
+
+\end{frontmatter}
+
+\setcounter{footnote}{0}
+
+
+
+%________________________
+% Header and Footers
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagestyle{fancy}
+\chead{}
+\rhead{}
+\lfoot{}
+\rfoot{\footnotesize Page \thepage}
+\lhead{}
+%\rfoot{\footnotesize Page \thepage } % "e.g. Page 2"
+\cfoot{}
+
+%\setlength\headheight{30pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%________________________
+
+\headsep 35pt % So that header does not go over title
+
+
+
+
+\section{\texorpdfstring{Introduction
+\label{Introduction}}{Introduction }}\label{introduction}
+
+You are welcome to add some sort of an introduction here. Spend 5
+minutes detailing the purpose here, e.g.
+
+Look at the README.txt file and maybe give some background - especially
+also in understanding the definition of the variables.
+
+Notice that for the below plots I created a parameters to play around
+with xaxis labels.
+
+\section{Time time-series representation of the rank-correlation
+calculations}\label{time-time-series-representation-of-the-rank-correlation-calculations}
+
+\section{Time time-series representation of the rank-correlation
+visualisation}\label{time-time-series-representation-of-the-rank-correlation-visualisation}
+
+\begin{figure}[H]
+
+{\centering \includegraphics{Question1_files/figure-latex/unnamed-chunk-2-1} 
+
+}
+
+\caption{Persistence of National Top 25 Baby Names (1910-2014).\label{Figure1}}\label{fig:unnamed-chunk-2}
+\end{figure}
+
+As you can see from Figure \ref{Figure1}, name persistence is much
+stronger among names for boys than names for girls. Both display trends
+that appear to be generally downward sloping over time. Persistence is
+also seen to decrease the further the future year is from the target
+year. Considering the client's suspicion that popular name trends have
+been slower to persist since the 1990s than in earlier decades their
+suspicion is correct for boys names, but appears to be the opposite for
+girls names which display with an upwards trend since the 1990s.
+
+\newpage
+
+\section{Popular names per decade
+calculations}\label{popular-names-per-decade-calculations}
+
+\section{Popular names per decade
+visualisation}\label{popular-names-per-decade-visualisation}
+
+\begin{figure}[H]
+
+{\centering \includegraphics{Question1_files/figure-latex/unnamed-chunk-4-1} 
+
+}
+
+\caption{Persistence of National Top 10 Baby Names per decade (1910-2014).\label{Figure2}}\label{fig:unnamed-chunk-4}
+\end{figure}
+
+Figure \ref{Figure2} once again shows that name persistence is much
+stronger among males. By displaying the information in a heatmap we can
+see that popularity is concentrated among less names for males than for
+females, contributing to their higher persistence levels.
+
+\newpage
+
+\section{Movie star names
+calculations}\label{movie-star-names-calculations}
+
+\begin{verbatim}
+## # A tibble: 29,118 x 7
+##    name              Name     Surname  character   title release_year tmdb_score
+##    <chr>             <chr>    <chr>    <chr>       <chr>        <dbl>      <dbl>
+##  1 Judy Garland      Judy     Garland  Dorothy Ga~ The ~         1939        7.6
+##  2 Ray Bolger        Ray      Bolger   Hunk / Sca~ The ~         1939        7.6
+##  3 Jack Haley        Jack     Haley    Hickory / ~ The ~         1939        7.6
+##  4 Bert Lahr         Bert     Lahr     Zeke / Cow~ The ~         1939        7.6
+##  5 Margaret Hamilton Margaret Hamilton Elmira Gul~ The ~         1939        7.6
+##  6 Frank Morgan      Frank    Morgan   Professor ~ The ~         1939        7.6
+##  7 Clara Blandick    Clara    Blandick Auntie Em   The ~         1939        7.6
+##  8 Charley Grapewin  Charley  Grapewin Uncle Henry The ~         1939        7.6
+##  9 Billie Burke      Billie   Burke    Glinda      The ~         1939        7.6
+## 10 Pat Walshe        Pat      Walshe   Nikko       The ~         1939        7.6
+## # i 29,108 more rows
+\end{verbatim}
+
+\begin{verbatim}
+## # A tibble: 10 x 11
+##    name      Name  Surname character title release_year tmdb_score Decade Gender
+##    <chr>     <chr> <chr>   <chr>     <chr>        <dbl>      <dbl>  <dbl> <chr> 
+##  1 Mary Ast~ Mary  Astor   Brigid O~ The ~         1941        7.8   1940 F     
+##  2 Mary And~ Mary  Anders~ Maybelle~ Gone~         1939        8     1940 F     
+##  3 Mary Nash Mary  Nash    Margaret~ The ~         1940        7.7   1940 F     
+##  4 Mary Cla~ Mary  Clare   Baroness~ The ~         1938        7.5   1940 F     
+##  5 Mary Wic~ Mary  Wickes  Dora Pic~ Now,~         1942        7.4   1940 F     
+##  6 Mary Mor~ Mary  Morris  Halima    The ~         1940        7.2   1940 F     
+##  7 Mary Cla~ Mary  Clare   Mrs. Cor~ Oliv~         1948        7.5   1940 F     
+##  8 Mary Bol~ Mary  Boland  Mrs. Ben~ Prid~         1940        6.9   1940 F     
+##  9 Mary Jo ~ Mary  Jo Ell~ Clementi~ The ~         1949        7     1940 F     
+## 10 Mary Ast~ Mary  Astor   Brigid O~ The ~         1941        7.8   1950 F     
+## # i 2 more variables: Total_Dec_Count <dbl>, Rank <int>
+\end{verbatim}
+
+\begin{verbatim}
+## # A tibble: 10 x 11
+##    name      Name  Surname character title release_year tmdb_score Decade Gender
+##    <chr>     <chr> <chr>   <chr>     <chr>        <dbl>      <dbl>  <dbl> <chr> 
+##  1 Mary Ast~ Mary  Astor   Brigid O~ The ~         1941        7.8   1940 F     
+##  2 Mary And~ Mary  Anders~ Maybelle~ Gone~         1939        8     1940 F     
+##  3 Mary Nash Mary  Nash    Margaret~ The ~         1940        7.7   1940 F     
+##  4 Mary Cla~ Mary  Clare   Baroness~ The ~         1938        7.5   1940 F     
+##  5 Mary Wic~ Mary  Wickes  Dora Pic~ Now,~         1942        7.4   1940 F     
+##  6 Mary Mor~ Mary  Morris  Halima    The ~         1940        7.2   1940 F     
+##  7 Mary Cla~ Mary  Clare   Mrs. Cor~ Oliv~         1948        7.5   1940 F     
+##  8 Mary Bol~ Mary  Boland  Mrs. Ben~ Prid~         1940        6.9   1940 F     
+##  9 Mary Jo ~ Mary  Jo Ell~ Clementi~ The ~         1949        7     1940 F     
+## 10 Mary Ast~ Mary  Astor   Brigid O~ The ~         1941        7.8   1950 F     
+## # i 2 more variables: Total_Dec_Count <dbl>, Rank <int>
+\end{verbatim}
+
+\bibliography{Tex/ref}
+
+
+
+
+
+\end{document}

@@ -39,7 +39,7 @@ gc() # garbage collection
 
     ##           used (Mb) gc trigger (Mb) max used (Mb)
     ## Ncells  556080 29.7    1237775 66.2   702048 37.5
-    ## Vcells 1056309  8.1    8388608 64.0  1927558 14.8
+    ## Vcells 1056317  8.1    8388608 64.0  1927558 14.8
 
 ``` r
 library(pacman)
