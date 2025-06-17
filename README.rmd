@@ -10,8 +10,9 @@ output:
 
 This readme is located in my repository for the Data Science Methods for Economics and Finance 871 Exam. 
 The repository contains all of my code, figures, tables, and write-ups for the exam. 
-There are a total of xxxxx questions & each question has its own folder with an accompanying Readme, code and data folder.
+There are a total of 5 questions & each question has its own folder with an accompanying Readme, code and data folder.
 
+# SETUP CREATION: 
 
 ```{r create folders, eval = FALSE}
 
@@ -26,6 +27,12 @@ Texevier::create_template(directory = location, template_name = "Question4")
 Texevier::create_template(directory = location, template_name = "Question5")
 
 ```
+
+# DATA STORAGE: 
+
+I unzipped the data folder provided (datsci.nfkatzke.com/PracData25.zip) and put each data file in its respective question folder's corresponding data file.
+I then added '*data/' to my gitignore to prevent the data folders from committing to GitHub. 
+
 
 # CODE USED FOR FIGURES AND TABLES: 
 
@@ -46,9 +53,7 @@ list.files('Question5/code/', full.names = T, recursive = T) %>% .[grepl('.R', .
 
 ```
 
-# DATA: 
 
-I unzipped the data folder provided and put each file in its respective question folder.
 
 
 ## QUESTION 1: 
