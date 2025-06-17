@@ -51,7 +51,9 @@ HBO_titles <- read_rds("..//Question1/data/US_Baby_names/HBO_titles.rds")
 
 ```{r formatting data}
 
-# Identify main genre (assume first genre listed)  
+# Identify main genre 
+identify_main_genre = function(df = df_titles, og_genre_col = genres)
+    
 df_titles <- df_titles %>% 
     mutate(main_genre = sub(",.*", "", genres)) %>% 
     mutate(main_genre = gsub("\\[|\\]|'", "", main_genre))
