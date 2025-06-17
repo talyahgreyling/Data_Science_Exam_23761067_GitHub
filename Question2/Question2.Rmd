@@ -3,7 +3,7 @@
 # Remove comments and add values where applicable.
 # The descriptions below should be self-explanatory
 
-title: "QUESTION 1: Music taste"
+title: "QUESTION 2: Music taste"
 #subtitle: "This will appear as Right Header"
 
 documentclass: "elsarticle"
@@ -119,6 +119,10 @@ billboard_100 <- read_rds(glue::glue("{Loc}charts.rds"))
 <!-- ############################## -->
 
 # Introduction \label{Introduction}
+
+Metallica is a pioneering American heavy metal band known for fast tempo's, instrumentals and aggressive musicianship. Their breakthrough came with their 3rd album: 'Master of Puppets' (1986), described as one of the heaviest metal albums and named their best work.'...And Justice for All' (1988) earned their first Grammy nod, while Metallica (1991) marked a mainstream shift from their thrash metal roots, becoming their best-selling album (16M+ U.S. copies). After genre experimentation, they returned to thrash with Death Magnetic (2008). Their latest release is 72 Seasons (2023). 
+
+  
 
 References are to be made as follows: @fama1997[p. 33] and @grinold2000 Such authors could also be referenced in brackets [@grinold2000] and together [@fama1997 \& @grinold2000]. Source the reference code from scholar.google.com by clicking on ``cite'' below article name. Then select BibTeX at the bottom of the Cite window, and proceed to copy and paste this code into your ref.bib file, located in the directory's Tex folder. Open this file in Rstudio for ease of management, else open it in your preferred Tex environment. Add and manage your article details here for simplicity - once saved, it will self-adjust in your paper.
 
