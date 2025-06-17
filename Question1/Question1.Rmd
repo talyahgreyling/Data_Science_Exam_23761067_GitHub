@@ -84,7 +84,7 @@ output:
     fig_width: 3.5 # Adjust default figure sizes. This can also be done in the chunks of the text.
     fig_height: 3.5
 abstract: |
-  This report is a concise analysis of baby name conventions over time utilising graphs, tables and bullet summaries to explain the findings to a client.
+  This report is a concise analysis of baby naming trends in the US through the years utilising graphs, tables and bullet summaries to explain the findings to the client, a New York based kids’ toy design agency.
 ---
 
 <!-- First: Set your default preferences for chunk options: -->
@@ -105,8 +105,6 @@ Top_100_billboard <- read_rds("data/US_Baby_names/charts.rds")
 HBO_titles <- read_rds("data/US_Baby_names/HBO_titles.rds")
 HBO_credits <- read_rds("data/US_Baby_names/HBO_credits.rds")
 
-
-
 ```
 
 
@@ -121,6 +119,17 @@ You are welcome to add some sort of an introduction here. Spend 5 minutes detail
 Look at the README.txt file and maybe give some background - especially also in understanding the definition of the variables.
 
 Notice that for the below plots I created a parameters to play around with xaxis labels.
+
+# Time time-series representation of the rank-correlation
+```{r}
+# Data wrangling 
+top_names <- Baby_names %>% 
+  top_n_names(n = 25)
+
+# Computing Spearman Rank Correlation
+calculate_correlations(top_names, target_year = 2000, future_years = 3)
+
+```
 
 
 
