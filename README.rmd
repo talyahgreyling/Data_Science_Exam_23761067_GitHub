@@ -33,6 +33,8 @@ Texevier::create_template(directory = location, template_name = "Question5")
 I unzipped the data folder provided (datsci.nfkatzke.com/PracData25.zip) and put each data file in its respective question folder's corresponding data file.
 I then added '*data/' to my gitignore to prevent the data folders from committing to GitHub. 
 
+I also stored the 'Practical_25.pdf' in my bin folder. 
+
 
 # CODE USED FOR FIGURES AND TABLES: 
 
@@ -65,3 +67,5 @@ list.files('Question5/code/', full.names = T, recursive = T) %>% .[grepl('.R', .
 
 ### Plot number 1 
 
+### Issues encountered 
+* I wrote a function to silently collate the rds files, but upon its creation saw that many of the columns then became unusable by containing an abundance of NAs, I decided to read in each file seperately by adapting the code provided in the assignment. 
