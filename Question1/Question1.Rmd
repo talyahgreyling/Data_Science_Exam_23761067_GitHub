@@ -168,13 +168,32 @@ Figure \ref{Figure2} once again shows that name persistence is much stronger amo
 \newpage 
 * TMDB stands for The Movie Database. The percentage is a score given to that movie or TV show by the database users on a 10-star scale. This can give you an idea of how other viewers feel about the show.
 * Do people name babies after popular movie characters? Define popular as a movie that scores above average on TMDB 
-* Do people name babies after famous movie stars?
+* Do people name babies after famous actors/ actresses?
 
 # Movie star names calculations 
 ```{r}
-
+# Create a data frame of popular movies 
 Popular_movies <- get_popular_movies(HBO_credits, HBO_titles)
-Popular_movies   
+Popular_movies 
+
+# See if the top 10 baby names per decade are related to actors/ actresses' names from popular movies released during that decade: 
+
+babies_after_actors <- left_join(Popular_movies, decade_top_names, by = "Name") %>% # create single data frame
+    drop_na(Total_Dec_Count) %>% # filter out instances where actor name was not a popular baby name in that decade 
+    filter(!(release_year > (Decade + 10))) 
+
+top_10_female <- babies_after_actors %>%
+    filter(Gender == "F") %>%
+    arrange(desc(Total_Dec_Count)) %>%
+    slice_head(n = 10)
+
+top_10_male <- babies_after_actors %>%
+  filter(Gender == "M") %>%               
+  arrange(desc(Total_Dec_Count)) %>% 
+    slice_head(n = 10)
+    
+top_10_female
+top_10_female
 
 ```
 
