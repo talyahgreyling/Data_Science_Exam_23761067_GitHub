@@ -120,18 +120,30 @@ Look at the README.txt file and maybe give some background - especially also in 
 
 Notice that for the below plots I created a parameters to play around with xaxis labels.
 
-# Time time-series representation of the rank-correlation
+# Time time-series representation of the rank-correlation calculations 
 ```{r}
 # Data wrangling 
 top_names <- Baby_names %>% 
   top_n_names(n = 25)
 
-# Computing Spearman Rank Correlation
+# Computing Spearman Rank Correlation for a specific target year
 calculate_correlations(top_names, target_year = 2000, future_years = 3)
+
+# Apply Correlation calculation to all years
+corr_results <- name_persistence(top_names, future_years = 3)
 
 ```
 
+# Visualisation of the Spearman rank-correlation
+```{r,  warning =  FALSE, fig.align = 'center', fig.cap = "Persistence of National Top 25 Baby Names (1910-2014).\\label{Figure1}", fig.ext = 'png', fig.height = 5, fig.width = 7}
 
+plot_name_persistence(corr_results = corr_results) 
+
+```
+As you can see from Figure \ref{Figure1}, name persistence is much stronger among names for boys than names for girls. Both display trends that appear to be generally downward sloping over time. Persistence is also seen to decrease the further the future year is from the target year. Considering the client's suspicion that popular name trends have been slower to persist since the 1990s than in earlier decades their suspicion is correct for boys names, but appears to be the opposite for girls names which display with an upwards trend since the 1990s. 
+
+
+\newpage 
 
 
 
