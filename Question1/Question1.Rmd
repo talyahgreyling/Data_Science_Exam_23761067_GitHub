@@ -127,7 +127,7 @@ top_names <- Baby_names %>%
   top_n_names(n = 25)
 
 # Computing Spearman Rank Correlation for a specific target year
-calculate_correlations(top_names, target_year = 2000, future_years = 3)
+SpearCorr <- calculate_correlations(top_names, target_year = 2000, future_years = 3)
 
 # Apply Correlation calculation to all years
 corr_results <- name_persistence(top_names, future_years = 3)
@@ -137,7 +137,8 @@ corr_results <- name_persistence(top_names, future_years = 3)
 # Time time-series representation of the rank-correlation visualisation
 ```{r, warning =  FALSE, fig.align = 'center', fig.cap = "Persistence of National Top 25 Baby Names (1910-2014).\\label{Figure1}", fig.ext = 'png', fig.height = 5, fig.width = 10}
 
-plot_name_persistence(corr_results = corr_results) 
+PersistPlot <- plot_name_persistence(corr_results = corr_results) 
+PersistPlot
 
 ```
 As you can see from Figure \ref{Figure1}, name persistence is much stronger among names for boys than names for girls. Both display trends that appear to be generally downward sloping over time. Persistence is also seen to decrease the further the future year is from the target year. Considering the client's suspicion that popular name trends have been slower to persist since the 1990s than in earlier decades their suspicion is correct for boys names, but appears to be the opposite for girls names which display with an upwards trend since the 1990s. 
@@ -154,25 +155,26 @@ pop_names <- Baby_names %>%
 decade_top_names <- top_n_names_per_decade(pop_names, top_n = 10)   
 ```
 
-# Popular names visualisation 
-```{r, warning =  FALSE, fig.align = 'center', fig.cap = "Persistence of National Top 25 Baby Names (1910-2014).\\label{Figure1}", fig.ext = 'png', fig.height = 20, fig.width = 10}
+# Popular names per decade visualisation 
+```{r, warning =  FALSE, fig.align = 'center', fig.cap = "Persistence of National Top 10 Baby Names per decade (1910-2014).\\label{Figure2}", fig.ext = 'png', fig.height = 20, fig.width = 10}
 
-library(ggridges)
+PopNamesMap <- popular_names_heatmap(decade_top_names)
+PopNamesMap
 
-# Plot popularity trends
-pop_names %>%
-  ggplot(aes(x = Year, y = Total_Count, color = Name)) +
-  geom_line(linewidth = 1) +
-  scale_color_brewer(palette = "Dark2") +
-  facet_wrap(~Gender, scales = "free_y") +
-  labs(
-    title = "Top 5 National Names by Gender (1910-2014)",
-    subtitle = "Annual name counts show rise and fall of popularity",
-    y = "Number of Babies Named",
-    caption = "Source: US Social Security Administration"
-  ) +
-  theme_bw() +
-  theme(legend.position = "bottom")
+```
+
+Figure \ref{Figure2} once again shows that name persistence is much stronger among males. By displaying the information in a heatmap we can see that popularity is concentrated among less names for males than for females, contributing to their higher persistence levels.  
+
+\newpage 
+* TMDB stands for The Movie Database. The percentage is a score given to that movie or TV show by the database users on a 10-star scale. This can give you an idea of how other viewers feel about the show.
+* Do people name babies after popular movie characters? Define popular as a movie that scores above average on TMDB 
+* Do people name babies after famous movie stars?
+
+# Movie star names calculations 
+```{r}
+
+Popular_movies <- get_popular_movies(HBO_credits, HBO_titles)
+Popular_movies   
 
 ```
 
