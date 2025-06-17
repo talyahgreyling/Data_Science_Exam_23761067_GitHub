@@ -63,6 +63,7 @@ list.files('Question5/code/', full.names = T, recursive = T) %>% .[grepl('.R', .
 ### Thought process explained 
 * I decided to look at naming trends nationally for the US since this was in line with the clients request to start by showing a time-series representation of the Spearman rank-correlation between each year’s 25 most popular boys’ and girls’ names
 and that of the next 3 years and meant that substantial wrangling work was already done in this format. 
+* To look at name popularity I decided to look at the top 5 nationally per year for boys and girls respectively, but upon time series visualisation saw that the persistence was too weak over the while time series to generate useful plots. I therefore decided to identify the top 10 names per decade. 
 
 ### Loading the data 
 ```{r}

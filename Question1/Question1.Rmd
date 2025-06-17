@@ -134,17 +134,47 @@ corr_results <- name_persistence(top_names, future_years = 3)
 
 ```
 
-# Visualisation of the Spearman rank-correlation
-```{r,  warning =  FALSE, fig.align = 'center', fig.cap = "Persistence of National Top 25 Baby Names (1910-2014).\\label{Figure1}", fig.ext = 'png', fig.height = 5, fig.width = 7}
+# Time time-series representation of the rank-correlation visualisation
+```{r, warning =  FALSE, fig.align = 'center', fig.cap = "Persistence of National Top 25 Baby Names (1910-2014).\\label{Figure1}", fig.ext = 'png', fig.height = 5, fig.width = 10}
 
 plot_name_persistence(corr_results = corr_results) 
 
 ```
 As you can see from Figure \ref{Figure1}, name persistence is much stronger among names for boys than names for girls. Both display trends that appear to be generally downward sloping over time. Persistence is also seen to decrease the further the future year is from the target year. Considering the client's suspicion that popular name trends have been slower to persist since the 1990s than in earlier decades their suspicion is correct for boys names, but appears to be the opposite for girls names which display with an upwards trend since the 1990s. 
 
-
 \newpage 
 
+#After this requested initial analysis it would be useful to see which names were the most popular 
+
+# Popular names per decade calculations
+```{r}
+pop_names <- Baby_names %>% 
+  top_n_names(n = 10)
+
+decade_top_names <- top_n_names_per_decade(pop_names, top_n = 10)   
+```
+
+# Popular names visualisation 
+```{r, warning =  FALSE, fig.align = 'center', fig.cap = "Persistence of National Top 25 Baby Names (1910-2014).\\label{Figure1}", fig.ext = 'png', fig.height = 20, fig.width = 10}
+
+library(ggridges)
+
+# Plot popularity trends
+pop_names %>%
+  ggplot(aes(x = Year, y = Total_Count, color = Name)) +
+  geom_line(linewidth = 1) +
+  scale_color_brewer(palette = "Dark2") +
+  facet_wrap(~Gender, scales = "free_y") +
+  labs(
+    title = "Top 5 National Names by Gender (1910-2014)",
+    subtitle = "Annual name counts show rise and fall of popularity",
+    y = "Number of Babies Named",
+    caption = "Source: US Social Security Administration"
+  ) +
+  theme_bw() +
+  theme(legend.position = "bottom")
+
+```
 
 
 
