@@ -145,8 +145,6 @@ As you can see from Figure \ref{Figure1}, name persistence is much stronger amon
 
 \newpage 
 
-#After this requested initial analysis it would be useful to see which names were the most popular 
-
 # Popular names per decade calculations
 ```{r}
 pop_names <- Baby_names %>% 
@@ -166,9 +164,6 @@ PopNamesMap
 Figure \ref{Figure2} once again shows that name persistence is much stronger among males. By displaying the information in a heatmap we can see that popularity is concentrated among less names for males than for females, contributing to their higher persistence levels.  
 
 \newpage 
-* TMDB stands for The Movie Database. The percentage is a score given to that movie or TV show by the database users on a 10-star scale. This can give you an idea of how other viewers feel about the show.
-* Do people name babies after popular movie characters? Define popular as a movie that scores above average on TMDB 
-* Do people name babies after famous actors/ actresses?
 
 # Movie star names calculations 
 ```{r}

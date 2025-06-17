@@ -27,6 +27,8 @@ and put each data file in its respective question folder’s corresponding
 data file. I then added ’\*data/’ to my gitignore to prevent the data
 folders from committing to GitHub.
 
+I also stored the ‘Practical_25.pdf’ in my bin folder.
+
 # CODE USED FOR FIGURES AND TABLES:
 
 ``` r
@@ -36,8 +38,8 @@ gc() # garbage collection
 ```
 
     ##           used (Mb) gc trigger (Mb) max used (Mb)
-    ## Ncells  555965 29.7    1237447 66.1   702048 37.5
-    ## Vcells 1055074  8.1    8388608 64.0  1927558 14.8
+    ## Ncells  556080 29.7    1237775 66.2   702048 37.5
+    ## Vcells 1056309  8.1    8388608 64.0  1927558 14.8
 
 ``` r
 library(pacman)
@@ -53,6 +55,104 @@ list.files('Question5/code/', full.names = T, recursive = T) %>% .[grepl('.R', .
 
 ## QUESTION 1:
 
+### Thought process explained
+
+-   I decided to look at naming trends nationally for the US since this
+    was in line with the clients request to start by showing a
+    time-series representation of the Spearman rank-correlation between
+    each year’s 25 most popular boys’ and girls’ names and that of the
+    next 3 years and meant that substantial wrangling work was already
+    done in this format.
+-   To look at name popularity I decided to look at the top 5 nationally
+    per year for boys and girls respectively, but upon time series
+    visualisation saw that the persistence was too weak over the while
+    time series to generate useful plots. I therefore decided to
+    identify the top 10 names per decade and visualise those in a
+    heatmap.
+-   Lastly
+
 ### Loading the data
 
-### Plot number 1
+``` r
+# Load data
+Baby_names <- read_rds("Question1/data/US_Baby_names/Baby_Names_By_US_State.rds")
+Top_100_billboard <- read_rds("Question1/data/US_Baby_names/charts.rds")
+HBO_titles <- read_rds("Question1/data/US_Baby_names/HBO_titles.rds")
+HBO_credits <- read_rds("Question1/data/US_Baby_names/HBO_credits.rds")
+```
+
+### Time-series representation of the Spearman rank-correlation
+
+-   I created a function ‘top_n_names’ that filters and ranks the baby
+    names by year & gender (boys vs girls).
+-   Thereafter I created a function ‘calculate_correlations’ that
+    computes the Spearman Rank Correlation for a specific target year
+-   Then I created a function ‘name_persistence’ that applies this
+    correlation calculation to all years such that the output can be
+    visually represented.
+-   Lastly, the function ‘plot_name_persistence’ uses geom_smooth to fit
+    a series of lines that represent the rank-correlation over time
+
+#### Plot number 1
+
+``` r
+top_names <- Baby_names %>% 
+  top_n_names(n = 25)
+SpearCorr <- calculate_correlations(top_names, target_year = 2000, future_years = 3)
+corr_results <- name_persistence(top_names, future_years = 3)
+PersistPlot <- plot_name_persistence(corr_results = corr_results) 
+PersistPlot
+```
+
+    ## `geom_smooth()` using formula = 'y ~ x'
+
+<img src="README_files/figure-markdown_github/unnamed-chunk-3-1.png" alt="Persistence of National Top 25 Baby Names (1910-2014).\label{Figure1}"  />
+<p class="caption">
+Persistence of National Top 25 Baby Names (1910-2014).
+</p>
+
+### Popular names
+
+-   After this requested initial rank-correlation analysis it would be
+    useful to see which names were the most popular
+-   I created a function ‘top_n_names_per_decade’ that I use to
+    determine to top 10 boy and girl names respectively per decade
+-   I then created a function ‘popular_names_heatmap’ that generates a
+    heatmap to illustrate persistance of the top 10 names in each
+    decade.
+
+#### Plot number 2
+
+``` r
+pop_names <- Baby_names %>% 
+  top_n_names(n = 10)
+decade_top_names <- top_n_names_per_decade(pop_names, top_n = 10)
+PopNamesMap <- popular_names_heatmap(decade_top_names)
+PopNamesMap
+```
+
+<img src="README_files/figure-markdown_github/unnamed-chunk-4-1.png" alt="Persistence of National Top 10 Baby Names per decade (1910-2014).\label{Figure2}"  />
+<p class="caption">
+Persistence of National Top 10 Baby Names per decade (1910-2014).
+</p>
+
+### Do movies determine popular names
+
+-   TMDB stands for The Movie Database. The percentage is a score given
+    to that movie or TV show by the database users on a 10-star scale.
+    This can give you an idea of how other viewers feel about the show.
+-   Do people name babies after famous actors/ actresses who play
+    popular movie characters? Define popular as a movie that scores
+    above average on TMDB.
+-   To explore this question I created a function ‘get_popular_movies’
+    that determines which movies got above average TMDB scores
+-   
+
+#### Plot 3
+
+### Issues encountered
+
+-   I wrote a function to silently collate the rds files, but upon its
+    creation saw that many of the columns then became unusable by
+    containing an abundance of NAs, I decided to read in each file
+    seperately by adapting the code provided in the assignment.
