@@ -38,8 +38,8 @@ gc() # garbage collection
 ```
 
     ##           used (Mb) gc trigger (Mb) max used (Mb)
-    ## Ncells  556080 29.7    1237775 66.2   702048 37.5
-    ## Vcells 1056309  8.1    8388608 64.0  1927558 14.8
+    ## Ncells  556204 29.8    1238130 66.2   702048 37.5
+    ## Vcells 1057032  8.1    8388608 64.0  1927558 14.8
 
 ``` r
 library(pacman)
@@ -156,3 +156,74 @@ Persistence of National Top 10 Baby Names per decade (1910-2014).
     creation saw that many of the columns then became unusable by
     containing an abundance of NAs, I decided to read in each file
     seperately by adapting the code provided in the assignment.
+
+# QUESTION 4
+
+## Load data
+
+``` r
+df_billions <- "Question4/data/Billions/billionaires.csv" %>% read_csv_with_col_type()
+```
+
+## Process explained
+
+-   Fixed inconsistent naming conventions in billionaires.csv
+-   Added a column ‘Automatic Type’ to Info file.xlsx
+-   Read through StackOverflow thread to resolve read_csv issue: decided
+    to set the default column type as character & adjust the necessary
+    columns to double and integer.
+-   Created the function ‘read_csv_with_col_type’ that takes ‘csv_file’
+    as an input and then reads in a CSV document with its specific
+    column types
+-   Wrote the intro
+-   Wrote the exploration goals
+-   Created the functions ‘counts_new_us’ and ‘counts_new_other’ which
+    take the data frame ‘df_billions’ as input and counts the amount of
+    new billionaires & bilionaires by inheritance per decade in the US
+    and other countries respectively
+-   Created the function ‘draw_first_claim’ that takes ‘df’ and
+    ‘input_title’ as inputs to create a grouped barchart of the counts
+    of new vs. inherited wealth per decade
+-   Drew ‘us_plot_first_claim’ (as depicted below) and discussed my
+    findings
+
+``` r
+# Data 
+df_us_billions <- counts_new_us(df_billions)
+```
+
+    ## `summarise()` has grouped output by 'year'. You can override using the
+    ## `.groups` argument.
+
+``` r
+#Plot
+us_plot_first_claim <- draw_first_claim(df_us_billions, input_title = "Counts of new vs inherited wealth in the US per decade")
+us_plot_first_claim
+```
+
+<img src="README_files/figure-markdown_github/unnamed-chunk-6-1.png" alt="New vs. inherited wealth per decade (US)"  />
+<p class="caption">
+New vs. inherited wealth per decade (US)
+</p>
+
+-   Drew ‘other_plot_first_claim’ (as depicted below) and discussed my
+    findings
+
+``` r
+# Data 
+df_other_billions <- counts_new_other(df_billions)
+```
+
+    ## `summarise()` has grouped output by 'year'. You can override using the
+    ## `.groups` argument.
+
+``` r
+# Plot
+other_plot_first_claim <- draw_first_claim(df_other_billions, input_title = "Counts of new vs inherited wealth in other countries per decade")
+other_plot_first_claim
+```
+
+<img src="README_files/figure-markdown_github/unnamed-chunk-7-1.png" alt="New vs. inherited wealth per decade (other countries)"  />
+<p class="caption">
+New vs. inherited wealth per decade (other countries)
+</p>

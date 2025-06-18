@@ -117,6 +117,11 @@ PopNamesMap
 
 # QUESTION 4 
 
+## Load data 
+```{r}
+df_billions <- "Question4/data/Billions/billionaires.csv" %>% read_csv_with_col_type()
+```
+
 ## Process explained 
 * Fixed inconsistent naming conventions in billionaires.csv
 * Added a column 'Automatic Type' to Info file.xlsx
@@ -129,6 +134,10 @@ PopNamesMap
 * Drew 'us_plot_first_claim' (as depicted below) and discussed my findings
 ```{r, fig.align = 'center', fig.cap = "New vs. inherited wealth per decade (US)", fig.ext = 'png', fig.height = 5, fig.width = 7}
 
+# Data 
+df_us_billions <- counts_new_us(df_billions)
+
+#Plot
 us_plot_first_claim <- draw_first_claim(df_us_billions, input_title = "Counts of new vs inherited wealth in the US per decade")
 us_plot_first_claim
 
@@ -136,6 +145,10 @@ us_plot_first_claim
 * Drew 'other_plot_first_claim' (as depicted below) and discussed my findings
 ```{r, fig.align = 'center', fig.cap = "New vs. inherited wealth per decade (other countries)", fig.ext = 'png', fig.height = 5, fig.width = 7}
 
+# Data 
+df_other_billions <- counts_new_other(df_billions)
+
+# Plot
 other_plot_first_claim <- draw_first_claim(df_other_billions, input_title = "Counts of new vs inherited wealth in other countries per decade")
 other_plot_first_claim
 
