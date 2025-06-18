@@ -61,8 +61,18 @@ Two main claims (made by one of Forbs' participants) will be explored in this do
 df_us_billions <- counts_new_us(df_billions)
 df_other_billions <- counts_new_other(df_billions)
 
-# Create first claim plot
-first_claim_plot <- bind_rows(df_us_billions, df_other_billions) 
+"Counts of new vs inhereted wealth in the US per decade"
+us_plot_first_claim <- draw_first_claim(df_us_billions, input_title = "Counts of new vs inhereted wealth in the US per decade")
+us_plot_first_claim
+
+ggplot(df_us_billions, aes(fill = new_status, y = count, x = year)) + 
+    geom_bar(position="dodge", stat="identity")
+
+
+# Create first claim plot (grouped bar chart)
+first_claim_plot <- bind_rows(df_us_billions, df_other_billions) %>% 
+    ggplot(aes(fill=condition, y=value, x=specie)) + 
+    geom_bar(position="dodge", stat="identity")
 
 ```
 
