@@ -2,15 +2,15 @@
 title: "Booming Billions: an Analysis on Global Wealth Data"
 author: "Talyah Greyling"
 date: "`r Sys.Date()`"
-bibliography: Tex/ref.bib       
+bibliography: Tex/ref.bib 
+documentclass: "elsarticle"
 output:
   pdf_document:
     keep_tex: TRUE
     template: Tex/TexDefault.txt
     fig_width: 3.5 
     fig_height: 3.5
-    toc: true 
-    self_contained: TRUE
+    
     
 abstract: |
     This pdf document contains an analysis on a collection of global billionaires using data supplied by Forbes to uncover the underlying patterns to becoming one of the world's wealthiest. Do developing countries deliver more self-made men? Is the software industry the key to a comfortable life? Read this paper to find out. 
@@ -55,26 +55,35 @@ Two main claims (made by one of Forbs' participants) will be explored in this do
 # Exploring claim number 1 
 * This claim entails comparing the prevalence of self-made billionaires in the US versus inherited wealth dominance in other developed and emerging markets.
 
-```{r first claim}
+```{r first claim wrangling}
 
 # Prepare data for first claim plot 
 df_us_billions <- counts_new_us(df_billions)
 df_other_billions <- counts_new_other(df_billions)
 
-"Counts of new vs inhereted wealth in the US per decade"
-us_plot_first_claim <- draw_first_claim(df_us_billions, input_title = "Counts of new vs inhereted wealth in the US per decade")
-us_plot_first_claim
-
-ggplot(df_us_billions, aes(fill = new_status, y = count, x = year)) + 
-    geom_bar(position="dodge", stat="identity")
+# Draw first claim plots 
 
 
-# Create first claim plot (grouped bar chart)
-first_claim_plot <- bind_rows(df_us_billions, df_other_billions) %>% 
-    ggplot(aes(fill=condition, y=value, x=specie)) + 
-    geom_bar(position="dodge", stat="identity")
+
 
 ```
+```{r, fig.align = 'center', fig.cap = "New vs. inherited wealth per decade (US)", fig.ext = 'png', fig.height = 5, fig.width = 7}
+
+us_plot_first_claim <- draw_first_claim(df_us_billions, input_title = "Counts of new vs inherited wealth in the US per decade")
+us_plot_first_claim
+
+```
+
+Figure \ref{Figure1} depicts the counts of US billionaires per decade who become rich by inheritance (indicated by the pink bars) or their own hard work (indicated by the blue bars). We see that in the US the amount of self-made billionaires increases over the decades and outnumbers the amount of billionaires by inheritance. We can therefore confirm the first part of the first claim that an increasing number of new billionaires emerged over the decades studies that had little to no familial ties to generational wealth. 
+
+```{r, fig.align = 'center', fig.cap = "New vs. inherited wealth per decade (other countries)", fig.ext = 'png', fig.height = 5, fig.width = 7}
+
+other_plot_first_claim <- draw_first_claim(df_other_billions, input_title = "Counts of new vs inherited wealth in other countries per decade")
+other_plot_first_claim
+
+```
+
+Figure \ref{Figure2} depicts the counts of billionaires from other developed markets and emerging markets per decade who become rich by inheritance (indicated by the pink bars) or their own hard work (indicated by the blue bars). We see that in other countries the amount of self-made billionaires reduces slightly and then increases by a great magnitude, outnumbering the amount of billionaires by inheritance by a large margin. The billionaires by inheritance follow the same trajectory with a lesser increase in the final decade recorded. We therefore find the second part of the first claim, that these other markets tend to have less entrepreneurial successes and house mostly inherited wealth, to be false. 
 
 # Exploring claim number 2
 * Analyze the shift from consumer services (1990s) to software as the primary industry for self-made millionaires, correlating with national GDP levels.
