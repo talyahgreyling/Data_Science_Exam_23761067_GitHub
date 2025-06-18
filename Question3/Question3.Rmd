@@ -26,6 +26,10 @@ abstract: |
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, fig.width = 6, fig.height = 5, fig.pos = 'H') # set chunk defaults 
 rm(list = ls()) # clear environment 
 options(scipen = 999) #suppress scientific notation
+options(dplyr.summarise.inform=F) # suppress messages 
+
+# Load neccessary libraries 
+pacman::p_load(dplyr, ggplot2, tidyverse, stringr) ############## update 
 
 # Source all existing functions 
 list.files('..//Question1/code/', full.names = T, recursive = T) %>% as.list() %>% walk(~source(.))
@@ -36,42 +40,97 @@ list.files('code/', full.names = T, recursive = T) %>% as.list() %>% walk(~sourc
 palette <- c("#3A7370", "#FB9072", "#FFC57B", "#CE677A", "#163940", "#2C1F2C")
 theme <- set_custom_theme()
 
-# Load neccessary libraries 
-pacman::p_load(dplyr, ggplot2, tidyverse, stringr) ############## update 
-
 # Load data 
 location <- "data/netflix/"
 df_titles <- read_rds(glue::glue("{location}titles.rds"))
 df_credits <- read_rds(glue::glue("{location}credits.rds"))
 df_movies <-  read_csv(glue::glue("{location}netflix_movies.csv"))
-HBO_titles <- read_rds("..//Question1/data/US_Baby_names/HBO_titles.rds")
 
 ```
 \newpage 
 
 ```{r formatting data}
 
-# Identify main genre 
-identify_main_genre = function(df = df_titles, og_genre_col = genres)
-    
-df_titles <- df_titles %>% 
-    mutate(main_genre = sub(",.*", "", genres)) %>% 
+# Identify main genre in df_titles
+df_titles <- df_titles %>%
+    mutate(main_genre = sub(",.*", "", genres)) %>%
     mutate(main_genre = gsub("\\[|\\]|'", "", main_genre))
 
 # Generate genre distribution
 genre_distribution <- df_titles %>%
-  group_by(main_genre) %>%
-  summarise(count = n()) %>% 
-  filter(main_genre != "")
+    group_by(main_genre) %>%
+    summarise(count = n()) %>%
+    arrange(desc(count)) %>%
+    filter(main_genre != "")
 
 # Calculate top 10 genres by average audience score
-top_10_genres <- HBO_titles %>%
-  group_by(Genre) %>%
-  summarise(AvgScore = mean(`Audience  score %`, na.rm = TRUE)) %>%
-  arrange(desc(AvgScore)) %>%
-  head(10)
+top_10_genres <- df_titles %>%
+    group_by(main_genre) %>%
+    summarise(ave_score = mean(imdb_score, na.rm = TRUE)) %>%
+    arrange(desc(ave_score)) %>%
+    mutate(main_genre = factor(main_genre, levels = main_genre)) %>% 
+    head(10)
 
 ```
 
+```{r genre}
+# Plot genre distribution
+ggplot(genre_distribution, aes(x = main_genre, y = count)) +
+  geom_col(fill = "#a60c28") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  theme +
+  labs(x = "Main Genre", y = "Number of Movies", title = "Distribution of Genres on Netflix")
+
+# Plot top 10 genres by average audience score
+ggplot(top_10_genres, aes(x = main_genre, y = ave_score)) +
+  geom_bar(stat = "identity", fill = "#a60c28") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  theme +
+  labs(x = "Main Genre", y = "Average Audience Score", title = "Top 10 genres by Average Audience Score")
+```
+
+```{r }
+
+# Create duration data frame
+df_duration <- left_join(df_titles, df_movies, by = "title") %>% 
+    filter(!is.na(imdb_score)) %>%
+    mutate(minutes = sub(" min", "", duration))
+
+# Generate duration distribution
+duration_distribution <- df_duration %>%
+    group_by(minutes) %>%
+    summarise(count = n()) %>%
+    arrange(desc(count)) %>% 
+    filter(!is.na(minutes)) %>% 
+    mutate(minute_bin = floor(as.numeric(minutes) / 10) * 10) %>%
+    group_by(minute_bin) %>%
+    summarise(total_count = sum(count)) %>%             
+    arrange(minute_bin) 
+
+# Calculate top 10 durations by average audience score
+top_10_durations <- df_duration %>%
+    group_by(minutes) %>%
+    summarise(ave_score = mean(imdb_score, na.rm = TRUE)) %>%
+    arrange(desc(ave_score)) %>%
+    mutate(minutes = factor(minutes, levels = minutes)) %>% 
+    head(10)
+
+```
+
+```{r duration}
+# Plot duration distribution
+ggplot(duration_distribution, aes(x = minute_bin, y = total_count)) +
+  geom_col(fill = "#0b2585") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  theme +
+  labs(x = "Duration (in minutes)", y = "Number of Movies", title = "Distribution of durations on Netflix")
+
+# Plot top 10 durations by average audience score
+ggplot(top_10_durations, aes(x = minutes, y = ave_score)) +
+  geom_bar(stat = "identity", fill = "#0b2585") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  theme +
+  labs(x = "Duration (in minutes)", y = "Average Audience Score", title = "Top 10 durations by Average Audience Score")
+```
 
 
