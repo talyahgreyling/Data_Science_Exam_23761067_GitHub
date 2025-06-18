@@ -39,6 +39,24 @@ palette <- c("#3A7370", "#FB9072", "#FFC57B", "#CE677A", "#163940", "#2C1F2C")
 theme <- set_custom_theme()
 
 # Load data
-
+df_billions <- "data/Billions/billionaires.csv" %>% read_csv_with_col_type()
 
 ```
+
+# Introduction
+
+Global wealth inequality has reached unprecedented levels, with just 8% of the world’s population owning 85% of its wealth and most of this being concentrated in the top 1% [@Piketty2015]. Against this backdrop, Forbes surveyed South Africa’s wealthiest individuals and identified a pressing need to analyze shifting wealth patterns across three decades—from the 1990s to the mid-2010s. With disparities widening both within and between nations [@Mittelman2007], this research aims to uncover critical insights that could inform future economic strategies. If successful, Forbes plans to expand this database, offering a vital tool to address one of today’s most urgent challenges: an increasingly unequal world.
+
+## Exploration Goals
+The two main research questions that will be discussed in this document are as follows: 
+* Compare the prevalence of self-made billionaires in the US versus inherited wealth dominance in other developed and emerging markets.
+* Analyze the shift from consumer services (1990s) to software as the primary industry for self-made millionaires, correlating with national GDP levels.
+
+```{r}
+
+```
+
+
+
+
+
