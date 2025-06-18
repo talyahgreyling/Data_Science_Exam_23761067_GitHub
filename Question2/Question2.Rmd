@@ -1,130 +1,76 @@
 ---
-# IMPORTANT: Change settings here, but DO NOT change the spacing AT ALL.
-# Remove comments and add values where applicable.
-# The descriptions below should be self-explanatory
-
-title: "QUESTION 2: Music taste"
-#subtitle: "This will appear as Right Header"
-
-documentclass: "elsarticle"
-
-# --------- Thesis title (Optional - set to FALSE by default).
-# You can move the details below around as you please.
-Thesis_FP: FALSE
-# Entry1: "An unbelievable study with a title spanning multiple lines."
-# Entry2: "\\textbf{Some Guy}" # textbf for bold
-# Entry3: "A thesis submitted toward the degree of Doctor of Philosophy"
-# Uni_Logo: Tex/Logo.png # Place a logo in the indicated location (from your root, e.g. defaults to ~/Tex/Logo.png) and uncomment this line. Leave uncommented for no image
-# Logo_width: 0.3 # If using a logo - use this to set width (size) of image
-# Entry4: "Under the supervision of: \\vfill Prof. Joe Smith and Dr. Frank Smith"
-# Entry5: "Stellenbosch University"
-# Entry6: April 2020
-# Entry7:
-# Entry8:
-
-# --------- Front Page
-# Comment: ----- Follow this pattern for up to 5 authors
-AddTitle: TRUE # Use FALSE when submitting to peer reviewed platform. This will remove author names.
-Author1: "Talyah Greyling^[__Contributions:__  \\newline _The authors would like to thank the cleaning staff in Van der Sterr for turning on the heating in the normally arctic lab._]"  # First Author - note the thanks message displayed as an italic footnote of first page.
-Ref1: "Stellenbosch University, Cape Town, South Africa" # First Author's Affiliation
-Email1: "23761067\\@sun.ac.za" # First Author's Email address
-
-CorrespAuthor_1: TRUE  # If corresponding author is author 3, e.g., use CorrespAuthor_3: TRUE
-
-# Comment out below to remove both. JEL Codes only given if keywords also given.
-# keywords: "Multivariate GARCH \\sep Kalman Filter \\sep Copula" # Use \\sep to separate
-# JELCodes: "L250 \\sep L100"
-
-# ----- Manage headers and footers:
-#BottomLFooter: $Title$
-#BottomCFooter:
-#TopLHeader: \leftmark # Adds section name at topleft. Remove comment to add it.
-BottomRFooter: "\\footnotesize Page \\thepage" # Add a '#' before this line to remove footer.
-addtoprule: TRUE
-addfootrule: TRUE               # Use if footers added. Add '#' to remove line.
-
-# --------- page margins:
-margin: 2.3 # Sides
-bottom: 2 # bottom
-top: 2.5 # Top
-HardSet_layout: TRUE # Hard-set the spacing of words in your document. This will stop LaTeX squashing text to fit on pages, e.g.
-# This is done by hard-setting the spacing dimensions. Set to FALSE if you want LaTeX to optimize this for your paper.
-
-# --------- Line numbers
-linenumbers: FALSE # Used when submitting to journal
-
-# ---------- References settings:
-# You can download cls format here: https://www.zotero.org/ - simply search for your institution. You can also edit and save cls formats here: https://editor.citationstyles.org/about/
-# Hit download, store it in Tex/ folder, and change reference below - easy.
-bibliography: Tex/ref.bib       # Do not edit: Keep this naming convention and location.
-csl: Tex/harvard-stellenbosch-university.csl # referencing format used.
-# By default, the bibliography only displays the cited references. If you want to change this, you can comment out one of the following:
-#nocite: '@*' # Add all items in bibliography, whether cited or not
-# nocite: |  # add specific references that aren't cited
-#  @grinold2000
-#  @Someoneelse2010
-
-# ---------- General:
-RemovePreprintSubmittedTo: TRUE  # Removes the 'preprint submitted to...' at bottom of titlepage
-Journal: "Journal of Finance"   # Journal that the paper will be submitting to, if RemovePreprintSubmittedTo is set to TRUE.
-toc: FALSE                       # Add a table of contents
-numbersections: TRUE             # Should sections (and thus figures and tables) be numbered?
-fontsize: 11pt                  # Set fontsize
-linestretch: 1.2                # Set distance between lines.
-link-citations: TRUE            # This creates dynamic links to the papers in reference list.
-
-### Adding additional latex packages:
-# header-includes:
-#    - \usepackage{colortbl} # Add additional packages here.
-
+title: "Famous for Forever: an Analysis on Coldplay and Metallica Data"
+author: "Talyah Greyling"
+date: "`r Sys.Date()`"
+bibliography: Tex/ref.bib       
 output:
-  pdf_document:
-    keep_tex: TRUE
-    template: Tex/TexDefault.txt
-    fig_width: 3.5 # Adjust default figure sizes. This can also be done in the chunks of the text.
-    fig_height: 3.5
+  pagedown::html_paged:
+    # template: wp_paged.html
+    # css: ['wp.css', 'wp-fonts.css', 'wp-page.css']
+    css: ["Template/default-fonts-Texevier.css", "Template/default-page-Texevier.css", "Template/default-Texevier.css"]
+    csl: Template/harvard-stellenbosch-university.csl # referencing format used.
+    template: ["Template/paged-Texevier.html"]
+
+    toc: true 
+    # change to true for a self-contained document, but it'll be a litte slower for Pandoc to render
+    self_contained: TRUE
+    
 abstract: |
-  This report is a concise analysis of baby naming trends in the US through the years utilising graphs, tables and bullet summaries to explain the findings to the client, a New York based kids’ toy design agency.
+    This report contains an analysis on Coldplay and Metallica using data supplied by Spotify to uncover in the fame achieved by these 2 famous band truely is forever. 
+    Focusing on their studio recordings, it explores key aspects such as album characteristics, industry trends, and the distinction between live and studio performances. The report presents statistical tables and visualizations to provide insights into the longevity and musical progression of these iconic bands.  
+
 ---
 
-<!-- First: Set your default preferences for chunk options: -->
-
-<!-- If you want a chunk's code to be printed, set echo = TRUE. message = FALSE stops R printing ugly package loading details in your final paper too. I also suggest setting warning = FALSE and checking for warnings in R, else you might find ugly warnings in your paper. -->
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, fig.width = 6, fig.height = 5, fig.pos = 'H')
 
-options(dplyr.summarise.inform=F) # suppress messages
+# Housekeeping 
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, fig.width = 6, fig.height = 5, fig.pos = 'H') # set chunk defaults 
+rm(list = ls()) # clear environment 
+options(scipen = 999) #suppress scientific notation
+options(dplyr.summarise.inform=F) # suppress messages 
 
-# Install and load necessary packages 
-if(!require("tidyverse")) install.packages("tidyverse")
-library(tidyverse)
+# Load neccessary libraries 
+pacman::p_load(dplyr, ggplot2, tidyverse, stringr) ############## update 
 
-# Source in all existing code folders 
-list.files('code/', full.names = T, recursive = T) %>% as.list() %>% walk(~source(.))
+# Source all existing functions 
 list.files('..//Question1/code/', full.names = T, recursive = T) %>% as.list() %>% walk(~source(.))
+list.files('code/', full.names = T, recursive = T) %>% as.list() %>% walk(~source(.))
+
+# Set theme & colour palette
+palette <- c("#3A7370", "#FB9072", "#FFC57B", "#CE677A", "#163940", "#2C1F2C")
+theme <- set_custom_theme()
 
 # Load data
-Loc <- "data/Coldplay_vs_Metallica/" # set up directory path to data 
-coldplay <- read_csv(glue::glue("{Loc}Coldplay.csv")) # read in csv file
-metallica <- read_csv(glue::glue("{Loc}metallica.csv")) 
-spotify <- read_rds(glue::glue("{Loc}Broader Spotify Info.rds")) # read in rds file
-billboard_100 <- read_rds(glue::glue("{Loc}charts.rds"))
+location <- "data/Coldplay_vs_Metallica/" # set up directory path to data 
+df_metallica <- read_csv(glue::glue("{location}metallica.csv")) # read in csv file
+df_coldplay <- read_csv(glue::glue("{location}Coldplay.csv")) 
+df_spotify <- read_rds(glue::glue("{location}Broader_Spotify_Info.rds")) # read in rds file
+df_billboard_100 <- read_rds(glue::glue("{location}charts.rds"))
  
 ```
 
+# Introduction 
 
-<!-- ############################## -->
-<!-- # Start Writing here: -->
-<!-- ############################## -->
+Metallica is a pioneering American heavy metal band known for fast tempo's, instrumentals and aggressive musicianship. Their breakthrough came with their 3rd album: 'Master of Puppets' (1986), described as one of the heaviest metal albums and named their best work.'...And Justice for All' (1988) earned their first Grammy nod, while Metallica (1991) marked a mainstream shift from their thrash metal roots, becoming their best-selling album (16M+ U.S. copies). After genre experimentation, they returned to thrash with 'Death Magnetic' (2008). Their latest release is '72 Seasons' (2023) [@wiki:metallica]. 
 
-# Introduction \label{Introduction}
+Coldplay, a British rock band renowned for their live performances, have sold over 100 million albums worldwide. Their debut album, 'Parachutes' (2000), featuring "Yellow," won a Brit Award and a Grammy. The follow-up, 'A Rush of Blood to the Head' (2002), repeated this success, while 'X&Y' (2005) completed what they called a trilogy. 'Viva la Vida or Death and All His Friends' (2008) also earned a Grammy, topping charts in over 30 countries. Later albums, 'Mylo Xyloto' (2011), 'Ghost Stories' (2014), 'A Head Full of Dreams' (2015), 'Everyday Life' (2019), 'Music of the Spheres' (2021), and 'Moon Music' (2024), explored genres like electronica, R&B, disco, and progressive rock [@wiki:coldplay].
 
-Metallica is a pioneering American heavy metal band known for fast tempo's, instrumentals and aggressive musicianship. Their breakthrough came with their 3rd album: 'Master of Puppets' (1986), described as one of the heaviest metal albums and named their best work.'...And Justice for All' (1988) earned their first Grammy nod, while Metallica (1991) marked a mainstream shift from their thrash metal roots, becoming their best-selling album (16M+ U.S. copies). After genre experimentation, they returned to thrash with Death Magnetic (2008). Their latest release is 72 Seasons (2023). 
+```{r formatting data}
+# Merge datasets
+df_metallica <- df_metallica %>% 
+    mutate(band = "Metallica")
+
+df_coldplay <- df_coldplay %>% 
+    mutate(band = "Coldplay")
+
+df_combined <- df_metallica %>% 
+    full_join(df_coldplay, by = "band")
+```
 
   
 
-References are to be made as follows: @fama1997[p. 33] and @grinold2000 Such authors could also be referenced in brackets [@grinold2000] and together [@fama1997 \& @grinold2000]. Source the reference code from scholar.google.com by clicking on ``cite'' below article name. Then select BibTeX at the bottom of the Cite window, and proceed to copy and paste this code into your ref.bib file, located in the directory's Tex folder. Open this file in Rstudio for ease of management, else open it in your preferred Tex environment. Add and manage your article details here for simplicity - once saved, it will self-adjust in your paper.
+
 
 
 

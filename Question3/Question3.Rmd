@@ -87,6 +87,9 @@ ggplot(top_10_genres, aes(x = main_genre, y = ave_score)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
   theme +
   labs(x = "Main Genre", y = "Average Audience Score", title = "Top 10 genres by Average Audience Score")
+
+# plot1 <- plot_top_10(data = top_10_genres, focus_col = main_genre, choose_colour = "#a60c28", x_label = "Main Genre", y_label = "Average Audience Score",title_label = "Top 10 genres by Average Audience Score")
+# plot1
 ```
 
 ```{r }
