@@ -48,15 +48,29 @@ df_billions <- "data/Billions/billionaires.csv" %>% read_csv_with_col_type()
 Global wealth inequality has reached unprecedented levels, with just 8% of the world’s population owning 85% of its wealth and most of this being concentrated in the top 1% [@Piketty2015]. Against this backdrop, Forbes surveyed South Africa’s wealthiest individuals and identified a pressing need to analyze shifting wealth patterns across three decades—from the 1990s to the mid-2010s. With disparities widening both within and between nations [@Mittelman2007], this research aims to uncover critical insights that could inform future economic strategies. If successful, Forbes plans to expand this database, offering a vital tool to address one of today’s most urgent challenges: an increasingly unequal world.
 
 ## Exploration Goals
-The two main research questions that will be discussed in this document are as follows: 
-* Compare the prevalence of self-made billionaires in the US versus inherited wealth dominance in other developed and emerging markets.
-* Analyze the shift from consumer services (1990s) to software as the primary industry for self-made millionaires, correlating with national GDP levels.
+Two main claims (made by one of Forbs' participants) will be explored in this document: 
+(1) "In the US, you saw an increasing number of new billionaires emerge that had little to no familial ties to generational wealth. Other developed markets and emerging markets tend to have less entrepreneurial successes and tend to house mostly inherited wealth."
+(2) “Most new self-made millionaires are in software, compared to consumer services type industries in the 90s. This is related to different countries’ GDP, of course, with richer countries providing more innovation in consumer services."
 
-```{r}
+# Exploring claim number 1 
+* This claim entails comparing the prevalence of self-made billionaires in the US versus inherited wealth dominance in other developed and emerging markets.
+
+```{r first claim}
+
+# Prepare data for first claim plot 
+df_us_billions <- counts_new_us(df_billions)
+df_other_billions <- counts_new_other(df_billions)
+
+# Create first claim plot
+first_claim_plot <- bind_rows(df_us_billions, df_other_billions) 
 
 ```
 
+# Exploring claim number 2
+* Analyze the shift from consumer services (1990s) to software as the primary industry for self-made millionaires, correlating with national GDP levels.
 
 
+# Additional insights 
+* 
 
 

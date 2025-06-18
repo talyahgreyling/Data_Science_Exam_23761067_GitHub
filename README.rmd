@@ -114,3 +114,10 @@ PopNamesMap
 
 ### Issues encountered 
 * I wrote a function to silently collate the rds files, but upon its creation saw that many of the columns then became unusable by containing an abundance of NAs, I decided to read in each file seperately by adapting the code provided in the assignment. 
+
+# QUESTION 4 
+* Fixed inconsistent naming conventions in billionaires.csv
+* Added a column 'Automatic Type' to Info file.xlsx
+* Read through StackOverflow thread to resolve issue: decided to set the default type as character & adjust the necessary columns to double and integer. 
+*
+
