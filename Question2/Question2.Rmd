@@ -31,7 +31,7 @@ options(scipen = 999) #suppress scientific notation
 options(dplyr.summarise.inform=F) # suppress messages 
 
 # Load neccessary libraries 
-pacman::p_load(dplyr, ggplot2, tidyverse, stringr, purrr, lubridate) ############## update 
+pacman::p_load(dplyr, ggplot2, tidyverse, stringr, purrr, lubridate, gt) ############## update 
 
 # Source all existing functions 
 list.files('..//Question1/code/', full.names = T, recursive = T) %>% as.list() %>% walk(~source(.))
@@ -52,9 +52,21 @@ df_billboard_100 <- read_rds(glue::glue("{location}charts.rds"))
 
 # Introduction 
 
-Metallica is a pioneering American heavy metal band known for fast tempo's, instrumentals and aggressive musicianship. Their breakthrough came with their 3rd album: 'Master of Puppets' (1986), described as one of the heaviest metal albums and named their best work.'...And Justice for All' (1988) earned their first Grammy nod, while Metallica (1991) marked a mainstream shift from their thrash metal roots, becoming their best-selling album (16M+ U.S. copies). After genre experimentation, they returned to thrash with 'Death Magnetic' (2008). Their latest release is '72 Seasons' (2023) [@wiki:metallica]. 
+In the dynamic world of music, artistic growth and transformation offer profound insights into the creative journeys of legendary performers. This report examines the musical evolution of Coldplay and Metallica—two iconic bands whose distinct sounds have topped charts and delighted listeners for generations. 
 
-Coldplay, a British rock band renowned for their live performances, have sold over 100 million albums worldwide. Their debut album, 'Parachutes' (2000), featuring "Yellow," won a Brit Award and a Grammy. The follow-up, 'A Rush of Blood to the Head' (2002), repeated this success, while 'X&Y' (2005) completed what they called a trilogy. 'Viva la Vida or Death and All His Friends' (2008) also earned a Grammy, topping charts in over 30 countries. Later albums, 'Mylo Xyloto' (2011), 'Ghost Stories' (2014), 'A Head Full of Dreams' (2015), 'Everyday Life' (2019), 'Music of the Spheres' (2021), and 'Moon Music' (2024), explored genres like electronica, R&B, disco, and progressive rock [@wiki:coldplay].
+This analysis focuses on studio recordings to track key metrics that define their sonic identities:
+* Popularity: How mainstream appeal has shifted over time
+* Energy: Sense of forward motion that keeps the listener engaged - like when drums intensify and the key increases in loud music. 
+* Danceability & Energy: Changes in rhythm and intensity
+* Acousticness: The role of organic versus electronic elements
+* Tempo: Variations in pacing and mood
+
+Through data-driven analysis and interactive visualizations, this report reveals:
+* Genre-Bending Trends: How both bands experimented beyond their roots
+* Commercial vs. Artistic Balance: The interplay between chart success and creative risks
+* Legacy Through Data: What makes their music endure in the streaming era
+
+Whether you're a fan, researcher, or music enthusiast, join us in uncovering the stories behind the stats—and how these artists continue to redefine their craft.
 
 ```{r formatting data}
 
@@ -65,32 +77,28 @@ df_metallica <- df_metallica %>%
 df_coldplay <- df_coldplay %>% 
     mutate(band = "Coldplay")
 
-df_combined <- df_metallica %>% 
-    full_join(df_coldplay, by = "name")
-
-df_combined <- df_combined %>% 
-    mutate(duration = map2(duration_ms, duration, convert_duration))
-
+df_metcol <- bind_rows(df_metallica, df_coldplay) %>% 
+    mutate(album = coalesce(album, album_name)) %>% 
+    mutate(duration = map2(duration_ms, duration, convert_duration)) #get all durations in seconds
+  
 # Remove song duplicates 
 duplicate_words <- c("Remastered", "Remix","Rerecorded", "Re-recorded", "Deluxe", "Live", "Edit", "Edition", "Prospekt")
 
-df_combined_unique <- df_combined %>%
+df_metcol_unique <- df_metcol %>%
     filter(is.na(name) | map_lgl(name, no_duplicate_words)) %>% 
-    filter(is.na(album) | map_lgl(album, no_duplicate_words)) %>% 
-    filter(is.na(album_name) | map_lgl(album_name, no_duplicate_words))
+    filter(is.na(album) | map_lgl(album, no_duplicate_words)) 
+    
 
 # Format dates
-df_combined_unique <- df_combined_unique %>%
-    mutate(month_year = floor_date(as.Date(release_date.x), "month")) %>% 
-    mutate(month_year = floor_date(as.Date(release_date.y), "month"))
+df_metcol_unique <- df_metcol_unique %>%
+    mutate(month_year = floor_date(as.Date(release_date), "month")) 
 
 # GOAL: Calculate days since first album release 
-calculate_days_since_first_release <- function(df) {
+calculate_days_after <- function(df) {
+    
   df <- df %>%
     group_by(band) %>%
-    mutate(first_release_date = min(min(release_date.x), min(release_date.y)),
-           days_since_first_release_metallica = as.integer(release_date.x - first_release_date),
-           days_since_first_release_metallica = as.integer(release_date.x - first_release_date))
+    mutate(days_after = as.integer(release_date - min(release_date)))
   
   return(df)
 }    
@@ -98,15 +106,142 @@ calculate_days_since_first_release <- function(df) {
 # GOAL: Indicate if song was performed live 
 performed_live <- function(name) {
   return(str_detect(name, regex("Live", ignore_case = TRUE)))
-}   
+}
 
 ```
 
-```{r}
+```{r initial try}
+# df_combined <- df_metallica %>% 
+#     full_join(df_coldplay, by = "name")
+# 
+# df_combined <- df_combined %>% 
+#     mutate(duration = map2(duration_ms, duration, convert_duration))
+# 
+# # Remove song duplicates 
+# duplicate_words <- c("Remastered", "Remix","Rerecorded", "Re-recorded", "Deluxe", "Live", "Edit", "Edition", "Prospekt")
+# 
+# df_combined_unique <- df_combined %>%
+#     filter(is.na(name) | map_lgl(name, no_duplicate_words)) %>% 
+#     filter(is.na(album) | map_lgl(album, no_duplicate_words)) %>% 
+#     filter(is.na(album_name) | map_lgl(album_name, no_duplicate_words))
+# 
+# # Format dates
+# df_combined_unique <- df_combined_unique %>%
+#     mutate(month_year = floor_date(as.Date(release_date.x), "month")) %>% 
+#     mutate(month_year = floor_date(as.Date(release_date.y), "month"))
+# 
+# # GOAL: Calculate days since first album release 
+# calculate_days_since_first_release <- function(df) {
+#   df <- df %>%
+#     group_by(band) %>%
+#     mutate(first_release_date = min(min(release_date.x), min(release_date.y)),
+#            days_since_first_release_metallica = as.integer(release_date.x - first_release_date),
+#            days_since_first_release_metallica = as.integer(release_date.x - first_release_date))
+#   
+#   return(df)
+# }    
+#  
+# # GOAL: Indicate if song was performed live 
+# performed_live <- function(name) {
+#   return(str_detect(name, regex("Live", ignore_case = TRUE)))
+# } 
+```
+
+## Context for less avid listeners: 
+Metallica is a pioneering American heavy metal band known for fast tempo's, instrumentals and aggressive musicianship. Their breakthrough came with their 3rd album: 'Master of Puppets' (1986), described as one of the heaviest metal albums and named their best work.'...And Justice for All' (1988) earned their first Grammy nod, while Metallica (1991) marked a mainstream shift from their thrash metal roots, becoming their best-selling album (16M+ U.S. copies). After genre experimentation, they returned to thrash with 'Death Magnetic' (2008). Their latest release is '72 Seasons' (2023) [@wiki:metallica]. 
+
+Coldplay, a British rock band renowned for their live performances, have sold over 100 million albums worldwide. Their debut album, 'Parachutes' (2000), featuring "Yellow," won a Brit Award and a Grammy. The follow-up, 'A Rush of Blood to the Head' (2002), repeated this success, while 'X&Y' (2005) completed what they called a trilogy. 'Viva la Vida or Death and All His Friends' (2008) also earned a Grammy, topping charts in over 30 countries. Later albums, 'Mylo Xyloto' (2011), 'Ghost Stories' (2014), 'A Head Full of Dreams' (2015), 'Everyday Life' (2019), 'Music of the Spheres' (2021), and 'Moon Music' (2024), explored genres like electronica, R&B, disco, and progressive rock [@wiki:coldplay].
+
+```{r basic tables}
+
+# Table 1 : basic summary stats
+table_summary <- df_metcol_unique %>%
+    filter(band %in% c("Metallica", "Coldplay")) %>%
+    group_by("Band" = band) %>%
+    summarise(
+        "Average Popularity" = mean(popularity),
+        "SD: Energy" = sd(energy),
+        "SD: Danceability" = sd(danceability),
+        "SD: Acousticness" = sd(acousticness),
+        "SD: Tempo" = sd(tempo)
+    ) %>%
+    gt() %>%
+    tab_header(title = "Table 1: Basic Summary Statistics for Coldplay and Metallica Albums",
+             subtitle = "(SD = Standard Deviation)")
+
+table_summary
+
+# Best performing albums table
+table_best_albums <- df_metcol_unique %>%
+  filter(band %in% c("Coldplay", "Metallica")) %>%
+  group_by(band, "Album" = album, "Release Date" = release_date) %>%
+  summarise(
+    Popularity = mean(popularity),
+    Danceability = mean(danceability),
+    Acousticness = mean(acousticness)
+  ) %>%
+  arrange(band, desc(Popularity)) %>%
+  group_by(band) %>%
+  top_n(3) %>% 
+    gt() %>%
+    tab_header(title = "Table 2: Best performing albums for Coldplay and Metallica")
+
+table_best_albums
 
 ```
-  
 
+**Consistent Popularity, Divergent Paths**  
+Both Coldplay and Metallica have maintained remarkable popularity throughout their careers as A-list artists. However, our analysis reveals that **Coldplay achieved higher average popularity** overall, while Metallica's success stemmed from a more consistent musical formula.  
+
+**Metallica: The Power of Consistency**  
+Metallica's music shows exceptionally low variation in key metrics:  
+- Tempo (BPM)  
+- Energy  
+- Danceability  
+- Acousticness  
+
+The minimal standard deviations in these metrics suggest a deliberate adherence to their signature sound over time, with little experimentation across albums.  
+
+**Coldplay: Embracing Musical Evolution**  
+In contrast, Coldplay exhibits:  
+- Higher variability in acousticness and energy  
+- Significant deviations between songs, indicating willingness to experiment  
+- Potential album-driven shifts in style  
+
+This analysis sets the stage for deeper investigation into how these contrasting approaches have sustained two of music's most enduring acts. Might these differences be tied to specific album releases? Lets find out...  
+
+```{r stacked bar graph, fig.height=10, fig.width=8}
+
+# Filter for Coldplay and Metallica only
+df_metcol_unique <- df_metcol_unique %>% 
+  filter(band %in% c("Coldplay", "Metallica")) %>%
+  group_by(band, month_year) %>%
+  summarise(
+    ave_popularity = mean(popularity, na.rm = TRUE),
+    ave_energy = mean(energy, na.rm = TRUE),
+    ave_danceability = mean(danceability, na.rm = TRUE),
+    ave_acousticness = mean(acousticness, na.rm = TRUE),
+    ave_tempo = mean(tempo, na.rm = TRUE)
+  ) %>%
+  pivot_longer(
+    cols = starts_with("ave"),
+    names_to = "category",
+    values_to = "value"
+  )
+
+df_bands$month_year <- as.Date(paste(df_bands$month_year, "01", sep = "-"))
+
+df_metcol_unique %>%
+  filter(month_year > as.Date("1995-01-01")) %>% 
+  ggplot(aes(x = month_year, y = value, fill = band)) +
+  geom_area(position = "stack", alpha = 0.8) +
+  facet_wrap(~ category, scales = "free_y", ncol = 1) +
+  scale_fill_brewer(palette = "Dark2") +
+  theme +
+    theme(legend.position = "bottom") +
+    labs(title = "Figure 1: Stacked Bar Graph of Band Characteristics Over time", x = "", y = "Count", fill = "")
+
+```
 
 
 
