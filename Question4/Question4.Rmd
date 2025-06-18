@@ -30,7 +30,7 @@ options(scipen = 999) #suppress scientific notation
 options(dplyr.summarise.inform=F) # suppress messages 
 
 # Load neccessary libraries 
-pacman::p_load(dplyr, ggplot2, tidyverse, stringr, purrr, lubridate, gt, fmsb) ############## update 
+pacman::p_load(dplyr, ggplot2, tidyverse, stringr, purrr, lubridate, gt, fmsb, hrbrthemes) ############## update 
 
 # Source all existing functions 
 list.files('..//Question1/code/', full.names = T, recursive = T) %>% as.list() %>% walk(~source(.))
@@ -48,7 +48,6 @@ df_billions <- "data/Billions/billionaires.csv" %>% read_csv_with_col_type()
 ```
 
 \newpage
-
 # Introduction
 
 Global wealth inequality has reached unprecedented levels, with just 8% of the world’s population owning 85% of its wealth and most of this being concentrated in the top 1% [@Piketty2015]. Against this backdrop, Forbes surveyed South Africa’s wealthiest individuals and identified a pressing need to analyze shifting wealth patterns across three decades—from the 1990s to the mid-2010s. With disparities widening both within and between nations [@Mittelman2007], this research aims to uncover critical insights that could inform future economic strategies. If successful, Forbes plans to expand this database, offering a vital tool to address one of today’s most urgent challenges: an increasingly unequal world.
@@ -94,21 +93,19 @@ This claim entails analysing the shift from consumer services (1990s) to softwar
 # Prepare data for second claim plot 
 df_software_billions <- counts_software(df_billions, c("software","technology"))
 
-df_software_billions <- df_billions %>%
-    mutate(sector_status = if_else(str_detect(
-        company.sector, regex(paste(software_words, collapse = "|"), ignore_case = TRUE)
-    ), true = "software",
-      false = "consumer"
-)) %>%
-  filter(!is.na(sector_status))  %>% 
-    group_by(year, sector_status) %>%
-    summarise(count = n()) %>%
-    mutate(status = "US")
-
 ```
 
+```{r, fig.align = 'center', fig.cap = "New Billionaires from Software vs Consumer Services (per decade)", fig.ext = 'png', fig.height = 5, fig.width = 12}
 
-# Additional insights 
-* 
+software_plot_second_claim <- draw_second_claim_software(df_software_billions)
+software_plot_second_claim
 
+```
+The figure above depicts per decade the amount of new billionaires through software (indicated by the green dots) vs.  consumer services (indicated by the red dots) who's riches were the fruits of their own labour. We see that new billionaires by software already outnumber those from consumer services in the 90s and continue to increase by a greater amount than in consumer services in the subsequent decades. We therefore find the first part of the second  claim, that most new self-made millionaires are in software, compared to consumer services type
+industries in the 90s to be true and continue to be true my a greater magnitude in the subsequent periods.
+
+# Conclusion
+The data reveals a powerful trend: self-made success—driven by skill, persistence, or entrepreneurial luck—now dominates wealth creation globally, with software eclipsing traditional industries like consumer services as the fastest path to billionaire status. For those embracing this shift, the future holds extraordinary opportunity: the tools to build, innovate, and join this new elite are more accessible than ever. Your journey starts here.  
+
+\newpage 
 # References 
