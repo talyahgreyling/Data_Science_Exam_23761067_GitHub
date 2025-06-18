@@ -45,7 +45,7 @@ rm(list = ls()) # clean environment
 gc() # garbage collection 
 
 # Load neccessary libraries 
-pacman::p_load(dplyr, ggplot2, tidyverse, stringr, purrr, lubridate, gt, fmsb) ############## update 
+pacman::p_load(dplyr, ggplot2, tidyverse, stringr, purrr, lubridate, gt, fmsb, hrbrthemes) ############## update 
 
 # Source in all functions: 
 list.files('Question1/code/', full.names = T, recursive = T) %>% .[grepl('.R', .)] %>% as.list() %>% walk(~source(.))
@@ -116,7 +116,7 @@ PopNamesMap
 ### Issues encountered 
 * I wrote a function to silently collate the rds files, but upon its creation saw that many of the columns then became unusable by containing an abundance of NAs, I decided to read in each file seperately by adapting the code provided in the assignment. 
 
-# QUESTION 4 
+# QUESTION 4: Billionaires 
 
 ## Load data 
 ```{r}
@@ -154,4 +154,22 @@ other_plot_first_claim <- draw_first_claim(df_other_billions, input_title = "Cou
 other_plot_first_claim
 
 ```
+* Created the function 'counts_software' that takes 'df' and 'software_words' as inputs to count the amount of new billionaires through software vs. consumer services (per decade)
+* Created the function 'draw_second_claim_software' that takes 'df' as an input to create a lollipop plot of the amount of new billionaires through software vs. consumer services (per decade)
+* Drew 'draw_second_claim_software' (as depicted below) and discussed my findings
+```{r, fig.align = 'center', fig.cap = "New Billionaires from Software vs Consumer Services (per decade)", fig.ext = 'png', fig.height = 5, fig.width = 12}
 
+# Data 
+df_software_billions <- counts_software(df_billions, c("software","technology"))
+
+# Plot
+software_plot_second_claim <- draw_second_claim_software(df_software_billions)
+software_plot_second_claim
+```
+* Wrote the conclusion
+
+# QUESTION 5: Health 
+
+## Process explained 
+* Read the question at 1am & thought it looked really nice
+* Decided to use my remaining hours to iron out issues in my previous questions 

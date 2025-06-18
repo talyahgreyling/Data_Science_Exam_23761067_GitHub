@@ -1,4 +1,4 @@
-# GOAL: Creates a Lollipop plot of the amount of new billionaires through software vs consumer services (per decade)
+# GOAL: Creates a Lollipop plot of the amount of new billionaires through software vs. consumer services (per decade)
 
 draw_second_claim_software <- function(df) {
   ggplot(df) +

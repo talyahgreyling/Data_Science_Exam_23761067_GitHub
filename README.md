@@ -38,12 +38,12 @@ gc() # garbage collection
 ```
 
     ##           used (Mb) gc trigger (Mb) max used (Mb)
-    ## Ncells  556204 29.8    1238130 66.2   702048 37.5
-    ## Vcells 1057032  8.1    8388608 64.0  1927558 14.8
+    ## Ncells  556283 29.8    1238355 66.2   702048 37.5
+    ## Vcells 1057489  8.1    8388608 64.0  1927558 14.8
 
 ``` r
-library(pacman)
-p_load(tidyverse, lubridate)
+# Load neccessary libraries 
+pacman::p_load(dplyr, ggplot2, tidyverse, stringr, purrr, lubridate, gt, fmsb, hrbrthemes) ############## update 
 
 # Source in all functions: 
 list.files('Question1/code/', full.names = T, recursive = T) %>% .[grepl('.R', .)] %>% as.list() %>% walk(~source(.))
@@ -157,7 +157,7 @@ Persistence of National Top 10 Baby Names per decade (1910-2014).
     containing an abundance of NAs, I decided to read in each file
     seperately by adapting the code provided in the assignment.
 
-# QUESTION 4
+# QUESTION 4: Billionaires
 
 ## Load data
 
@@ -227,3 +227,64 @@ other_plot_first_claim
 <p class="caption">
 New vs. inherited wealth per decade (other countries)
 </p>
+
+-   Created the function ‘counts_software’ that takes ‘df’ and
+    ‘software_words’ as inputs to count the amount of new billionaires
+    through software vs. consumer services (per decade)
+-   Created the function ‘draw_second_claim_software’ that takes ‘df’ as
+    an input to create a lollipop plot of the amount of new billionaires
+    through software vs. consumer services (per decade)
+-   Drew ‘draw_second_claim_software’ (as depicted below) and discussed
+    my findings
+
+``` r
+# Data 
+df_software_billions <- counts_software(df_billions, c("software","technology"))
+```
+
+    ## `summarise()` has grouped output by 'year'. You can override using the
+    ## `.groups` argument.
+
+``` r
+# Plot
+software_plot_second_claim <- draw_second_claim_software(df_software_billions)
+software_plot_second_claim
+```
+
+    ## Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+    ## not found in Windows font database
+    ## Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+    ## not found in Windows font database
+    ## Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+    ## not found in Windows font database
+
+    ## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+    ## family not found in Windows font database
+    ## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+    ## family not found in Windows font database
+    ## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+    ## family not found in Windows font database
+
+    ## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+    ## font family not found in Windows font database
+    ## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+    ## font family not found in Windows font database
+    ## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+    ## font family not found in Windows font database
+    ## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+    ## font family not found in Windows font database
+
+<img src="README_files/figure-markdown_github/unnamed-chunk-8-1.png" alt="New Billionaires from Software vs Consumer Services (per decade)"  />
+<p class="caption">
+New Billionaires from Software vs Consumer Services (per decade)
+</p>
+
+-   Wrote the conclusion
+
+# QUESTION 5: Health
+
+## Process explained
+
+-   Read the question at 1am & thought it looked really nice
+-   Decided to use my remaining hours to iron out issues in my previous
+    questions

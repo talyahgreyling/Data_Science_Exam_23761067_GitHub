@@ -1,4 +1,4 @@
-#GOAL: count the amount of new billionaires through software companies per decade
+#GOAL: count the amount of new billionaires through software vs. consumer services (per decade)
 
 counts_software <- function(df, software_words){
 
