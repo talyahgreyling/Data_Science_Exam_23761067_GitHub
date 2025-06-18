@@ -5,12 +5,16 @@ date: "`r Sys.Date()`"
 bibliography: Tex/ref.bib 
 documentclass: "elsarticle"
 output:
-  pdf_document:
-    keep_tex: TRUE
-    template: Tex/TexDefault.txt
-    fig_width: 3.5 
-    fig_height: 3.5
-    
+  pagedown::html_paged:
+    # template: wp_paged.html
+    # css: ['wp.css', 'wp-fonts.css', 'wp-page.css']
+    css: ["Template/default-fonts-Texevier.css", "Template/default-page-Texevier.css", "Template/default-Texevier.css"]
+    csl: Template/harvard-stellenbosch-university.csl # referencing format used.
+    template: ["Template/paged-Texevier.html"]
+
+    toc: false
+    # change to true for a self-contained document, but it'll be a litte slower for Pandoc to render
+    self_contained: TRUE
     
 abstract: |
     This pdf document contains an analysis on a collection of global billionaires using data supplied by Forbes to uncover the underlying patterns to becoming one of the world's wealthiest. Do developing countries deliver more self-made men? Is the software industry the key to a comfortable life? Read this paper to find out. 
@@ -43,6 +47,8 @@ df_billions <- "data/Billions/billionaires.csv" %>% read_csv_with_col_type()
 
 ```
 
+\newpage
+
 # Introduction
 
 Global wealth inequality has reached unprecedented levels, with just 8% of the world’s population owning 85% of its wealth and most of this being concentrated in the top 1% [@Piketty2015]. Against this backdrop, Forbes surveyed South Africa’s wealthiest individuals and identified a pressing need to analyze shifting wealth patterns across three decades—from the 1990s to the mid-2010s. With disparities widening both within and between nations [@Mittelman2007], this research aims to uncover critical insights that could inform future economic strategies. If successful, Forbes plans to expand this database, offering a vital tool to address one of today’s most urgent challenges: an increasingly unequal world.
@@ -53,18 +59,13 @@ Two main claims (made by one of Forbs' participants) will be explored in this do
 (2) “Most new self-made millionaires are in software, compared to consumer services type industries in the 90s. This is related to different countries’ GDP, of course, with richer countries providing more innovation in consumer services."
 
 # Exploring claim number 1 
-* This claim entails comparing the prevalence of self-made billionaires in the US versus inherited wealth dominance in other developed and emerging markets.
+This claim entails comparing the prevalence of self-made billionaires in the US versus inherited wealth dominance in other developed and emerging markets.
 
 ```{r first claim wrangling}
 
 # Prepare data for first claim plot 
 df_us_billions <- counts_new_us(df_billions)
 df_other_billions <- counts_new_other(df_billions)
-
-# Draw first claim plots 
-
-
-
 
 ```
 ```{r, fig.align = 'center', fig.cap = "New vs. inherited wealth per decade (US)", fig.ext = 'png', fig.height = 5, fig.width = 7}
@@ -74,7 +75,7 @@ us_plot_first_claim
 
 ```
 
-Figure \ref{Figure1} depicts the counts of US billionaires per decade who become rich by inheritance (indicated by the pink bars) or their own hard work (indicated by the blue bars). We see that in the US the amount of self-made billionaires increases over the decades and outnumbers the amount of billionaires by inheritance. We can therefore confirm the first part of the first claim that an increasing number of new billionaires emerged over the decades studies that had little to no familial ties to generational wealth. 
+The figure above depicts the counts of US billionaires per decade who become rich by inheritance (indicated by the pink bars) or their own hard work (indicated by the blue bars). We see that in the US the amount of self-made billionaires increases over the decades and outnumbers the amount of billionaires by inheritance. We can therefore confirm the first part of the first claim that an increasing number of new billionaires emerged over the decades studies that had little to no familial ties to generational wealth. 
 
 ```{r, fig.align = 'center', fig.cap = "New vs. inherited wealth per decade (other countries)", fig.ext = 'png', fig.height = 5, fig.width = 7}
 
@@ -83,7 +84,7 @@ other_plot_first_claim
 
 ```
 
-Figure \ref{Figure2} depicts the counts of billionaires from other developed markets and emerging markets per decade who become rich by inheritance (indicated by the pink bars) or their own hard work (indicated by the blue bars). We see that in other countries the amount of self-made billionaires reduces slightly and then increases by a great magnitude, outnumbering the amount of billionaires by inheritance by a large margin. The billionaires by inheritance follow the same trajectory with a lesser increase in the final decade recorded. We therefore find the second part of the first claim, that these other markets tend to have less entrepreneurial successes and house mostly inherited wealth, to be false. 
+The figure above depicts the counts of billionaires from other developed markets and emerging markets per decade who become rich by inheritance (indicated by the pink bars) or their own hard work (indicated by the blue bars). We see that in other countries the amount of self-made billionaires reduces slightly and then increases by a great magnitude, outnumbering the amount of billionaires by inheritance by a large margin. The billionaires by inheritance follow the same trajectory with a lesser increase in the final decade recorded. We therefore find the second part of the first claim, that these other markets tend to have less entrepreneurial successes and house mostly inherited wealth, to be false. 
 
 # Exploring claim number 2
 * Analyze the shift from consumer services (1990s) to software as the primary industry for self-made millionaires, correlating with national GDP levels.
@@ -92,4 +93,4 @@ Figure \ref{Figure2} depicts the counts of billionaires from other developed mar
 # Additional insights 
 * 
 
-
+# References 
