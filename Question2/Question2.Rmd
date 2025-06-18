@@ -31,7 +31,7 @@ options(scipen = 999) #suppress scientific notation
 options(dplyr.summarise.inform=F) # suppress messages 
 
 # Load neccessary libraries 
-pacman::p_load(dplyr, ggplot2, tidyverse, stringr) ############## update 
+pacman::p_load(dplyr, ggplot2, tidyverse, stringr, purrr) ############## update 
 
 # Source all existing functions 
 list.files('..//Question1/code/', full.names = T, recursive = T) %>% as.list() %>% walk(~source(.))
@@ -57,6 +57,7 @@ Metallica is a pioneering American heavy metal band known for fast tempo's, inst
 Coldplay, a British rock band renowned for their live performances, have sold over 100 million albums worldwide. Their debut album, 'Parachutes' (2000), featuring "Yellow," won a Brit Award and a Grammy. The follow-up, 'A Rush of Blood to the Head' (2002), repeated this success, while 'X&Y' (2005) completed what they called a trilogy. 'Viva la Vida or Death and All His Friends' (2008) also earned a Grammy, topping charts in over 30 countries. Later albums, 'Mylo Xyloto' (2011), 'Ghost Stories' (2014), 'A Head Full of Dreams' (2015), 'Everyday Life' (2019), 'Music of the Spheres' (2021), and 'Moon Music' (2024), explored genres like electronica, R&B, disco, and progressive rock [@wiki:coldplay].
 
 ```{r formatting data}
+
 # Merge datasets
 df_metallica <- df_metallica %>% 
     mutate(band = "Metallica")
@@ -65,7 +66,33 @@ df_coldplay <- df_coldplay %>%
     mutate(band = "Coldplay")
 
 df_combined <- df_metallica %>% 
-    full_join(df_coldplay, by = "band")
+    full_join(df_coldplay, by = "name")
+
+df_combined <- df_combined %>% 
+    mutate(duration = map2(duration_ms, duration, convert_duration))
+
+# Remove song duplicates 
+duplicate_words <- c("Remastered", "Remix","Rerecorded", "Re-recorded", "Deluxe", "Live", "Edit", "Edition", "Prospekt")
+
+# Apply the function to the 'name' column
+df_combined_unique <- df_combined %>% 
+    filter(!contains_duplicate_word(df_combined$name),
+           !contains_duplicate_word(album),
+           !contains_duplicate_word(album_name))
+           
+# Test each column's filter
+name_issues <- df_combined %>% filter(contains_duplicate_word(df_combined$name))
+album_issues <- df_combined %>% filter(contains_duplicate_word(album))
+album_name_issues <- df_combined %>% filter(contains_duplicate_word(album_name))
+
+# Inspect the results
+nrow(name_issues)      # If == nrow(df_combined), ALL names are flagged
+nrow(album_issues)     # Same for albums
+nrow(album_name_issues)     
+
+
+
+
 ```
 
   
