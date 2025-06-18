@@ -31,7 +31,7 @@ options(scipen = 999) #suppress scientific notation
 options(dplyr.summarise.inform=F) # suppress messages 
 
 # Load neccessary libraries 
-pacman::p_load(dplyr, ggplot2, tidyverse, stringr, purrr) ############## update 
+pacman::p_load(dplyr, ggplot2, tidyverse, stringr, purrr, lubridate) ############## update 
 
 # Source all existing functions 
 list.files('..//Question1/code/', full.names = T, recursive = T) %>% as.list() %>% walk(~source(.))
@@ -74,27 +74,37 @@ df_combined <- df_combined %>%
 # Remove song duplicates 
 duplicate_words <- c("Remastered", "Remix","Rerecorded", "Re-recorded", "Deluxe", "Live", "Edit", "Edition", "Prospekt")
 
-# Apply the function to the 'name' column
-df_combined_unique <- df_combined %>% 
-    filter(!contains_duplicate_word(df_combined$name),
-           !contains_duplicate_word(album),
-           !contains_duplicate_word(album_name))
-           
-# Test each column's filter
-name_issues <- df_combined %>% filter(contains_duplicate_word(df_combined$name))
-album_issues <- df_combined %>% filter(contains_duplicate_word(album))
-album_name_issues <- df_combined %>% filter(contains_duplicate_word(album_name))
+df_combined_unique <- df_combined %>%
+    filter(is.na(name) | map_lgl(name, no_duplicate_words)) %>% 
+    filter(is.na(album) | map_lgl(album, no_duplicate_words)) %>% 
+    filter(is.na(album_name) | map_lgl(album_name, no_duplicate_words))
 
-# Inspect the results
-nrow(name_issues)      # If == nrow(df_combined), ALL names are flagged
-nrow(album_issues)     # Same for albums
-nrow(album_name_issues)     
+# Format dates
+df_combined_unique <- df_combined_unique %>%
+    mutate(month_year = floor_date(as.Date(release_date.x), "month")) %>% 
+    mutate(month_year = floor_date(as.Date(release_date.y), "month"))
 
-
-
+# GOAL: Calculate days since first album release 
+calculate_days_since_first_release <- function(df) {
+  df <- df %>%
+    group_by(band) %>%
+    mutate(first_release_date = min(min(release_date.x), min(release_date.y)),
+           days_since_first_release_metallica = as.integer(release_date.x - first_release_date),
+           days_since_first_release_metallica = as.integer(release_date.x - first_release_date))
+  
+  return(df)
+}    
+ 
+# GOAL: Indicate if song was performed live 
+performed_live <- function(name) {
+  return(str_detect(name, regex("Live", ignore_case = TRUE)))
+}   
 
 ```
 
+```{r}
+
+```
   
 
 
