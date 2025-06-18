@@ -30,7 +30,7 @@ options(scipen = 999) #suppress scientific notation
 options(dplyr.summarise.inform=F) # suppress messages 
 
 # Load neccessary libraries 
-pacman::p_load(dplyr, ggplot2, tidyverse, stringr, purrr, lubridate, gt) ############## update 
+pacman::p_load(dplyr, ggplot2, tidyverse, stringr, purrr, lubridate, gt, fmsb) ############## update 
 
 # Source all existing functions 
 list.files('..//Question1/code/', full.names = T, recursive = T) %>% as.list() %>% walk(~source(.))
@@ -87,7 +87,25 @@ other_plot_first_claim
 The figure above depicts the counts of billionaires from other developed markets and emerging markets per decade who become rich by inheritance (indicated by the pink bars) or their own hard work (indicated by the blue bars). We see that in other countries the amount of self-made billionaires reduces slightly and then increases by a great magnitude, outnumbering the amount of billionaires by inheritance by a large margin. The billionaires by inheritance follow the same trajectory with a lesser increase in the final decade recorded. We therefore find the second part of the first claim, that these other markets tend to have less entrepreneurial successes and house mostly inherited wealth, to be false. 
 
 # Exploring claim number 2
-* Analyze the shift from consumer services (1990s) to software as the primary industry for self-made millionaires, correlating with national GDP levels.
+This claim entails analysing the shift from consumer services (1990s) to software as the primary industry for self-made millionaires, correlating with national GDP levels where the wealthier countries generate more billionaires in consumer services.
+
+```{r second claim wrangling}
+
+# Prepare data for second claim plot 
+df_software_billions <- counts_software(df_billions, c("software","technology"))
+
+df_software_billions <- df_billions %>%
+    mutate(sector_status = if_else(str_detect(
+        company.sector, regex(paste(software_words, collapse = "|"), ignore_case = TRUE)
+    ), true = "software",
+      false = "consumer"
+)) %>%
+  filter(!is.na(sector_status))  %>% 
+    group_by(year, sector_status) %>%
+    summarise(count = n()) %>%
+    mutate(status = "US")
+
+```
 
 
 # Additional insights 

@@ -43,8 +43,9 @@ I also stored the 'Practical_25.pdf' in my bin folder.
 # Basic setup: 
 rm(list = ls()) # clean environment
 gc() # garbage collection 
-library(pacman)
-p_load(tidyverse, lubridate)
+
+# Load neccessary libraries 
+pacman::p_load(dplyr, ggplot2, tidyverse, stringr, purrr, lubridate, gt, fmsb) ############## update 
 
 # Source in all functions: 
 list.files('Question1/code/', full.names = T, recursive = T) %>% .[grepl('.R', .)] %>% as.list() %>% walk(~source(.))
