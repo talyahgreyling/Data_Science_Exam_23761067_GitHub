@@ -88,7 +88,6 @@ df_metcol_unique <- df_metcol %>%
     filter(is.na(name) | map_lgl(name, no_duplicate_words)) %>% 
     filter(is.na(album) | map_lgl(album, no_duplicate_words)) 
     
-
 # Format dates
 df_metcol_unique <- df_metcol_unique %>%
     mutate(month_year = floor_date(as.Date(release_date), "month")) 
@@ -108,43 +107,6 @@ performed_live <- function(name) {
   return(str_detect(name, regex("Live", ignore_case = TRUE)))
 }
 
-```
-
-```{r initial try}
-# df_combined <- df_metallica %>% 
-#     full_join(df_coldplay, by = "name")
-# 
-# df_combined <- df_combined %>% 
-#     mutate(duration = map2(duration_ms, duration, convert_duration))
-# 
-# # Remove song duplicates 
-# duplicate_words <- c("Remastered", "Remix","Rerecorded", "Re-recorded", "Deluxe", "Live", "Edit", "Edition", "Prospekt")
-# 
-# df_combined_unique <- df_combined %>%
-#     filter(is.na(name) | map_lgl(name, no_duplicate_words)) %>% 
-#     filter(is.na(album) | map_lgl(album, no_duplicate_words)) %>% 
-#     filter(is.na(album_name) | map_lgl(album_name, no_duplicate_words))
-# 
-# # Format dates
-# df_combined_unique <- df_combined_unique %>%
-#     mutate(month_year = floor_date(as.Date(release_date.x), "month")) %>% 
-#     mutate(month_year = floor_date(as.Date(release_date.y), "month"))
-# 
-# # GOAL: Calculate days since first album release 
-# calculate_days_since_first_release <- function(df) {
-#   df <- df %>%
-#     group_by(band) %>%
-#     mutate(first_release_date = min(min(release_date.x), min(release_date.y)),
-#            days_since_first_release_metallica = as.integer(release_date.x - first_release_date),
-#            days_since_first_release_metallica = as.integer(release_date.x - first_release_date))
-#   
-#   return(df)
-# }    
-#  
-# # GOAL: Indicate if song was performed live 
-# performed_live <- function(name) {
-#   return(str_detect(name, regex("Live", ignore_case = TRUE)))
-# } 
 ```
 
 ## Context for less avid listeners: 
@@ -210,10 +172,12 @@ In contrast, Coldplay exhibits:
 
 This analysis sets the stage for deeper investigation into how these contrasting approaches have sustained two of music's most enduring acts. Might these differences be tied to specific album releases? Lets find out...  
 
+# Comparing Characteristics
+
 ```{r stacked bar graph, fig.height=10, fig.width=8}
 
-# Filter for Coldplay and Metallica only
-df_metcol_unique <- df_metcol_unique %>% 
+# Prepare data 
+df_stack <- df_metcol_unique %>% 
   filter(band %in% c("Coldplay", "Metallica")) %>%
   group_by(band, month_year) %>%
   summarise(
@@ -229,9 +193,9 @@ df_metcol_unique <- df_metcol_unique %>%
     values_to = "value"
   )
 
-df_bands$month_year <- as.Date(paste(df_bands$month_year, "01", sep = "-"))
+df_stack$month_year <- as.Date(paste(df_stack$month_year, "01", sep = "-"))
 
-df_metcol_unique %>%
+df_stack %>%
   filter(month_year > as.Date("1995-01-01")) %>% 
   ggplot(aes(x = month_year, y = value, fill = band)) +
   geom_area(position = "stack", alpha = 0.8) +
@@ -243,7 +207,26 @@ df_metcol_unique %>%
 
 ```
 
+The stacked bar graph visualization highlights key stylistic differences between Coldplay and Metallica, with distinct color coding (green for Coldplay, orange for Metallica) facilitating immediate comparison.
 
+Coldplay's Signature Sound
+* Higher acousticness: Prominent use of organic instrumentation
+* Elevated danceability: Rhythmic patterns conducive to movement
+* Greater popularity: Broader mainstream appeal
 
+Metallica's Dominant Traits
+* Intense energy: Characteristic high-intensity sound
+* Consistent heaviness: Lower variability in energy metrics
 
+Coldplay's fluid, evolving style contrasts sharply with Metallica's steadfast intensity, reflecting divergent artistic philosophies. This visualization underscores how these differences manifest in measurable audio features.
 
+```{r}
+
+table_best_albums 
+
+```
+
+Table 2 above depicts the most popular albums for both Coldplay and Metallica. It is interesting to note that Metallica achieves higher popularity in each of their top 3 albums (quite significantly so for the second place album) in comparison to Coldplay despite Table 1 depicting that Coldplay outscored Metallica in average popularity by quite a long shot. We also note that Coldplay's top 3 albums portray higher variance in acousticness again portraying the band's willingness to sample different music styles that win over more listeners. 
+
+# Conclusion
+This analysis reveals two distinct musical trajectories. Coldplay demonstrates greater variability in popularity and a penchant for stylistic experimentation, while Metallica maintains remarkable consistency in both appeal and sound. These contrasting approaches underscore the unique artistic identities that have sustained both bands as iconic acts. The findings illuminate how adaptability and consistency can each forge enduring musical legacies.
