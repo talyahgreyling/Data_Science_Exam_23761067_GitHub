@@ -32,16 +32,20 @@ I also stored the ‘Practical_25.pdf’ in my bin folder.
 # CODE USED FOR FIGURES AND TABLES:
 
 ``` r
-# Basic setup: 
-rm(list = ls()) # clean environment
+# Housekeeping 
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, fig.width = 6, fig.height = 5, fig.pos = 'H') # set chunk defaults 
+rm(list = ls()) # clear environment 
 gc() # garbage collection 
 ```
 
     ##           used (Mb) gc trigger (Mb) max used (Mb)
-    ## Ncells  556283 29.8    1238355 66.2   702048 37.5
-    ## Vcells 1057489  8.1    8388608 64.0  1927558 14.8
+    ## Ncells  556566 29.8    1239164 66.2   702048 37.5
+    ## Vcells 1059236  8.1    8388608 64.0  1927558 14.8
 
 ``` r
+options(scipen = 999) #suppress scientific notation
+options(dplyr.summarise.inform=F) # suppress messages
+
 # Load neccessary libraries 
 pacman::p_load(dplyr, ggplot2, tidyverse, stringr, purrr, lubridate, gt, fmsb, hrbrthemes) ############## update 
 
@@ -53,10 +57,14 @@ list.files('Question4/code/', full.names = T, recursive = T) %>% .[grepl('.R', .
 list.files('Question5/code/', full.names = T, recursive = T) %>% .[grepl('.R', .)] %>% as.list() %>% walk(~source(.))
 ```
 
-## QUESTION 1:
+# QUESTION 1: Baby Names
 
-### Thought process explained
+## Load data
 
+## Process explained
+
+-   Created the function \*\*\* that takes \*\*\* as an input and \*\*\*
+-   Created the function \*\*\* that takes \*\*\* as an input and \*\*\*
 -   I decided to look at naming trends nationally for the US since this
     was in line with the clients request to start by showing a
     time-series representation of the Spearman rank-correlation between
@@ -71,16 +79,6 @@ list.files('Question5/code/', full.names = T, recursive = T) %>% .[grepl('.R', .
     heatmap.
 -   Lastly
 
-### Loading the data
-
-``` r
-# Load data
-Baby_names <- read_rds("Question1/data/US_Baby_names/Baby_Names_By_US_State.rds")
-Top_100_billboard <- read_rds("Question1/data/US_Baby_names/charts.rds")
-HBO_titles <- read_rds("Question1/data/US_Baby_names/HBO_titles.rds")
-HBO_credits <- read_rds("Question1/data/US_Baby_names/HBO_credits.rds")
-```
-
 ### Time-series representation of the Spearman rank-correlation
 
 -   I created a function ‘top_n_names’ that filters and ranks the baby
@@ -94,17 +92,6 @@ HBO_credits <- read_rds("Question1/data/US_Baby_names/HBO_credits.rds")
     a series of lines that represent the rank-correlation over time
 
 #### Plot number 1
-
-``` r
-top_names <- Baby_names %>% 
-  top_n_names(n = 25)
-SpearCorr <- calculate_correlations(top_names, target_year = 2000, future_years = 3)
-corr_results <- name_persistence(top_names, future_years = 3)
-PersistPlot <- plot_name_persistence(corr_results = corr_results) 
-PersistPlot
-```
-
-    ## `geom_smooth()` using formula = 'y ~ x'
 
 <img src="README_files/figure-markdown_github/unnamed-chunk-3-1.png" alt="Persistence of National Top 25 Baby Names (1910-2014).\label{Figure1}"  />
 <p class="caption">
@@ -122,14 +109,6 @@ Persistence of National Top 25 Baby Names (1910-2014).
     decade.
 
 #### Plot number 2
-
-``` r
-pop_names <- Baby_names %>% 
-  top_n_names(n = 10)
-decade_top_names <- top_n_names_per_decade(pop_names, top_n = 10)
-PopNamesMap <- popular_names_heatmap(decade_top_names)
-PopNamesMap
-```
 
 <img src="README_files/figure-markdown_github/unnamed-chunk-4-1.png" alt="Persistence of National Top 10 Baby Names per decade (1910-2014).\label{Figure2}"  />
 <p class="caption">
@@ -157,13 +136,87 @@ Persistence of National Top 10 Baby Names per decade (1910-2014).
     containing an abundance of NAs, I decided to read in each file
     seperately by adapting the code provided in the assignment.
 
-# QUESTION 4: Billionaires
+## Plots, graphs and tables reprinted
+
+# QUESTION 2: Music Taste
 
 ## Load data
 
-``` r
-df_billions <- "Question4/data/Billions/billionaires.csv" %>% read_csv_with_col_type()
-```
+## Process explained
+
+-   Created the function \*\*\* that takes \*\*\* as an input and \*\*\*
+-   Created the function \*\*\* that takes \*\*\* as an input and \*\*\*
+
+## Plots, graphs and tables reprinted
+
+# QUESTION 3: Netflix
+
+## Load data
+
+## Process explained
+
+-   Wrote a short introduction with 1 reference
+-   Created the function ‘add_main_genre’ that takes ‘df_titles’ as an
+    input and identifies the main genre as the first entry in df_titles
+    and stores it in a new column ‘main_genre’
+-   Created the function ‘counts_genre’ that takes ‘df_titles’ as an
+    input and generates the genre distribution by counting the
+    occurences in Netflix data
+-   Created the function ‘get_top_n_genres’ that takes ‘df_titles’ and
+    ‘n’ as inputs and calculates the top n genres by average audience
+    score on IMDB
+-   Created the function ‘draw_genre_distribution’ that takes
+    ‘genre_distribution’ as an input and creates a bar plot of the
+    distribution of genres on Netflix
+-   Created the function ‘draw_top_n_genres’ that takes ‘top_10_genres’
+    as an input and creates a bar plot of the top 10 genres by average
+    audience score on IMDB
+-   Created a duration data frame by combining ‘df_titles’ and
+    ‘df_movies’
+-   Created the function ‘get_duration_distribution’ that takes
+    ‘df_duration’ as an input and generates the distribution of duration
+    by summing occurrences in Netflix data in bins of 10 minutes
+-   Created the function ‘get_top_n_durations’ that takes ‘df_duration’
+    as an input and calculates the top n durations by average audience
+    score on IMDB
+-   Created the function ‘draw_duration_distribution’ that takes
+    ‘duration_distribution’ as an input and creates a barplot of the
+    distribution of durations on Netflix
+-   Created the function ‘draw_top_n_durations’ that takes
+    ‘top_10_durations’ as an input and create a bar plot of the top 10
+    durations by average audience score on IMDB
+-   Created the function \*\*\* that takes \*\*\* as an input and \*\*\*
+-   Created the function \*\*\* that takes \*\*\* as an input and \*\*\*
+-   Drew ‘genre_distribution_plot’, ‘top_n_genres_plot’,
+    ‘duration_distribution_plot’ and ‘top_n_durations_plot’ (as depicted
+    below)
+-   Discussed my findings in a brief summary
+
+## Plots, graphs and tables reprinted
+
+<img src="README_files/figure-markdown_github/unnamed-chunk-7-1.png" alt="Distribution of genres on Netflix"  />
+<p class="caption">
+Distribution of genres on Netflix
+</p>
+
+<img src="README_files/figure-markdown_github/unnamed-chunk-8-1.png" alt="Top genres according to audience"  />
+<p class="caption">
+Top genres according to audience
+</p>
+
+<img src="README_files/figure-markdown_github/unnamed-chunk-9-1.png" alt="Distribution of durations on Netflix"  />
+<p class="caption">
+Distribution of durations on Netflix
+</p>
+
+<img src="README_files/figure-markdown_github/unnamed-chunk-10-1.png" alt="Top genres according to audience"  />
+<p class="caption">
+Top genres according to audience
+</p>
+
+# QUESTION 4: Billionaires
+
+## Load data
 
 ## Process explained
 
@@ -175,111 +228,46 @@ df_billions <- "Question4/data/Billions/billionaires.csv" %>% read_csv_with_col_
 -   Created the function ‘read_csv_with_col_type’ that takes ‘csv_file’
     as an input and then reads in a CSV document with its specific
     column types
--   Wrote the intro
+-   Wrote the introduction with 2 references  
 -   Wrote the exploration goals
 -   Created the functions ‘counts_new_us’ and ‘counts_new_other’ which
     take the data frame ‘df_billions’ as input and counts the amount of
-    new billionaires & bilionaires by inheritance per decade in the US
+    new billionaires & billionaires by inheritance per decade in the US
     and other countries respectively
--   Created the function ‘draw_first_claim’ that takes ‘df’ and
-    ‘input_title’ as inputs to create a grouped barchart of the counts
-    of new vs. inherited wealth per decade
+-   Created the function ‘draw_first_claim’ that takes ‘df_us_billions’
+    and ‘input_title’ as inputs to create a grouped bar chart of the
+    counts of new vs. inherited wealth per decade
 -   Drew ‘us_plot_first_claim’ (as depicted below) and discussed my
     findings
+-   Drew ‘other_plot_first_claim’ (as depicted below) and discussed my
+    findings
+-   Created the function ‘counts_software’ that takes ‘df_billions’ and
+    ‘software_words’ as inputs to count the amount of new billionaires
+    through software vs. consumer services (per decade)
+-   Created the function ‘draw_second_claim_software’ that takes
+    ‘df_software_billions’ as an input to create a lollipop plot of the
+    amount of new billionaires through software vs. consumer services
+    (per decade)
+-   Drew ‘draw_second_claim_software’ (as depicted below) and discussed
+    my findings
+-   Wrote the conclusion
 
-``` r
-# Data 
-df_us_billions <- counts_new_us(df_billions)
-```
+## Plots, graphs and tables reprinted
 
-    ## `summarise()` has grouped output by 'year'. You can override using the
-    ## `.groups` argument.
-
-``` r
-#Plot
-us_plot_first_claim <- draw_first_claim(df_us_billions, input_title = "Counts of new vs inherited wealth in the US per decade")
-us_plot_first_claim
-```
-
-<img src="README_files/figure-markdown_github/unnamed-chunk-6-1.png" alt="New vs. inherited wealth per decade (US)"  />
+<img src="README_files/figure-markdown_github/unnamed-chunk-12-1.png" alt="New vs. inherited wealth per decade (US)"  />
 <p class="caption">
 New vs. inherited wealth per decade (US)
 </p>
 
--   Drew ‘other_plot_first_claim’ (as depicted below) and discussed my
-    findings
-
-``` r
-# Data 
-df_other_billions <- counts_new_other(df_billions)
-```
-
-    ## `summarise()` has grouped output by 'year'. You can override using the
-    ## `.groups` argument.
-
-``` r
-# Plot
-other_plot_first_claim <- draw_first_claim(df_other_billions, input_title = "Counts of new vs inherited wealth in other countries per decade")
-other_plot_first_claim
-```
-
-<img src="README_files/figure-markdown_github/unnamed-chunk-7-1.png" alt="New vs. inherited wealth per decade (other countries)"  />
+<img src="README_files/figure-markdown_github/unnamed-chunk-13-1.png" alt="New vs. inherited wealth per decade (other countries)"  />
 <p class="caption">
 New vs. inherited wealth per decade (other countries)
 </p>
 
--   Created the function ‘counts_software’ that takes ‘df’ and
-    ‘software_words’ as inputs to count the amount of new billionaires
-    through software vs. consumer services (per decade)
--   Created the function ‘draw_second_claim_software’ that takes ‘df’ as
-    an input to create a lollipop plot of the amount of new billionaires
-    through software vs. consumer services (per decade)
--   Drew ‘draw_second_claim_software’ (as depicted below) and discussed
-    my findings
-
-``` r
-# Data 
-df_software_billions <- counts_software(df_billions, c("software","technology"))
-```
-
-    ## `summarise()` has grouped output by 'year'. You can override using the
-    ## `.groups` argument.
-
-``` r
-# Plot
-software_plot_second_claim <- draw_second_claim_software(df_software_billions)
-software_plot_second_claim
-```
-
-    ## Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-    ## not found in Windows font database
-    ## Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-    ## not found in Windows font database
-    ## Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
-    ## not found in Windows font database
-
-    ## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-    ## family not found in Windows font database
-    ## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-    ## family not found in Windows font database
-    ## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-    ## family not found in Windows font database
-
-    ## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-    ## font family not found in Windows font database
-    ## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-    ## font family not found in Windows font database
-    ## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-    ## font family not found in Windows font database
-    ## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
-    ## font family not found in Windows font database
-
-<img src="README_files/figure-markdown_github/unnamed-chunk-8-1.png" alt="New Billionaires from Software vs Consumer Services (per decade)"  />
+<img src="README_files/figure-markdown_github/unnamed-chunk-14-1.png" alt="New Billionaires from Software vs Consumer Services (per decade)"  />
 <p class="caption">
 New Billionaires from Software vs Consumer Services (per decade)
 </p>
-
--   Wrote the conclusion
 
 # QUESTION 5: Health
 
@@ -288,3 +276,5 @@ New Billionaires from Software vs Consumer Services (per decade)
 -   Read the question at 1am & thought it looked really nice
 -   Decided to use my remaining hours to iron out issues in my previous
     questions
+
+## Plots, graphs and tables reprinted
