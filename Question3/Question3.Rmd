@@ -25,11 +25,12 @@ abstract: |
 # Housekeeping 
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, fig.width = 6, fig.height = 5, fig.pos = 'H') # set chunk defaults 
 rm(list = ls()) # clear environment 
+gc() # garbage collection
 options(scipen = 999) #suppress scientific notation
 options(dplyr.summarise.inform=F) # suppress messages 
 
 # Load neccessary libraries 
-pacman::p_load(dplyr, ggplot2, tidyverse, stringr) ############## update 
+pacman::p_load(dplyr, ggplot2, tidyverse, stringr, purrr, lubridate, gt, fmsb, hrbrthemes) ############## update 
 
 # Source all existing functions 
 list.files('..//Question1/code/', full.names = T, recursive = T) %>% as.list() %>% walk(~source(.))
@@ -47,14 +48,15 @@ df_credits <- read_rds(glue::glue("{location}credits.rds"))
 df_movies <-  read_csv(glue::glue("{location}netflix_movies.csv"))
 
 ```
+
 \newpage 
+# Introduction
+Recent declines in Netflix subscribers and stock value may be signaling shifting industry dynamics. Typically drama, comedy, and action genres drive the highest viewer engagement [@ContentEngine2023], offering critical insights for new streaming platforms. This analysis summarises key trends in successful content strategies to guide potential investors in the competitive streaming market.
 
-```{r formatting data}
+```{r genre plot wrangling}
 
-# Identify main genre in df_titles
-df_titles <- df_titles %>%
-    mutate(main_genre = sub(",.*", "", genres)) %>%
-    mutate(main_genre = gsub("\\[|\\]|'", "", main_genre))
+# Prepare data for genre plot
+df_titles <- add_main_genre(df_titles)
 
 # Generate genre distribution
 genre_distribution <- df_titles %>%
@@ -136,4 +138,5 @@ ggplot(top_10_durations, aes(x = minutes, y = ave_score)) +
   labs(x = "Duration (in minutes)", y = "Average Audience Score", title = "Top 10 durations by Average Audience Score")
 ```
 
-
+\newpage 
+# References
