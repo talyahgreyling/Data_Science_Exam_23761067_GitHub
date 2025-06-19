@@ -74,22 +74,13 @@ Metallica is a pioneering American heavy metal band known for fast tempo's, inst
 
 Coldplay, a British rock band renowned for their live performances, have sold over 100 million albums worldwide. Their debut album, 'Parachutes' (2000), featuring "Yellow," won a Brit Award and a Grammy. The follow-up, 'A Rush of Blood to the Head' (2002), repeated this success, while 'X&Y' (2005) completed what they called a trilogy. 'Viva la Vida or Death and All His Friends' (2008) also earned a Grammy, topping charts in over 30 countries. Later albums, 'Mylo Xyloto' (2011), 'Ghost Stories' (2014), 'A Head Full of Dreams' (2015), 'Everyday Life' (2019), 'Music of the Spheres' (2021), and 'Moon Music' (2024), explored genres like electronica, R&B, disco, and progressive rock [@wiki:coldplay].
 
-```{r formatting data}
+```{r data wrangling}
 
-# Merge datasets
-df_metallica <- df_metallica %>% 
-    mutate(band = "Metallica")
-
-df_coldplay <- df_coldplay %>% 
-    mutate(band = "Coldplay")
-
-df_metcol <- bind_rows(df_metallica, df_coldplay) %>% 
-    mutate(album = coalesce(album, album_name)) %>% 
-    mutate(duration = map2(duration_ms, duration, convert_duration)) #get all durations in seconds
+# Get single dataset 
+df_metcol <- merge_datasets(df_metallica, df_coldplay)
   
 # Remove song duplicates 
 duplicate_words <- c("Remastered", "Remix","Rerecorded", "Re-recorded", "Deluxe", "Live", "Edit", "Edition", "Prospekt")
-
 df_metcol_unique <- df_metcol %>%
     filter(is.na(name) | map_lgl(name, no_duplicate_words)) %>% 
     filter(is.na(album) | map_lgl(album, no_duplicate_words)) 
@@ -98,57 +89,23 @@ df_metcol_unique <- df_metcol %>%
 df_metcol_unique <- df_metcol_unique %>%
     mutate(month_year = floor_date(as.Date(release_date), "month")) 
 
-# GOAL: Calculate days since first album release 
-calculate_days_after <- function(df) {
-    
-  df <- df %>%
-    group_by(band) %>%
-    mutate(days_after = as.integer(release_date - min(release_date)))
-  
-  return(df)
-}    
- 
-# GOAL: Indicate if song was performed live 
-performed_live <- function(name) {
-  return(str_detect(name, regex("Live", ignore_case = TRUE)))
-}
+# Prepare data for stacked bar graph
+df_stack <- get_stack_df(df_metcol_unique)
 
 ```
 
-```{r basic tables}
+```{r basic tables, fig.align = 'center', fig.cap = "Table of Basic Summary Stats", fig.ext = 'png', fig.height = 5, fig.width = 7}
 
-# Table 1 : basic summary stats
-table_summary <- df_metcol_unique %>%
-    filter(band %in% c("Metallica", "Coldplay")) %>%
-    group_by("Band" = band) %>%
-    summarise(
-        "Average Popularity" = mean(popularity),
-        "SD: Energy" = sd(energy),
-        "SD: Danceability" = sd(danceability),
-        "SD: Acousticness" = sd(acousticness),
-        "SD: Tempo" = sd(tempo)
-    ) %>%
-    gt() %>%
-    tab_header(title = "Table 1: Basic Summary Statistics for Coldplay and Metallica Albums",
-             subtitle = "(SD = Standard Deviation)")
-
+# Plot a table of basic summary statistics for both Coldplay and Metallica
+table_summary <- draw_table_summary(df_metcol_unique)
 table_summary
 
-# Best performing albums table
-table_best_albums <- df_metcol_unique %>%
-  filter(band %in% c("Coldplay", "Metallica")) %>%
-  group_by(band, "Album" = album, "Release Date" = release_date) %>%
-  summarise(
-    Popularity = mean(popularity),
-    Danceability = mean(danceability),
-    Acousticness = mean(acousticness)
-  ) %>%
-  arrange(band, desc(Popularity)) %>%
-  group_by(band) %>%
-  top_n(3) %>% 
-    gt() %>%
-    tab_header(title = "Table 2: Best performing albums for Coldplay and Metallica")
+```
 
+```{r, fig.align = 'center', fig.cap = "Table of Best Albums Stats", fig.ext = 'png', fig.height = 5, fig.width = 7}
+
+# Plot a table of summary statistics for the best albums for both Coldplay and Metallica
+table_best_albums <- draw_best_albums_table(df_metcol_unique)
 table_best_albums
 
 ```
@@ -177,34 +134,9 @@ This analysis sets the stage for deeper investigation into how these contrasting
 
 ```{r stacked bar graph, fig.height=10, fig.width=8}
 
-# Prepare data 
-df_stack <- df_metcol_unique %>% 
-  filter(band %in% c("Coldplay", "Metallica")) %>%
-  group_by(band, month_year) %>%
-  summarise(
-    ave_popularity = mean(popularity, na.rm = TRUE),
-    ave_energy = mean(energy, na.rm = TRUE),
-    ave_danceability = mean(danceability, na.rm = TRUE),
-    ave_acousticness = mean(acousticness, na.rm = TRUE),
-    ave_tempo = mean(tempo, na.rm = TRUE)
-  ) %>%
-  pivot_longer(
-    cols = starts_with("ave"),
-    names_to = "category",
-    values_to = "value"
-  )
-
-df_stack$month_year <- as.Date(paste(df_stack$month_year, "01", sep = "-"))
-
-df_stack %>%
-  filter(month_year > as.Date("1995-01-01")) %>% 
-  ggplot(aes(x = month_year, y = value, fill = band)) +
-  geom_area(position = "stack", alpha = 0.8) +
-  facet_wrap(~ category, scales = "free_y", ncol = 1) +
-  scale_fill_brewer(palette = "Dark2") +
-  theme +
-    theme(legend.position = "bottom") +
-    labs(title = "Figure 1: Stacked Bar Graph of Band Characteristics Over time", x = "", y = "Count", fill = "")
+# Plot a stacked bar graph of summary statistics for both Coldplay and Metallica
+stack_plot <- draw_stack(df_stack)
+stack_plot
 
 ```
 
@@ -231,3 +163,6 @@ Table 2 above depicts the most popular albums for both Coldplay and Metallica. I
 
 # Conclusion
 This analysis reveals two distinct musical trajectories. Coldplay demonstrates greater variability in popularity and a penchant for stylistic experimentation, while Metallica maintains remarkable consistency in both appeal and sound. These contrasting approaches underscore the unique artistic identities that have sustained both bands as iconic acts. The findings illuminate how adaptability and consistency can each forge enduring musical legacies.
+
+\newpage
+# References
