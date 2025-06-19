@@ -39,8 +39,8 @@ gc() # garbage collection
 ```
 
     ##           used (Mb) gc trigger (Mb) max used (Mb)
-    ## Ncells  556706 29.8    1239564 66.2   702048 37.5
-    ## Vcells 1060497  8.1    8388608 64.0  1927558 14.8
+    ## Ncells  556731 29.8    1239635 66.3   702048 37.5
+    ## Vcells 1060576  8.1    8388608 64.0  1927558 14.8
 
 ``` r
 options(scipen = 999) #suppress scientific notation
@@ -181,23 +181,23 @@ Persistence of National Top 10 Baby Names per decade (1910-2014)
 
 ## Plots, graphs and tables reprinted
 
-<div id="tzmgzaqiae" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#tzmgzaqiae table {
+<div id="fdxxelexkh" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#fdxxelexkh table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#tzmgzaqiae thead, #tzmgzaqiae tbody, #tzmgzaqiae tfoot, #tzmgzaqiae tr, #tzmgzaqiae td, #tzmgzaqiae th {
+#fdxxelexkh thead, #fdxxelexkh tbody, #fdxxelexkh tfoot, #fdxxelexkh tr, #fdxxelexkh td, #fdxxelexkh th {
   border-style: none;
 }
 
-#tzmgzaqiae p {
+#fdxxelexkh p {
   margin: 0;
   padding: 0;
 }
 
-#tzmgzaqiae .gt_table {
+#fdxxelexkh .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -223,12 +223,12 @@ Persistence of National Top 10 Baby Names per decade (1910-2014)
   border-left-color: #D3D3D3;
 }
 
-#tzmgzaqiae .gt_caption {
+#fdxxelexkh .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#tzmgzaqiae .gt_title {
+#fdxxelexkh .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -240,7 +240,7 @@ Persistence of National Top 10 Baby Names per decade (1910-2014)
   border-bottom-width: 0;
 }
 
-#tzmgzaqiae .gt_subtitle {
+#fdxxelexkh .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -252,7 +252,7 @@ Persistence of National Top 10 Baby Names per decade (1910-2014)
   border-top-width: 0;
 }
 
-#tzmgzaqiae .gt_heading {
+#fdxxelexkh .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -264,13 +264,13 @@ Persistence of National Top 10 Baby Names per decade (1910-2014)
   border-right-color: #D3D3D3;
 }
 
-#tzmgzaqiae .gt_bottom_border {
+#fdxxelexkh .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#tzmgzaqiae .gt_col_headings {
+#fdxxelexkh .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -285,7 +285,7 @@ Persistence of National Top 10 Baby Names per decade (1910-2014)
   border-right-color: #D3D3D3;
 }
 
-#tzmgzaqiae .gt_col_heading {
+#fdxxelexkh .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -305,7 +305,7 @@ Persistence of National Top 10 Baby Names per decade (1910-2014)
   overflow-x: hidden;
 }
 
-#tzmgzaqiae .gt_column_spanner_outer {
+#fdxxelexkh .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -317,15 +317,15 @@ Persistence of National Top 10 Baby Names per decade (1910-2014)
   padding-right: 4px;
 }
 
-#tzmgzaqiae .gt_column_spanner_outer:first-child {
+#fdxxelexkh .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#tzmgzaqiae .gt_column_spanner_outer:last-child {
+#fdxxelexkh .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#tzmgzaqiae .gt_column_spanner {
+#fdxxelexkh .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -337,11 +337,11 @@ Persistence of National Top 10 Baby Names per decade (1910-2014)
   width: 100%;
 }
 
-#tzmgzaqiae .gt_spanner_row {
+#fdxxelexkh .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#tzmgzaqiae .gt_group_heading {
+#fdxxelexkh .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -367,7 +367,7 @@ Persistence of National Top 10 Baby Names per decade (1910-2014)
   text-align: left;
 }
 
-#tzmgzaqiae .gt_empty_group_heading {
+#fdxxelexkh .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -382,15 +382,15 @@ Persistence of National Top 10 Baby Names per decade (1910-2014)
   vertical-align: middle;
 }
 
-#tzmgzaqiae .gt_from_md > :first-child {
+#fdxxelexkh .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#tzmgzaqiae .gt_from_md > :last-child {
+#fdxxelexkh .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#tzmgzaqiae .gt_row {
+#fdxxelexkh .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -409,7 +409,7 @@ Persistence of National Top 10 Baby Names per decade (1910-2014)
   overflow-x: hidden;
 }
 
-#tzmgzaqiae .gt_stub {
+#fdxxelexkh .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -422,7 +422,7 @@ Persistence of National Top 10 Baby Names per decade (1910-2014)
   padding-right: 5px;
 }
 
-#tzmgzaqiae .gt_stub_row_group {
+#fdxxelexkh .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -436,15 +436,15 @@ Persistence of National Top 10 Baby Names per decade (1910-2014)
   vertical-align: top;
 }
 
-#tzmgzaqiae .gt_row_group_first td {
+#fdxxelexkh .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#tzmgzaqiae .gt_row_group_first th {
+#fdxxelexkh .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#tzmgzaqiae .gt_summary_row {
+#fdxxelexkh .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -454,16 +454,16 @@ Persistence of National Top 10 Baby Names per decade (1910-2014)
   padding-right: 5px;
 }
 
-#tzmgzaqiae .gt_first_summary_row {
+#fdxxelexkh .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#tzmgzaqiae .gt_first_summary_row.thick {
+#fdxxelexkh .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#tzmgzaqiae .gt_last_summary_row {
+#fdxxelexkh .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -473,7 +473,7 @@ Persistence of National Top 10 Baby Names per decade (1910-2014)
   border-bottom-color: #D3D3D3;
 }
 
-#tzmgzaqiae .gt_grand_summary_row {
+#fdxxelexkh .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -483,7 +483,7 @@ Persistence of National Top 10 Baby Names per decade (1910-2014)
   padding-right: 5px;
 }
 
-#tzmgzaqiae .gt_first_grand_summary_row {
+#fdxxelexkh .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -493,7 +493,7 @@ Persistence of National Top 10 Baby Names per decade (1910-2014)
   border-top-color: #D3D3D3;
 }
 
-#tzmgzaqiae .gt_last_grand_summary_row_top {
+#fdxxelexkh .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -503,11 +503,11 @@ Persistence of National Top 10 Baby Names per decade (1910-2014)
   border-bottom-color: #D3D3D3;
 }
 
-#tzmgzaqiae .gt_striped {
+#fdxxelexkh .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#tzmgzaqiae .gt_table_body {
+#fdxxelexkh .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -516,7 +516,7 @@ Persistence of National Top 10 Baby Names per decade (1910-2014)
   border-bottom-color: #D3D3D3;
 }
 
-#tzmgzaqiae .gt_footnotes {
+#fdxxelexkh .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -530,7 +530,7 @@ Persistence of National Top 10 Baby Names per decade (1910-2014)
   border-right-color: #D3D3D3;
 }
 
-#tzmgzaqiae .gt_footnote {
+#fdxxelexkh .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -539,7 +539,7 @@ Persistence of National Top 10 Baby Names per decade (1910-2014)
   padding-right: 5px;
 }
 
-#tzmgzaqiae .gt_sourcenotes {
+#fdxxelexkh .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -553,7 +553,7 @@ Persistence of National Top 10 Baby Names per decade (1910-2014)
   border-right-color: #D3D3D3;
 }
 
-#tzmgzaqiae .gt_sourcenote {
+#fdxxelexkh .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -561,72 +561,72 @@ Persistence of National Top 10 Baby Names per decade (1910-2014)
   padding-right: 5px;
 }
 
-#tzmgzaqiae .gt_left {
+#fdxxelexkh .gt_left {
   text-align: left;
 }
 
-#tzmgzaqiae .gt_center {
+#fdxxelexkh .gt_center {
   text-align: center;
 }
 
-#tzmgzaqiae .gt_right {
+#fdxxelexkh .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#tzmgzaqiae .gt_font_normal {
+#fdxxelexkh .gt_font_normal {
   font-weight: normal;
 }
 
-#tzmgzaqiae .gt_font_bold {
+#fdxxelexkh .gt_font_bold {
   font-weight: bold;
 }
 
-#tzmgzaqiae .gt_font_italic {
+#fdxxelexkh .gt_font_italic {
   font-style: italic;
 }
 
-#tzmgzaqiae .gt_super {
+#fdxxelexkh .gt_super {
   font-size: 65%;
 }
 
-#tzmgzaqiae .gt_footnote_marks {
+#fdxxelexkh .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#tzmgzaqiae .gt_asterisk {
+#fdxxelexkh .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#tzmgzaqiae .gt_indent_1 {
+#fdxxelexkh .gt_indent_1 {
   text-indent: 5px;
 }
 
-#tzmgzaqiae .gt_indent_2 {
+#fdxxelexkh .gt_indent_2 {
   text-indent: 10px;
 }
 
-#tzmgzaqiae .gt_indent_3 {
+#fdxxelexkh .gt_indent_3 {
   text-indent: 15px;
 }
 
-#tzmgzaqiae .gt_indent_4 {
+#fdxxelexkh .gt_indent_4 {
   text-indent: 20px;
 }
 
-#tzmgzaqiae .gt_indent_5 {
+#fdxxelexkh .gt_indent_5 {
   text-indent: 25px;
 }
 
-#tzmgzaqiae .katex-display {
+#fdxxelexkh .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#tzmgzaqiae div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#fdxxelexkh div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -671,23 +671,23 @@ Persistence of National Top 10 Baby Names per decade (1910-2014)
 Table of Best Albums Stats
 </p>
 
-<div id="xauqtjwadn" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#xauqtjwadn table {
+<div id="spuainhuje" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#spuainhuje table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#xauqtjwadn thead, #xauqtjwadn tbody, #xauqtjwadn tfoot, #xauqtjwadn tr, #xauqtjwadn td, #xauqtjwadn th {
+#spuainhuje thead, #spuainhuje tbody, #spuainhuje tfoot, #spuainhuje tr, #spuainhuje td, #spuainhuje th {
   border-style: none;
 }
 
-#xauqtjwadn p {
+#spuainhuje p {
   margin: 0;
   padding: 0;
 }
 
-#xauqtjwadn .gt_table {
+#spuainhuje .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -713,12 +713,12 @@ Table of Best Albums Stats
   border-left-color: #D3D3D3;
 }
 
-#xauqtjwadn .gt_caption {
+#spuainhuje .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#xauqtjwadn .gt_title {
+#spuainhuje .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -730,7 +730,7 @@ Table of Best Albums Stats
   border-bottom-width: 0;
 }
 
-#xauqtjwadn .gt_subtitle {
+#spuainhuje .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -742,7 +742,7 @@ Table of Best Albums Stats
   border-top-width: 0;
 }
 
-#xauqtjwadn .gt_heading {
+#spuainhuje .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -754,13 +754,13 @@ Table of Best Albums Stats
   border-right-color: #D3D3D3;
 }
 
-#xauqtjwadn .gt_bottom_border {
+#spuainhuje .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#xauqtjwadn .gt_col_headings {
+#spuainhuje .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -775,7 +775,7 @@ Table of Best Albums Stats
   border-right-color: #D3D3D3;
 }
 
-#xauqtjwadn .gt_col_heading {
+#spuainhuje .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -795,7 +795,7 @@ Table of Best Albums Stats
   overflow-x: hidden;
 }
 
-#xauqtjwadn .gt_column_spanner_outer {
+#spuainhuje .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -807,15 +807,15 @@ Table of Best Albums Stats
   padding-right: 4px;
 }
 
-#xauqtjwadn .gt_column_spanner_outer:first-child {
+#spuainhuje .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#xauqtjwadn .gt_column_spanner_outer:last-child {
+#spuainhuje .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#xauqtjwadn .gt_column_spanner {
+#spuainhuje .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -827,11 +827,11 @@ Table of Best Albums Stats
   width: 100%;
 }
 
-#xauqtjwadn .gt_spanner_row {
+#spuainhuje .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#xauqtjwadn .gt_group_heading {
+#spuainhuje .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -857,7 +857,7 @@ Table of Best Albums Stats
   text-align: left;
 }
 
-#xauqtjwadn .gt_empty_group_heading {
+#spuainhuje .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -872,15 +872,15 @@ Table of Best Albums Stats
   vertical-align: middle;
 }
 
-#xauqtjwadn .gt_from_md > :first-child {
+#spuainhuje .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#xauqtjwadn .gt_from_md > :last-child {
+#spuainhuje .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#xauqtjwadn .gt_row {
+#spuainhuje .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -899,7 +899,7 @@ Table of Best Albums Stats
   overflow-x: hidden;
 }
 
-#xauqtjwadn .gt_stub {
+#spuainhuje .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -912,7 +912,7 @@ Table of Best Albums Stats
   padding-right: 5px;
 }
 
-#xauqtjwadn .gt_stub_row_group {
+#spuainhuje .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -926,15 +926,15 @@ Table of Best Albums Stats
   vertical-align: top;
 }
 
-#xauqtjwadn .gt_row_group_first td {
+#spuainhuje .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#xauqtjwadn .gt_row_group_first th {
+#spuainhuje .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#xauqtjwadn .gt_summary_row {
+#spuainhuje .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -944,16 +944,16 @@ Table of Best Albums Stats
   padding-right: 5px;
 }
 
-#xauqtjwadn .gt_first_summary_row {
+#spuainhuje .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#xauqtjwadn .gt_first_summary_row.thick {
+#spuainhuje .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#xauqtjwadn .gt_last_summary_row {
+#spuainhuje .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -963,7 +963,7 @@ Table of Best Albums Stats
   border-bottom-color: #D3D3D3;
 }
 
-#xauqtjwadn .gt_grand_summary_row {
+#spuainhuje .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -973,7 +973,7 @@ Table of Best Albums Stats
   padding-right: 5px;
 }
 
-#xauqtjwadn .gt_first_grand_summary_row {
+#spuainhuje .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -983,7 +983,7 @@ Table of Best Albums Stats
   border-top-color: #D3D3D3;
 }
 
-#xauqtjwadn .gt_last_grand_summary_row_top {
+#spuainhuje .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -993,11 +993,11 @@ Table of Best Albums Stats
   border-bottom-color: #D3D3D3;
 }
 
-#xauqtjwadn .gt_striped {
+#spuainhuje .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#xauqtjwadn .gt_table_body {
+#spuainhuje .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1006,7 +1006,7 @@ Table of Best Albums Stats
   border-bottom-color: #D3D3D3;
 }
 
-#xauqtjwadn .gt_footnotes {
+#spuainhuje .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1020,7 +1020,7 @@ Table of Best Albums Stats
   border-right-color: #D3D3D3;
 }
 
-#xauqtjwadn .gt_footnote {
+#spuainhuje .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1029,7 +1029,7 @@ Table of Best Albums Stats
   padding-right: 5px;
 }
 
-#xauqtjwadn .gt_sourcenotes {
+#spuainhuje .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1043,7 +1043,7 @@ Table of Best Albums Stats
   border-right-color: #D3D3D3;
 }
 
-#xauqtjwadn .gt_sourcenote {
+#spuainhuje .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1051,72 +1051,72 @@ Table of Best Albums Stats
   padding-right: 5px;
 }
 
-#xauqtjwadn .gt_left {
+#spuainhuje .gt_left {
   text-align: left;
 }
 
-#xauqtjwadn .gt_center {
+#spuainhuje .gt_center {
   text-align: center;
 }
 
-#xauqtjwadn .gt_right {
+#spuainhuje .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#xauqtjwadn .gt_font_normal {
+#spuainhuje .gt_font_normal {
   font-weight: normal;
 }
 
-#xauqtjwadn .gt_font_bold {
+#spuainhuje .gt_font_bold {
   font-weight: bold;
 }
 
-#xauqtjwadn .gt_font_italic {
+#spuainhuje .gt_font_italic {
   font-style: italic;
 }
 
-#xauqtjwadn .gt_super {
+#spuainhuje .gt_super {
   font-size: 65%;
 }
 
-#xauqtjwadn .gt_footnote_marks {
+#spuainhuje .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#xauqtjwadn .gt_asterisk {
+#spuainhuje .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#xauqtjwadn .gt_indent_1 {
+#spuainhuje .gt_indent_1 {
   text-indent: 5px;
 }
 
-#xauqtjwadn .gt_indent_2 {
+#spuainhuje .gt_indent_2 {
   text-indent: 10px;
 }
 
-#xauqtjwadn .gt_indent_3 {
+#spuainhuje .gt_indent_3 {
   text-indent: 15px;
 }
 
-#xauqtjwadn .gt_indent_4 {
+#spuainhuje .gt_indent_4 {
   text-indent: 20px;
 }
 
-#xauqtjwadn .gt_indent_5 {
+#spuainhuje .gt_indent_5 {
   text-indent: 25px;
 }
 
-#xauqtjwadn .katex-display {
+#spuainhuje .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#xauqtjwadn div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#spuainhuje div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>

@@ -148,7 +148,7 @@ df_billboard_100 <- read_rds(glue::glue("{location}charts.rds"))
 
 \newpage
 ## Plots, graphs and tables reprinted
-```{r basic tables, fig.align = 'center', fig.cap = "Table of Basic Summary Stats", fig.ext = 'png', fig.height = 5, fig.width = 7}
+```{r basic tables, warning =  FALSE, fig.align = 'center', fig.cap = "Table of Basic Summary Stats", fig.ext = 'png', fig.height = 5, fig.width = 7}
 
 # Data 
 df_metcol <- merge_datasets(df_metallica, df_coldplay)
@@ -165,7 +165,7 @@ table_summary
 
 ```
 
-```{r stacked bar graph, fig.align = 'center', fig.cap = "Table of Best Albums Stats", fig.ext = 'png', fig.height = 5, fig.width = 7}
+```{r stacked bar graph, warning =  FALSE, fig.align = 'center', fig.cap = "Table of Best Albums Stats", fig.ext = 'png', fig.height = 5, fig.width = 7}
 
 # Data
 df_stack <- get_stack_df(df_metcol_unique)
@@ -176,7 +176,7 @@ stack_plot
 
 ```
 
-```{r, fig.align = 'center', fig.cap = "Table of Best Albums Stats", fig.ext = 'png', fig.height = 5, fig.width = 7}
+```{r, warning =  FALSE, fig.align = 'center', fig.cap = "Table of Best Albums Stats", fig.ext = 'png', fig.height = 5, fig.width = 7}
 
 # Plot 
 table_best_albums <- draw_best_albums_table(df_metcol_unique)
@@ -214,7 +214,7 @@ df_movies <-  read_csv(glue::glue("{location}netflix_movies.csv"))
 
 \newpage
 ## Plots, graphs and tables reprinted 
-```{r, fig.align = 'center', fig.cap = "Distribution of genres on Netflix", fig.ext = 'png', fig.height = 5, fig.width = 7}
+```{r, warning =  FALSE, fig.align = 'center', fig.cap = "Distribution of genres on Netflix", fig.ext = 'png', fig.height = 5, fig.width = 7}
 # Data
 df_titles <- add_main_genre(df_titles)
 genre_distribution <- counts_genre(df_titles)
@@ -224,7 +224,8 @@ genre_distribution_plot <- draw_genre_distribution(genre_distribution)
 genre_distribution_plot
 
 ```
-```{r, fig.align = 'center', fig.cap = "Top genres according to audience", fig.ext = 'png', fig.height = 5, fig.width = 7}
+
+```{r, warning =  FALSE, fig.align = 'center', fig.cap = "Top genres according to audience", fig.ext = 'png', fig.height = 5, fig.width = 7}
 
 # Data 
 top_10_genres <- get_top_n_genres(df_titles, 10)
@@ -235,7 +236,7 @@ top_n_genres_plot
 
 ```
 
-```{r, fig.align = 'center', fig.cap = "Distribution of durations on Netflix", fig.ext = 'png', fig.height = 5, fig.width = 7}
+```{r, warning =  FALSE, fig.align = 'center', fig.cap = "Distribution of durations on Netflix", fig.ext = 'png', fig.height = 5, fig.width = 7}
 
 # Data
 df_duration <- left_join(df_titles, df_movies, by = "title") %>% 
@@ -249,7 +250,7 @@ duration_distribution_plot
 
 ```
 
-```{r, fig.align = 'center', fig.cap = "Top genres according to audience", fig.ext = 'png', fig.height = 5, fig.width = 7}
+```{r, warning =  FALSE, fig.align = 'center', fig.cap = "Top genres according to audience", fig.ext = 'png', fig.height = 5, fig.width = 7}
 
 # Data 
 top_10_durations <- get_top_n_durations(df_duration, 10)
@@ -286,7 +287,7 @@ df_billions <- "Question4/data/Billions/billionaires.csv" %>% read_csv_with_col_
 
 \newpage
 ## Plots, graphs and tables reprinted
-```{r, fig.align = 'center', fig.cap = "New vs. inherited wealth per decade (US)", fig.ext = 'png', fig.height = 5, fig.width = 7}
+```{r, warning =  FALSE, fig.align = 'center', fig.cap = "New vs. inherited wealth per decade (US)", fig.ext = 'png', fig.height = 5, fig.width = 7}
 
 # Data 
 df_us_billions <- counts_new_us(df_billions)
@@ -297,7 +298,7 @@ us_plot_first_claim
 
 ```
 
-```{r, fig.align = 'center', fig.cap = "New vs. inherited wealth per decade (other countries)", fig.ext = 'png', fig.height = 5, fig.width = 7}
+```{r, warning =  FALSE, fig.align = 'center', fig.cap = "New vs. inherited wealth per decade (other countries)", fig.ext = 'png', fig.height = 5, fig.width = 7}
 
 # Data 
 df_other_billions <- counts_new_other(df_billions)
@@ -308,7 +309,7 @@ other_plot_first_claim
 
 ```
 
-```{r, fig.align = 'center', fig.cap = "New Billionaires from Software vs Consumer Services (per decade)", fig.ext = 'png', fig.height = 5, fig.width = 12}
+```{r, warning =  FALSE, fig.align = 'center', fig.cap = "New Billionaires from Software vs Consumer Services (per decade)", fig.ext = 'png', fig.height = 5, fig.width = 12}
 
 # Data 
 df_software_billions <- counts_software(df_billions, c("software","technology"))
@@ -317,6 +318,7 @@ df_software_billions <- counts_software(df_billions, c("software","technology"))
 software_plot_second_claim <- draw_second_claim_software(df_software_billions)
 software_plot_second_claim
 ```
+
 \newpage
 # QUESTION 5: Health 
 
