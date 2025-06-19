@@ -87,41 +87,40 @@ abstract: |
   This report is a concise analysis of baby naming trends in the US through the years utilising graphs, tables and bullet summaries to explain the findings to the client, a New York based kids’ toy design agency.
 ---
 
-<!-- First: Set your default preferences for chunk options: -->
-
-<!-- If you want a chunk's code to be printed, set echo = TRUE. message = FALSE stops R printing ugly package loading details in your final paper too. I also suggest setting warning = FALSE and checking for warnings in R, else you might find ugly warnings in your paper. -->
-
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, fig.width = 6, fig.height = 5, fig.pos = 'H')
 
-if(!require("tidyverse")) install.packages("tidyverse")
-library(tidyverse)
+# Housekeeping 
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, fig.width = 6, fig.height = 5, fig.pos = 'H') # set chunk defaults 
+rm(list = ls()) # clear environment 
+gc() # garbage collection
+options(scipen = 999) #suppress scientific notation
+options(dplyr.summarise.inform=F) # suppress messages 
 
+# Load neccessary libraries 
+pacman::p_load(dplyr, ggplot2, tidyverse, stringr, purrr, lubridate, gt, fmsb, hrbrthemes) ############## update 
+
+# Source functions
 list.files('code/', full.names = T, recursive = T) %>% as.list() %>% walk(~source(.))
 
+# Set theme & colour palette
+palette <- c("#3A7370", "#FB9072", "#FFC57B", "#CE677A", "#163940", "#2C1F2C")
+theme <- set_custom_theme()
+
 # Load data
-Baby_names <- read_rds("data/US_Baby_names/Baby_Names_By_US_State.rds")
-Top_100_billboard <- read_rds("data/US_Baby_names/charts.rds")
-HBO_titles <- read_rds("data/US_Baby_names/HBO_titles.rds")
-HBO_credits <- read_rds("data/US_Baby_names/HBO_credits.rds")
+location <- "data/US_Baby_names/" # set up directory path to data 
+Baby_names <- read_rds(glue::glue("{location}Baby_Names_By_US_State.rds"))
+Top_100_billboard <- read_rds(glue::glue("{location}charts.rds")) 
+HBO_titles <- read_rds(glue::glue("{location}HBO_titles.rds"))
+HBO_credits <- read_rds(glue::glue("{location}HBO_credits.rds")) 
 
 ```
 
+# Introduction 
 
-<!-- ############################## -->
-<!-- # Start Writing here: -->
-<!-- ############################## -->
+This analysis examines US baby naming trends to identify which trends endure versus fade. It then explores how a cultural influence like popular movies can shape naming choices. For brevity and ease of use all findings are presented in bullet point summaries.  
 
-# Introduction \label{Introduction}
+```{r time-series representation of the rank-correlation calculations}
 
-You are welcome to add some sort of an introduction here. Spend 5 minutes detailing the purpose here, e.g.
-
-Look at the README.txt file and maybe give some background - especially also in understanding the definition of the variables.
-
-Notice that for the below plots I created a parameters to play around with xaxis labels.
-
-# Time time-series representation of the rank-correlation calculations 
-```{r}
 # Data wrangling 
 top_names <- Baby_names %>% 
   top_n_names(n = 25)
@@ -134,19 +133,18 @@ corr_results <- name_persistence(top_names, future_years = 3)
 
 ```
 
-# Time time-series representation of the rank-correlation visualisation
-```{r, warning =  FALSE, fig.align = 'center', fig.cap = "Persistence of National Top 25 Baby Names (1910-2014).\\label{Figure1}", fig.ext = 'png', fig.height = 5, fig.width = 10}
+# Persistence of baby names 
+```{r, warning =  FALSE, fig.align = 'center', fig.cap = "Persistence of National Top 25 Baby Names (1910-2014) by Spearman rank-correlation.\\label{Figure1}", fig.ext = 'png', fig.height = 5, fig.width = 10}
 
 PersistPlot <- plot_name_persistence(corr_results = corr_results) 
 PersistPlot
 
 ```
-As you can see from Figure \ref{Figure1}, name persistence is much stronger among names for boys than names for girls. Both display trends that appear to be generally downward sloping over time. Persistence is also seen to decrease the further the future year is from the target year. Considering the client's suspicion that popular name trends have been slower to persist since the 1990s than in earlier decades their suspicion is correct for boys names, but appears to be the opposite for girls names which display with an upwards trend since the 1990s. 
+Figure \ref{Figure1} indicates that name persistence is much stronger among names for boys than names for girls. Both display trends that appear to be generally downward sloping over time. Persistence is also seen to decrease the further the future year is from the target year. Considering the client's suspicion (that popular name trends have been slower to persist since the 1990s than in earlier decades) is correct for boys names, but appears to be the opposite for girls names which display with an unexpected upwards trend since the 1990s. 
 
 \newpage 
-
-# Popular names per decade calculations
-```{r}
+# Popular Names 
+```{r Popular names per decade calculations}
 pop_names <- Baby_names %>% 
   top_n_names(n = 10)
 

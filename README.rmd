@@ -64,10 +64,11 @@ list.files('Question5/code/', full.names = T, recursive = T) %>% .[grepl('.R', .
 ## Load data 
 ```{r}
 # Load data
-Baby_names <- read_rds("Question1/data/US_Baby_names/Baby_Names_By_US_State.rds")
-Top_100_billboard <- read_rds("Question1/data/US_Baby_names/charts.rds")
-HBO_titles <- read_rds("Question1/data/US_Baby_names/HBO_titles.rds")
-HBO_credits <- read_rds("Question1/data/US_Baby_names/HBO_credits.rds")
+location <- "Question1/data/US_Baby_names/" # set up directory path to data 
+Baby_names <- read_rds(glue::glue("{location}Baby_Names_By_US_State.rds"))
+Top_100_billboard <- read_rds(glue::glue("{location}charts.rds")) 
+HBO_titles <- read_rds(glue::glue("{location}HBO_titles.rds"))
+HBO_credits <- read_rds(glue::glue("{location}HBO_credits.rds")) 
 ```
 
 ## Process explained 
