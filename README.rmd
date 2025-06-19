@@ -133,6 +133,7 @@ PopNamesMap
 ```
 
 ## Process explained
+* Wrote the introduction 
 * Created the function *** that takes *** as an input and ***
 * Created the function *** that takes *** as an input and ***
 
