@@ -69,6 +69,11 @@ Through data-driven analysis and interactive visualizations, this report reveals
 
 Whether you're a fan, researcher, or music enthusiast, join us in uncovering the stories behind the stats—and how these artists continue to redefine their craft.
 
+## Context for less avid listeners: 
+Metallica is a pioneering American heavy metal band known for fast tempo's, instrumentals and aggressive musicianship. Their breakthrough came with their 3rd album: 'Master of Puppets' (1986), described as one of the heaviest metal albums and named their best work.'...And Justice for All' (1988) earned their first Grammy nod, while Metallica (1991) marked a mainstream shift from their thrash metal roots, becoming their best-selling album (16M+ U.S. copies). After genre experimentation, they returned to thrash with 'Death Magnetic' (2008). Their latest release is '72 Seasons' (2023) [@wiki:metallica]. 
+
+Coldplay, a British rock band renowned for their live performances, have sold over 100 million albums worldwide. Their debut album, 'Parachutes' (2000), featuring "Yellow," won a Brit Award and a Grammy. The follow-up, 'A Rush of Blood to the Head' (2002), repeated this success, while 'X&Y' (2005) completed what they called a trilogy. 'Viva la Vida or Death and All His Friends' (2008) also earned a Grammy, topping charts in over 30 countries. Later albums, 'Mylo Xyloto' (2011), 'Ghost Stories' (2014), 'A Head Full of Dreams' (2015), 'Everyday Life' (2019), 'Music of the Spheres' (2021), and 'Moon Music' (2024), explored genres like electronica, R&B, disco, and progressive rock [@wiki:coldplay].
+
 ```{r formatting data}
 
 # Merge datasets
@@ -109,11 +114,6 @@ performed_live <- function(name) {
 }
 
 ```
-
-## Context for less avid listeners: 
-Metallica is a pioneering American heavy metal band known for fast tempo's, instrumentals and aggressive musicianship. Their breakthrough came with their 3rd album: 'Master of Puppets' (1986), described as one of the heaviest metal albums and named their best work.'...And Justice for All' (1988) earned their first Grammy nod, while Metallica (1991) marked a mainstream shift from their thrash metal roots, becoming their best-selling album (16M+ U.S. copies). After genre experimentation, they returned to thrash with 'Death Magnetic' (2008). Their latest release is '72 Seasons' (2023) [@wiki:metallica]. 
-
-Coldplay, a British rock band renowned for their live performances, have sold over 100 million albums worldwide. Their debut album, 'Parachutes' (2000), featuring "Yellow," won a Brit Award and a Grammy. The follow-up, 'A Rush of Blood to the Head' (2002), repeated this success, while 'X&Y' (2005) completed what they called a trilogy. 'Viva la Vida or Death and All His Friends' (2008) also earned a Grammy, topping charts in over 30 countries. Later albums, 'Mylo Xyloto' (2011), 'Ghost Stories' (2014), 'A Head Full of Dreams' (2015), 'Everyday Life' (2019), 'Music of the Spheres' (2021), and 'Moon Music' (2024), explored genres like electronica, R&B, disco, and progressive rock [@wiki:coldplay].
 
 ```{r basic tables}
 

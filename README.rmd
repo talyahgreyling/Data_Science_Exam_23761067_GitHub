@@ -129,11 +129,17 @@ PopNamesMap
 
 ## Load data 
 ```{r}
-
+location <- "Question2/data/Coldplay_vs_Metallica/" # set up directory path to data 
+df_metallica <- read_csv(glue::glue("{location}metallica.csv")) # read in csv file
+df_coldplay <- read_csv(glue::glue("{location}Coldplay.csv")) 
+df_spotify <- read_rds(glue::glue("{location}Broader_Spotify_Info.rds")) # read in rds file
+df_billboard_100 <- read_rds(glue::glue("{location}charts.rds"))
 ```
 
 ## Process explained
-* Wrote the introduction 
+* Wrote the introduction
+* Wrote context for less avid listeners so that all readers of the report can understand its contents. 
+    * Includes 2 references
 * Created the function *** that takes *** as an input and ***
 * Created the function *** that takes *** as an input and ***
 
