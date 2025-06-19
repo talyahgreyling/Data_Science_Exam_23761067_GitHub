@@ -76,7 +76,7 @@ Coldplay, a British rock band renowned for their live performances, have sold ov
 
 ```{r data wrangling}
 
-# Get single dataset 
+# Get single data set 
 df_metcol <- merge_datasets(df_metallica, df_coldplay)
   
 # Remove song duplicates 
@@ -94,6 +94,7 @@ df_stack <- get_stack_df(df_metcol_unique)
 
 ```
 
+# Basic Statistics
 ```{r basic tables, fig.align = 'center', fig.cap = "Table of Basic Summary Stats", fig.ext = 'png', fig.height = 5, fig.width = 7}
 
 # Plot a table of basic summary statistics for both Coldplay and Metallica
@@ -102,18 +103,10 @@ table_summary
 
 ```
 
-```{r, fig.align = 'center', fig.cap = "Table of Best Albums Stats", fig.ext = 'png', fig.height = 5, fig.width = 7}
+##Consistent Popularity, Divergent Paths 
+Table 1 above shows that both Coldplay and Metallica have maintained remarkable popularity throughout their careers as A-list artists. However, our analysis reveals that Coldplay achieved higher average popularity overall, while Metallica's success stemmed from a more consistent musical formula.  
 
-# Plot a table of summary statistics for the best albums for both Coldplay and Metallica
-table_best_albums <- draw_best_albums_table(df_metcol_unique)
-table_best_albums
-
-```
-
-**Consistent Popularity, Divergent Paths**  
-Both Coldplay and Metallica have maintained remarkable popularity throughout their careers as A-list artists. However, our analysis reveals that **Coldplay achieved higher average popularity** overall, while Metallica's success stemmed from a more consistent musical formula.  
-
-**Metallica: The Power of Consistency**  
+###Metallica: The Power of Consistency  
 Metallica's music shows exceptionally low variation in key metrics:  
 - Tempo (BPM)  
 - Energy  
@@ -122,7 +115,7 @@ Metallica's music shows exceptionally low variation in key metrics:
 
 The minimal standard deviations in these metrics suggest a deliberate adherence to their signature sound over time, with little experimentation across albums.  
 
-**Coldplay: Embracing Musical Evolution**  
+###Coldplay: Embracing Musical Evolution  
 In contrast, Coldplay exhibits:  
 - Higher variability in acousticness and energy  
 - Significant deviations between songs, indicating willingness to experiment  
@@ -130,16 +123,15 @@ In contrast, Coldplay exhibits:
 
 This analysis sets the stage for deeper investigation into how these contrasting approaches have sustained two of music's most enduring acts. Might these differences be tied to specific album releases? Lets find out...  
 
+\newpage
 # Comparing Characteristics
-
-```{r stacked bar graph, fig.height=10, fig.width=8}
+```{r stacked bar graph, fig.align = 'center', fig.cap = "Table of Best Albums Stats", fig.ext = 'png', fig.height = 5, fig.width = 7}
 
 # Plot a stacked bar graph of summary statistics for both Coldplay and Metallica
 stack_plot <- draw_stack(df_stack)
 stack_plot
 
 ```
-
 The stacked bar graph visualization highlights key stylistic differences between Coldplay and Metallica, with distinct color coding (green for Coldplay, orange for Metallica) facilitating immediate comparison.
 
 Coldplay's Signature Sound
@@ -153,9 +145,13 @@ Metallica's Dominant Traits
 
 Coldplay's fluid, evolving style contrasts sharply with Metallica's steadfast intensity, reflecting divergent artistic philosophies. This visualization underscores how these differences manifest in measurable audio features.
 
-```{r}
+\newpage
+# Comparing top albums 
+```{r, fig.align = 'center', fig.cap = "Table of Best Albums Stats", fig.ext = 'png', fig.height = 5, fig.width = 7}
 
-table_best_albums 
+# Plot a table of summary statistics for the best albums for both Coldplay and Metallica
+table_best_albums <- draw_best_albums_table(df_metcol_unique)
+table_best_albums
 
 ```
 
