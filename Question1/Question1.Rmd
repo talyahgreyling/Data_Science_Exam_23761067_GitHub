@@ -140,7 +140,13 @@ PersistPlot <- plot_name_persistence(corr_results = corr_results)
 PersistPlot
 
 ```
-Figure \ref{Figure1} indicates that name persistence is much stronger among names for boys than names for girls. Both display trends that appear to be generally downward sloping over time. Persistence is also seen to decrease the further the future year is from the target year. Considering the client's suspicion (that popular name trends have been slower to persist since the 1990s than in earlier decades) is correct for boys names, but appears to be the opposite for girls names which display with an unexpected upwards trend since the 1990s. 
+Insights from Figure \ref{Figure1}:
+* Name persistence is much stronger among boys than girls.
+* Generally boy and girl names display downward sloping persistence trends over time.
+* Persistence becomes weaker for boys and girls the further the future year is from the target year. 
+* The client's suspicion on slower to persistence since the 1990s is: 
+    * Correct for boys names.
+    * Incorrect for girls names which display with an unexpected upwards trend since the 1990s.  
 
 \newpage 
 # Popular Names 
@@ -152,14 +158,24 @@ decade_top_names <- top_n_names_per_decade(pop_names, top_n = 10)
 ```
 
 # Popular names per decade visualisation 
-```{r, warning =  FALSE, fig.align = 'center', fig.cap = "Persistence of National Top 10 Baby Names per decade (1910-2014).\\label{Figure2}", fig.ext = 'png', fig.height = 20, fig.width = 10}
+```{r, warning =  FALSE, fig.align = 'center', fig.cap = "Most Popular Baby Names per decade (1910-2014).\\label{Figure2}", fig.ext = 'png', fig.height = 20, fig.width = 10}
 
 PopNamesMap <- popular_names_heatmap(decade_top_names)
 PopNamesMap
 
 ```
-
-Figure \ref{Figure2} once again shows that name persistence is much stronger among males. By displaying the information in a heatmap we can see that popularity is concentrated among less names for males than for females, contributing to their higher persistence levels.  
+Insights from Figure \ref{Figure2}:
+* Name persistence is much stronger among males. 
+* Popularity is concentrated among less names for males, contributing to their higher persistence levels.  
+* Most persistently popular name over all decades:
+    * Girls: Mary
+    * Boys: William 
+* High popularity before the 1960s:
+    * Girls: Nancy, Margaret, Helen, Patricia, Barbara, Mary
+    * Boys: Thomas, Charles, Richard, William, John, Robert, James
+* High popularity after the 1960s:
+    * Girls: Elizabeth, Amanda, Ashley, Emily 
+    * Boys: Daniel, Matthew, Joshua, Christopher, James, Michael 
 
 \newpage 
 
@@ -186,7 +202,7 @@ top_10_male <- babies_after_actors %>%
     slice_head(n = 10)
     
 top_10_female
-top_10_female
+top_10_male
 
 ```
 
