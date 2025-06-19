@@ -53,90 +53,72 @@ df_movies <-  read_csv(glue::glue("{location}netflix_movies.csv"))
 # Introduction
 Recent declines in Netflix subscribers and stock value may be signaling shifting industry dynamics. Typically drama, comedy, and action genres drive the highest viewer engagement [@ContentEngine2023], offering critical insights for new streaming platforms. This analysis summarises key trends in successful content strategies to guide potential investors in the competitive streaming market.
 
+# Informative Graphs 
 ```{r genre plot wrangling}
 
-# Prepare data for genre plot
+# Prepare data for genre distribution plot
 df_titles <- add_main_genre(df_titles)
+genre_distribution <- counts_genre(df_titles)
 
-# Generate genre distribution
-genre_distribution <- df_titles %>%
-    group_by(main_genre) %>%
-    summarise(count = n()) %>%
-    arrange(desc(count)) %>%
-    filter(main_genre != "")
-
-# Calculate top 10 genres by average audience score
-top_10_genres <- df_titles %>%
-    group_by(main_genre) %>%
-    summarise(ave_score = mean(imdb_score, na.rm = TRUE)) %>%
-    arrange(desc(ave_score)) %>%
-    mutate(main_genre = factor(main_genre, levels = main_genre)) %>% 
-    head(10)
+# Prepare data for top n genres plot
+top_10_genres <- get_top_n_genres(df_titles, 10)
 
 ```
 
-```{r genre}
+```{r, fig.align = 'center', fig.cap = "Distribution of genres on Netflix", fig.ext = 'png', fig.height = 5, fig.width = 7}
+
 # Plot genre distribution
-ggplot(genre_distribution, aes(x = main_genre, y = count)) +
-  geom_col(fill = "#a60c28") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  theme +
-  labs(x = "Main Genre", y = "Number of Movies", title = "Distribution of Genres on Netflix")
+genre_distribution_plot <- draw_genre_distribution(genre_distribution)
+genre_distribution_plot
 
-# Plot top 10 genres by average audience score
-ggplot(top_10_genres, aes(x = main_genre, y = ave_score)) +
-  geom_bar(stat = "identity", fill = "#a60c28") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  theme +
-  labs(x = "Main Genre", y = "Average Audience Score", title = "Top 10 genres by Average Audience Score")
-
-# plot1 <- plot_top_10(data = top_10_genres, focus_col = main_genre, choose_colour = "#a60c28", x_label = "Main Genre", y_label = "Average Audience Score",title_label = "Top 10 genres by Average Audience Score")
-# plot1
 ```
 
-```{r }
+```{r, fig.align = 'center', fig.cap = "Top genres according to audience", fig.ext = 'png', fig.height = 5, fig.width = 7}
+
+# Plot top 10 genres
+top_n_genres_plot <- draw_top_n_genres(top_10_genres)
+top_n_genres_plot
+
+```
+
+```{r duration plot wrangling}
 
 # Create duration data frame
 df_duration <- left_join(df_titles, df_movies, by = "title") %>% 
     filter(!is.na(imdb_score)) %>%
     mutate(minutes = sub(" min", "", duration))
 
-# Generate duration distribution
-duration_distribution <- df_duration %>%
-    group_by(minutes) %>%
-    summarise(count = n()) %>%
-    arrange(desc(count)) %>% 
-    filter(!is.na(minutes)) %>% 
-    mutate(minute_bin = floor(as.numeric(minutes) / 10) * 10) %>%
-    group_by(minute_bin) %>%
-    summarise(total_count = sum(count)) %>%             
-    arrange(minute_bin) 
+# Prepare data for duration distribution plot 
+duration_distribution <- get_duration_distribution(df_duration)
 
-# Calculate top 10 durations by average audience score
-top_10_durations <- df_duration %>%
-    group_by(minutes) %>%
-    summarise(ave_score = mean(imdb_score, na.rm = TRUE)) %>%
-    arrange(desc(ave_score)) %>%
-    mutate(minutes = factor(minutes, levels = minutes)) %>% 
-    head(10)
+# Prepare data for top n durations by average audience score plot
+top_10_durations <- get_top_n_durations(df_duration, 10)
 
 ```
 
-```{r duration}
+```{r, fig.align = 'center', fig.cap = "Distribution of durations on Netflix", fig.ext = 'png', fig.height = 5, fig.width = 7}
+
 # Plot duration distribution
-ggplot(duration_distribution, aes(x = minute_bin, y = total_count)) +
-  geom_col(fill = "#0b2585") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  theme +
-  labs(x = "Duration (in minutes)", y = "Number of Movies", title = "Distribution of durations on Netflix")
+duration_distribution_plot <- draw_duration_distribution(duration_distribution)
+duration_distribution_plot
+
+```
+
+```{r, fig.align = 'center', fig.cap = "Top genres according to audience", fig.ext = 'png', fig.height = 5, fig.width = 7}
 
 # Plot top 10 durations by average audience score
-ggplot(top_10_durations, aes(x = minutes, y = ave_score)) +
-  geom_bar(stat = "identity", fill = "#0b2585") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  theme +
-  labs(x = "Duration (in minutes)", y = "Average Audience Score", title = "Top 10 durations by Average Audience Score")
+top_n_durations_plot <- draw_top_n_durations(top_10_durations)
+top_n_durations_plot
+
 ```
+
+\newpage
+# Summary of statistics 
+The data reveals a clear trend: drama and comedy films make up the bulk of Netflix’s catalog, while animation and fantasy titles are significantly underrepresented. Yet, despite their scarcity, the fantasy, animation, and drama genres consistently earn high IMDb ratings, suggesting a strong audience appeal.
+
+To better align with viewer demand, Netflix could benefit from boosting its fantasy and animation offerings, leveraging their proven popularity to attract and retain subscribers. At the same time, maintaining a robust selection of drama and comedy—already well-established favorites—would help sustain its current audience.
+
+A balanced content strategy, combining expanded investment in high-performing niche genres (like fantasy and animation) with steady support for mainstream hits (like drama and comedy), could enhance Netflix’s competitive edge and broaden its subscriber base.
 
 \newpage 
 # References
