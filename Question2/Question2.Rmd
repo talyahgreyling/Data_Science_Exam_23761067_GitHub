@@ -17,7 +17,7 @@ output:
     
 abstract: |
     This report contains an analysis on Coldplay and Metallica using data supplied by Spotify to uncover in the fame achieved by these 2 famous band truely is forever. 
-    Focusing on their studio recordings, it explores key aspects such as album characteristics, industry trends, and the distinction between live and studio performances. The report presents statistical tables and visualizations to provide insights into the longevity and musical progression of these iconic bands.  
+    Focusing on their studio recordings, it explores key summary statistics and then dives deeper to see if these same statistics persist at an album level. The report presents statistical tables and visualizations to provide insights into the longevity and musical progression of these iconic bands.  
 
 ---
 

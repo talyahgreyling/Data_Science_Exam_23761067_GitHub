@@ -39,8 +39,8 @@ gc() # garbage collection
 ```
 
     ##           used (Mb) gc trigger (Mb) max used (Mb)
-    ## Ncells  556566 29.8    1239164 66.2   702048 37.5
-    ## Vcells 1059236  8.1    8388608 64.0  1927558 14.8
+    ## Ncells  556585 29.8    1239218 66.2   702048 37.5
+    ## Vcells 1059798  8.1    8388608 64.0  1927558 14.8
 
 ``` r
 options(scipen = 999) #suppress scientific notation
@@ -144,8 +144,40 @@ Persistence of National Top 10 Baby Names per decade (1910-2014).
 
 ## Process explained
 
--   Created the function \*\*\* that takes \*\*\* as an input and \*\*\*
--   Created the function \*\*\* that takes \*\*\* as an input and \*\*\*
+-   Wrote the introduction
+-   Wrote context for less avid listeners so that all readers of the
+    report can understand its contents.
+    -   Includes 2 references
+-   Created the function ‘merge_datasets’ that takes ‘df_metallica’ and
+    ‘df_coldplay’ as an inputs and merges them to create a single data
+    set, ‘df_metcol’
+-   Created a list of words that indicate duplicates of a song that has
+    already been recorded, ‘duplicate_words’
+-   Created the function ‘no_duplicate_words’ that takes ‘col_name’ as
+    an input and indicates if any duplicate words are present
+-   Used ‘duplicate_words’ and ‘no_duplicate_words’ to filter by the
+    ‘name’ and ‘album’ columns in my data set
+-   Added a column ‘month_year’ in date format
+-   Created the function ‘get_stack_df’ that takes ‘df_metcol_unique’ as
+    an input and get summary statistics in long format that I can plot a
+    stacked bar graph for both Coldplay and Metallica
+-   Created the function ‘draw_table_summary’ that takes
+    ‘df_metcol_unique’ as an input and create a table containing basic
+    summary stats for both Coldplay and Metallica
+-   Drew ‘table_summary’ and commented on the statistics in the section
+    “Consistent Popularity, Divergent Paths”
+-   Created the function ‘draw_stack’ that takes ‘df_stack’ as an input
+    and creates a stacked bar graph of summary statistics for both
+    Coldplay and Metallica
+-   Drew ‘stack_plot’ and commented on the statistics in the section
+    “Comparing Characteristics”
+-   Created the function ‘draw_best_albums_table’ that takes
+    ‘df_metcol_unique’ as an input and creates a table of summary
+    statistics for the best performing albums for both Coldplay and
+    Metallica
+-   Drew ‘table_best_albums’ and commented on the statistics in the
+    section “Comparing top albums”
+-   Wrote the conclusion
 
 ## Plots, graphs and tables reprinted
 
