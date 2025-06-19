@@ -95,7 +95,7 @@ df_stack <- get_stack_df(df_metcol_unique)
 ```
 
 # Basic Statistics
-```{r basic tables, fig.align = 'center', fig.cap = "Table of Basic Summary Stats", fig.ext = 'png', fig.height = 5, fig.width = 7}
+```{r basic tables, warning =  FALSE, fig.align = 'center', fig.cap = "Table of Basic Summary Stats", fig.ext = 'png', fig.height = 5, fig.width = 5}
 
 # Plot a table of basic summary statistics for both Coldplay and Metallica
 table_summary <- draw_table_summary(df_metcol_unique)
@@ -125,7 +125,7 @@ This analysis sets the stage for deeper investigation into how these contrasting
 
 \newpage
 # Comparing Characteristics
-```{r stacked bar graph, fig.align = 'center', fig.cap = "Table of Best Albums Stats", fig.ext = 'png', fig.height = 5, fig.width = 7}
+```{r stacked bar graph, warning =  FALSE, fig.align = 'center', fig.cap = "Table of Best Albums Stats", fig.ext = 'png', fig.height = 5, fig.width = 7}
 
 # Plot a stacked bar graph of summary statistics for both Coldplay and Metallica
 stack_plot <- draw_stack(df_stack)
@@ -147,7 +147,7 @@ Coldplay's fluid, evolving style contrasts sharply with Metallica's steadfast in
 
 \newpage
 # Comparing top albums 
-```{r, fig.align = 'center', fig.cap = "Table of Best Albums Stats", fig.ext = 'png', fig.height = 5, fig.width = 7}
+```{r, warning =  FALSE, fig.align = 'center', fig.cap = "Table of Best Albums Stats", fig.ext = 'png', fig.height = 5, fig.width = 5}
 
 # Plot a table of summary statistics for the best albums for both Coldplay and Metallica
 table_best_albums <- draw_best_albums_table(df_metcol_unique)

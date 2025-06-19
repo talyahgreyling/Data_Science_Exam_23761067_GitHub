@@ -89,7 +89,6 @@ pop_names <- Baby_names %>%
 decade_top_names <- top_n_names_per_decade(pop_names, top_n = 10)   
 ```
 
-# Popular names per decade visualisation 
 ```{r, warning =  FALSE, fig.align = 'center', fig.cap = "Most Popular Baby Names per decade (1910-2014)", fig.ext = 'png', fig.height = 10, fig.width = 7}
 
 PopNamesMap <- popular_names_heatmap(decade_top_names)
