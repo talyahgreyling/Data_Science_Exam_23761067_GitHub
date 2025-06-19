@@ -48,7 +48,7 @@ options(scipen = 999) #suppress scientific notation
 options(dplyr.summarise.inform=F) # suppress messages
 
 # Load neccessary libraries 
-pacman::p_load(dplyr, ggplot2, tidyverse, stringr, purrr, lubridate, gt, fmsb, hrbrthemes) ############## update 
+pacman::p_load(dplyr, ggplot2, tidyverse, stringr, purrr, lubridate, gt, fmsb, hrbrthemes, knitr) ############## update 
 
 # Source in all functions: 
 list.files('Question1/code/', full.names = T, recursive = T) %>% .[grepl('.R', .)] %>% as.list() %>% walk(~source(.))
@@ -58,6 +58,7 @@ list.files('Question4/code/', full.names = T, recursive = T) %>% .[grepl('.R', .
 list.files('Question5/code/', full.names = T, recursive = T) %>% .[grepl('.R', .)] %>% as.list() %>% walk(~source(.))
 
 ```
+
 \newpage
 # QUESTION 1: Baby Names
 
@@ -70,20 +71,20 @@ Top_100_billboard <- read_rds(glue::glue("{location}charts.rds"))
 HBO_titles <- read_rds(glue::glue("{location}HBO_titles.rds"))
 HBO_credits <- read_rds(glue::glue("{location}HBO_credits.rds")) 
 ```
+* Created the function *** that takes *** as an input and ***
 
 ## Process explained 
-* Created the function *** that takes *** as an input and ***
-* Created the function *** that takes *** as an input and ***
-* I decided to look at naming trends nationally for the US since this was in line with the clients request to start by showing a time-series representation of the Spearman rank-correlation between each year’s 25 most popular boys’ and girls’ names
-and that of the next 3 years and meant that substantial wrangling work was already done in this format. 
+* Wrote the introduction
+* I decided to look at naming trends nationally for the US since this was in line with the clients request to start by showing a time-series representation of the Spearman rank-correlation between each year’s 25 most popular boys’ and girls’ names and that of the next 3 years and meant that wrangling work was already done in this format. 
+* Created the function 'top_n_names' that takes 'n' as an input and filters the top 25 names (by frequency) per year & gender combination and used it to create 'top_names'
+* Created the function 'calculate_correlations' that takes 'top_names', 'target_year' and 'future_years' as an input and calculates the Spearman correlation between a year and its future years
+* Created the function 'name_persistence' that takes 'top_names' and 'future_years' as an input and applies the above mentioned correlation analysis to all years
+* Created the function 'plot_name_persistence' that takes 'corr_results', 'gender_colors' and 'smooth_span' as inputs and create a smooth line graph of the persistence of national top 25 baby names (1910-2014) using the Spearman rank correlation between base year and subsequent years
+* Drew 'PersistPlot' and summarised my insights from the graph in bulletpoints 
 * To look at name popularity I decided to look at the top 5 nationally per year for boys and girls respectively, but upon time series visualisation saw that the persistence was too weak over the while time series to generate useful plots. I therefore decided to identify the top 10 names per decade and visualise those in a heatmap. 
-* Lastly 
-
-### Time-series representation of the Spearman rank-correlation
-* I created a function 'top_n_names' that filters and ranks the baby names by year & gender (boys vs girls). 
-* Thereafter I created a function 'calculate_correlations' that computes the Spearman Rank Correlation for a specific target year
-* Then I created a function 'name_persistence' that applies this correlation calculation to all years such that the output can be visually represented. 
-* Lastly, the function 'plot_name_persistence' uses geom_smooth to fit a series of lines that represent the rank-correlation over time  
+* Used function 'top_n_names' to create 'pop_names'
+* Created the function 'top_n_names_per_decade' that takes 'pop_names' and 'top_n' as inputs and filters the top 25 names per decade & gender combination and used this to create 'decade_top_names'
+* Created the function *** that takes *** as an input and ***
 
 #### Plot number 1 
 ```{r, warning =  FALSE, fig.align = 'center', fig.cap = "Persistence of National Top 25 Baby Names (1910-2014).\\label{Figure1}", fig.ext = 'png', fig.height = 5, fig.width = 10}

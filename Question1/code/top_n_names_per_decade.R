@@ -1,3 +1,5 @@
+# Goal: Filter top 25 names per decade & gender combination
+
 top_n_names_per_decade <- function(df, top_n = 10) {
 
     df %>%

@@ -267,23 +267,38 @@ agency.
 
 
 
-\section{\texorpdfstring{Introduction
-\label{Introduction}}{Introduction }}\label{introduction}
+\section{Introduction}\label{introduction}
 
-You are welcome to add some sort of an introduction here. Spend 5
-minutes detailing the purpose here, e.g.
+This analysis examines US baby naming trends to identify which trends
+endure versus fade. It then explores how a cultural influence like
+popular movies can shape naming choices. For brevity and ease of use all
+findings are presented in bullet point summaries.
 
-Look at the README.txt file and maybe give some background - especially
-also in understanding the definition of the variables.
+\section{Persistence of baby names}\label{persistence-of-baby-names}
 
-Notice that for the below plots I created a parameters to play around
-with xaxis labels.
+\begin{figure}[H]
 
-\section{Time time-series representation of the rank-correlation
-calculations}\label{time-time-series-representation-of-the-rank-correlation-calculations}
+{\centering \includegraphics{Question1_files/figure-latex/unnamed-chunk-1-1} 
 
-\section{Time time-series representation of the rank-correlation
-visualisation}\label{time-time-series-representation-of-the-rank-correlation-visualisation}
+}
+
+\caption{Persistence of National Top 25 Baby Names (1910-2014) by Spearman rank-correlation.\label{Figure1}}\label{fig:unnamed-chunk-1}
+\end{figure}
+
+Insights from Figure \ref{Figure1}: * Name persistence is much stronger
+among boys than girls. * Generally boy and girl names display downward
+sloping persistence trends over time. * Persistence becomes weaker for
+boys and girls the further the future year is from the target year. *
+The client's suspicion on slower to persistence since the 1990s is: *
+Correct for boys names. * Incorrect for girls names which display with
+an unexpected upwards trend since the 1990s.
+
+\newpage
+
+\section{Popular Names}\label{popular-names}
+
+\section{Popular names per decade
+visualisation}\label{popular-names-per-decade-visualisation}
 
 \begin{figure}[H]
 
@@ -291,39 +306,18 @@ visualisation}\label{time-time-series-representation-of-the-rank-correlation-vis
 
 }
 
-\caption{Persistence of National Top 25 Baby Names (1910-2014).\label{Figure1}}\label{fig:unnamed-chunk-2}
+\caption{Most Popular Baby Names per decade (1910-2014).\label{Figure2}}\label{fig:unnamed-chunk-2}
 \end{figure}
 
-As you can see from Figure \ref{Figure1}, name persistence is much
-stronger among names for boys than names for girls. Both display trends
-that appear to be generally downward sloping over time. Persistence is
-also seen to decrease the further the future year is from the target
-year. Considering the client's suspicion that popular name trends have
-been slower to persist since the 1990s than in earlier decades their
-suspicion is correct for boys names, but appears to be the opposite for
-girls names which display with an upwards trend since the 1990s.
-
-\newpage
-
-\section{Popular names per decade
-calculations}\label{popular-names-per-decade-calculations}
-
-\section{Popular names per decade
-visualisation}\label{popular-names-per-decade-visualisation}
-
-\begin{figure}[H]
-
-{\centering \includegraphics{Question1_files/figure-latex/unnamed-chunk-4-1} 
-
-}
-
-\caption{Persistence of National Top 10 Baby Names per decade (1910-2014).\label{Figure2}}\label{fig:unnamed-chunk-4}
-\end{figure}
-
-Figure \ref{Figure2} once again shows that name persistence is much
-stronger among males. By displaying the information in a heatmap we can
-see that popularity is concentrated among less names for males than for
-females, contributing to their higher persistence levels.
+Insights from Figure \ref{Figure2}: * Name persistence is much stronger
+among males. * Popularity is concentrated among less names for males,
+contributing to their higher persistence levels.\\
+* Most persistently popular name over all decades: * Girls: Mary * Boys:
+William * High popularity before the 1960s: * Girls: Nancy, Margaret,
+Helen, Patricia, Barbara, Mary * Boys: Thomas, Charles, Richard,
+William, John, Robert, James * High popularity after the 1960s: * Girls:
+Elizabeth, Amanda, Ashley, Emily * Boys: Daniel, Matthew, Joshua,
+Christopher, James, Michael
 
 \newpage
 
@@ -351,35 +345,107 @@ calculations}\label{movie-star-names-calculations}
 ## # A tibble: 10 x 11
 ##    name      Name  Surname character title release_year tmdb_score Decade Gender
 ##    <chr>     <chr> <chr>   <chr>     <chr>        <dbl>      <dbl>  <dbl> <chr> 
-##  1 Mary Ast~ Mary  Astor   Brigid O~ The ~         1941        7.8   1940 F     
-##  2 Mary And~ Mary  Anders~ Maybelle~ Gone~         1939        8     1940 F     
-##  3 Mary Nash Mary  Nash    Margaret~ The ~         1940        7.7   1940 F     
-##  4 Mary Cla~ Mary  Clare   Baroness~ The ~         1938        7.5   1940 F     
-##  5 Mary Wic~ Mary  Wickes  Dora Pic~ Now,~         1942        7.4   1940 F     
-##  6 Mary Mor~ Mary  Morris  Halima    The ~         1940        7.2   1940 F     
-##  7 Mary Cla~ Mary  Clare   Mrs. Cor~ Oliv~         1948        7.5   1940 F     
-##  8 Mary Bol~ Mary  Boland  Mrs. Ben~ Prid~         1940        6.9   1940 F     
-##  9 Mary Jo ~ Mary  Jo Ell~ Clementi~ The ~         1949        7     1940 F     
-## 10 Mary Ast~ Mary  Astor   Brigid O~ The ~         1941        7.8   1950 F     
+##  1 James Bu~ James Burke   Luke      The ~         1941        7.8   1950 M     
+##  2 James Wh~ James Whitmo~ Gus Mini~ The ~         1950        7.5   1950 M     
+##  3 James St~ James Stewart Macaulay~ The ~         1940        7.7   1950 M     
+##  4 James Fl~ James Flavin  Mate Bri~ King~         1933        7.6   1950 M     
+##  5 James Mc~ James McKech~ Spud Wil~ The ~         1943        7.6   1950 M     
+##  6 James Kn~ James Knight  Club Por~ The ~         1943        7.6   1950 M     
+##  7 James Re~ James Rennie  Frank Mc~ Now,~         1942        7.4   1950 M     
+##  8 James Ca~ James Cagney  Tom Powe~ The ~         1931        7.3   1950 M     
+##  9 James St~ James Stephe~ Howard J~ The ~         1940        7.4   1950 M     
+## 10 James Ca~ James Carlis~ <NA>      The ~         1940        7.4   1950 M     
 ## # i 2 more variables: Total_Dec_Count <dbl>, Rank <int>
 \end{verbatim}
 
-\begin{verbatim}
-## # A tibble: 10 x 11
-##    name      Name  Surname character title release_year tmdb_score Decade Gender
-##    <chr>     <chr> <chr>   <chr>     <chr>        <dbl>      <dbl>  <dbl> <chr> 
-##  1 Mary Ast~ Mary  Astor   Brigid O~ The ~         1941        7.8   1940 F     
-##  2 Mary And~ Mary  Anders~ Maybelle~ Gone~         1939        8     1940 F     
-##  3 Mary Nash Mary  Nash    Margaret~ The ~         1940        7.7   1940 F     
-##  4 Mary Cla~ Mary  Clare   Baroness~ The ~         1938        7.5   1940 F     
-##  5 Mary Wic~ Mary  Wickes  Dora Pic~ Now,~         1942        7.4   1940 F     
-##  6 Mary Mor~ Mary  Morris  Halima    The ~         1940        7.2   1940 F     
-##  7 Mary Cla~ Mary  Clare   Mrs. Cor~ Oliv~         1948        7.5   1940 F     
-##  8 Mary Bol~ Mary  Boland  Mrs. Ben~ Prid~         1940        6.9   1940 F     
-##  9 Mary Jo ~ Mary  Jo Ell~ Clementi~ The ~         1949        7     1940 F     
-## 10 Mary Ast~ Mary  Astor   Brigid O~ The ~         1941        7.8   1950 F     
-## # i 2 more variables: Total_Dec_Count <dbl>, Rank <int>
-\end{verbatim}
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 20\tabcolsep) * \real{0.1022}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 20\tabcolsep) * \real{0.0365}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 20\tabcolsep) * \real{0.0657}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 20\tabcolsep) * \real{0.1825}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 20\tabcolsep) * \real{0.1825}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 20\tabcolsep) * \real{0.0949}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 20\tabcolsep) * \real{0.0803}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 20\tabcolsep) * \real{0.0511}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 20\tabcolsep) * \real{0.0511}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 20\tabcolsep) * \real{0.1168}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 20\tabcolsep) * \real{0.0365}}@{}}
+\caption{Top 10 Female Names Coinciding With Actor Names}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+name
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Name
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Surname
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+character
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+title
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+release\_year
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+tmdb\_score
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Decade
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Gender
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Total\_Dec\_Count
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Rank
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+name
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Name
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Surname
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+character
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+title
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+release\_year
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+tmdb\_score
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Decade
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Gender
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Total\_Dec\_Count
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Rank
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Mary Astor & Mary & Astor & Brigid O'Shaughnessy & The Maltese Falcon &
+1941 & 7.8 & 1940 & F & 639986 & 1 \\
+Mary Anderson & Mary & Anderson & Maybelle Merriwether & Gone with the
+Wind & 1939 & 8.0 & 1940 & F & 639986 & 1 \\
+Mary Nash & Mary & Nash & Margaret Lord & The Philadelphia Story & 1940
+& 7.7 & 1940 & F & 639986 & 1 \\
+Mary Clare & Mary & Clare & Baroness Isabel Nisatona & The Lady Vanishes
+& 1938 & 7.5 & 1940 & F & 639986 & 1 \\
+Mary Wickes & Mary & Wickes & Dora Pickford & Now, Voyager & 1942 & 7.4
+& 1940 & F & 639986 & 1 \\
+Mary Morris & Mary & Morris & Halima & The Thief of Bagdad & 1940 & 7.2
+& 1940 & F & 639986 & 1 \\
+Mary Clare & Mary & Clare & Mrs.~Corney & Oliver Twist & 1948 & 7.5 &
+1940 & F & 639986 & 1 \\
+Mary Boland & Mary & Boland & Mrs.~Bennet & Pride and Prejudice & 1940 &
+6.9 & 1940 & F & 639986 & 1 \\
+Mary Jo Ellis & Mary & Jo Ellis & Clementine & The Barkleys of Broadway
+& 1949 & 7.0 & 1940 & F & 639986 & 1 \\
+Mary Astor & Mary & Astor & Brigid O'Shaughnessy & The Maltese Falcon &
+1941 & 7.8 & 1950 & F & 625498 & 1 \\
+\end{longtable}
 
 \bibliography{Tex/ref}
 

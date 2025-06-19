@@ -1,88 +1,19 @@
 ---
-# IMPORTANT: Change settings here, but DO NOT change the spacing AT ALL.
-# Remove comments and add values where applicable.
-# The descriptions below should be self-explanatory
-
-title: "QUESTION 1: Baby Names"
-#subtitle: "This will appear as Right Header"
-
-documentclass: "elsarticle"
-
-# --------- Thesis title (Optional - set to FALSE by default).
-# You can move the details below around as you please.
-Thesis_FP: FALSE
-# Entry1: "An unbelievable study with a title spanning multiple lines."
-# Entry2: "\\textbf{Some Guy}" # textbf for bold
-# Entry3: "A thesis submitted toward the degree of Doctor of Philosophy"
-# Uni_Logo: Tex/Logo.png # Place a logo in the indicated location (from your root, e.g. defaults to ~/Tex/Logo.png) and uncomment this line. Leave uncommented for no image
-# Logo_width: 0.3 # If using a logo - use this to set width (size) of image
-# Entry4: "Under the supervision of: \\vfill Prof. Joe Smith and Dr. Frank Smith"
-# Entry5: "Stellenbosch University"
-# Entry6: April 2020
-# Entry7:
-# Entry8:
-
-# --------- Front Page
-# Comment: ----- Follow this pattern for up to 5 authors
-AddTitle: TRUE # Use FALSE when submitting to peer reviewed platform. This will remove author names.
-Author1: "Talyah Greyling^[__Contributions:__  \\newline _The authors would like to thank the DNS server syncing for taking its time so that she could finish her morning cup of coffee before starting._]"  # First Author - note the thanks message displayed as an italic footnote of first page.
-Ref1: "Stellenbosch University, Cape Town, South Africa" # First Author's Affiliation
-Email1: "23761067\\@sun.ac.za" # First Author's Email address
-
-CorrespAuthor_1: TRUE  # If corresponding author is author 3, e.g., use CorrespAuthor_3: TRUE
-
-# Comment out below to remove both. JEL Codes only given if keywords also given.
-# keywords: "Multivariate GARCH \\sep Kalman Filter \\sep Copula" # Use \\sep to separate
-# JELCodes: "L250 \\sep L100"
-
-# ----- Manage headers and footers:
-#BottomLFooter: $Title$
-#BottomCFooter:
-#TopLHeader: \leftmark # Adds section name at topleft. Remove comment to add it.
-BottomRFooter: "\\footnotesize Page \\thepage" # Add a '#' before this line to remove footer.
-addtoprule: TRUE
-addfootrule: TRUE               # Use if footers added. Add '#' to remove line.
-
-# --------- page margins:
-margin: 2.3 # Sides
-bottom: 2 # bottom
-top: 2.5 # Top
-HardSet_layout: TRUE # Hard-set the spacing of words in your document. This will stop LaTeX squashing text to fit on pages, e.g.
-# This is done by hard-setting the spacing dimensions. Set to FALSE if you want LaTeX to optimize this for your paper.
-
-# --------- Line numbers
-linenumbers: FALSE # Used when submitting to journal
-
-# ---------- References settings:
-# You can download cls format here: https://www.zotero.org/ - simply search for your institution. You can also edit and save cls formats here: https://editor.citationstyles.org/about/
-# Hit download, store it in Tex/ folder, and change reference below - easy.
-bibliography: Tex/ref.bib       # Do not edit: Keep this naming convention and location.
-csl: Tex/harvard-stellenbosch-university.csl # referencing format used.
-# By default, the bibliography only displays the cited references. If you want to change this, you can comment out one of the following:
-#nocite: '@*' # Add all items in bibliography, whether cited or not
-# nocite: |  # add specific references that aren't cited
-#  @grinold2000
-#  @Someoneelse2010
-
-# ---------- General:
-RemovePreprintSubmittedTo: TRUE  # Removes the 'preprint submitted to...' at bottom of titlepage
-Journal: "Journal of Finance"   # Journal that the paper will be submitting to, if RemovePreprintSubmittedTo is set to TRUE.
-toc: FALSE                       # Add a table of contents
-numbersections: TRUE             # Should sections (and thus figures and tables) be numbered?
-fontsize: 11pt                  # Set fontsize
-linestretch: 1.2                # Set distance between lines.
-link-citations: TRUE            # This creates dynamic links to the papers in reference list.
-
-### Adding additional latex packages:
-# header-includes:
-#    - \usepackage{colortbl} # Add additional packages here.
-
+title: "The Naming Game: an Analysis on US Baby Name Data"
+author: "Talyah Greyling"
+date: "`r Sys.Date()`"
+bibliography: Tex/ref.bib       
 output:
-  pdf_document:
-    keep_tex: TRUE
-    template: Tex/TexDefault.txt
-    fig_width: 3.5 # Adjust default figure sizes. This can also be done in the chunks of the text.
-    fig_height: 3.5
+  pagedown::html_paged:
+    # template: wp_paged.html
+    # css: ['wp.css', 'wp-fonts.css', 'wp-page.css']
+    css: ["Template/default-fonts-Texevier.css", "Template/default-page-Texevier.css", "Template/default-Texevier.css"]
+    csl: Template/harvard-stellenbosch-university.csl # referencing format used.
+    template: ["Template/paged-Texevier.html"]
+
+    toc: true 
+    # change to true for a self-contained document, but it'll be a litte slower for Pandoc to render
+    self_contained: TRUE
 abstract: |
   This report is a concise analysis of baby naming trends in the US through the years utilising graphs, tables and bullet summaries to explain the findings to the client, a New York based kids’ toy design agency.
 ---
@@ -97,7 +28,7 @@ options(scipen = 999) #suppress scientific notation
 options(dplyr.summarise.inform=F) # suppress messages 
 
 # Load neccessary libraries 
-pacman::p_load(dplyr, ggplot2, tidyverse, stringr, purrr, lubridate, gt, fmsb, hrbrthemes) ############## update 
+pacman::p_load(dplyr, ggplot2, tidyverse, stringr, purrr, lubridate, gt, fmsb, hrbrthemes, knitr) ############## update 
 
 # Source functions
 list.files('code/', full.names = T, recursive = T) %>% as.list() %>% walk(~source(.))
@@ -133,14 +64,15 @@ corr_results <- name_persistence(top_names, future_years = 3)
 
 ```
 
+\newpage
 # Persistence of baby names 
-```{r, warning =  FALSE, fig.align = 'center', fig.cap = "Persistence of National Top 25 Baby Names (1910-2014) by Spearman rank-correlation.\\label{Figure1}", fig.ext = 'png', fig.height = 5, fig.width = 10}
+```{r, warning =  FALSE, fig.align = 'center', fig.cap = "Persistence of National Top 25 Baby Names (1910-2014) by Spearman rank-correlation", fig.ext = 'png', fig.height = 5, fig.width = 7}
 
 PersistPlot <- plot_name_persistence(corr_results = corr_results) 
 PersistPlot
 
 ```
-Insights from Figure \ref{Figure1}:
+Insights from Figure 1 (above):
 * Name persistence is much stronger among boys than girls.
 * Generally boy and girl names display downward sloping persistence trends over time.
 * Persistence becomes weaker for boys and girls the further the future year is from the target year. 
@@ -158,13 +90,13 @@ decade_top_names <- top_n_names_per_decade(pop_names, top_n = 10)
 ```
 
 # Popular names per decade visualisation 
-```{r, warning =  FALSE, fig.align = 'center', fig.cap = "Most Popular Baby Names per decade (1910-2014).\\label{Figure2}", fig.ext = 'png', fig.height = 20, fig.width = 10}
+```{r, warning =  FALSE, fig.align = 'center', fig.cap = "Most Popular Baby Names per decade (1910-2014)", fig.ext = 'png', fig.height = 10, fig.width = 7}
 
 PopNamesMap <- popular_names_heatmap(decade_top_names)
 PopNamesMap
 
 ```
-Insights from Figure \ref{Figure2}:
+Insights from Figure 2 (above):
 * Name persistence is much stronger among males. 
 * Popularity is concentrated among less names for males, contributing to their higher persistence levels.  
 * Most persistently popular name over all decades:
@@ -178,7 +110,6 @@ Insights from Figure \ref{Figure2}:
     * Boys: Daniel, Matthew, Joshua, Christopher, James, Michael 
 
 \newpage 
-
 # Movie star names calculations 
 ```{r}
 # Create a data frame of popular movies 
@@ -200,9 +131,16 @@ top_10_male <- babies_after_actors %>%
   filter(Gender == "M") %>%               
   arrange(desc(Total_Dec_Count)) %>% 
     slice_head(n = 10)
-    
-top_10_female
-top_10_male
+
+female_actors_table <- kable(top_10_female, 
+      format = "html",  
+      caption = "Top 10 Female Names Coinciding With Actor Names")
+female_actors_table
+
+male_actors_table <- kable(top_10_male, 
+      format = "html",  
+      caption = "Top 10 Male Names Coinciding With Actor Names")
+male_actors_table
 
 ```
 

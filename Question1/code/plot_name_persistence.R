@@ -1,3 +1,5 @@
+# GOAL: Create a smooth line graph of the persistence of national top 25 baby names (1910-2014) using the Spearman rank correlation between base year and subsequent years
+
 plot_name_persistence <- function(corr_results,
                                   gender_colors = c("M" = "#4eaff5", "F" = "#f567d8"),
                                   smooth_span = 0.2) {
