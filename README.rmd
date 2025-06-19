@@ -71,7 +71,6 @@ Top_100_billboard <- read_rds(glue::glue("{location}charts.rds"))
 HBO_titles <- read_rds(glue::glue("{location}HBO_titles.rds"))
 HBO_credits <- read_rds(glue::glue("{location}HBO_credits.rds")) 
 ```
-* Created the function *** that takes *** as an input and ***
 
 ## Process explained 
 * Wrote the introduction
@@ -80,14 +79,25 @@ HBO_credits <- read_rds(glue::glue("{location}HBO_credits.rds"))
 * Created the function 'calculate_correlations' that takes 'top_names', 'target_year' and 'future_years' as an input and calculates the Spearman correlation between a year and its future years
 * Created the function 'name_persistence' that takes 'top_names' and 'future_years' as an input and applies the above mentioned correlation analysis to all years
 * Created the function 'plot_name_persistence' that takes 'corr_results', 'gender_colors' and 'smooth_span' as inputs and create a smooth line graph of the persistence of national top 25 baby names (1910-2014) using the Spearman rank correlation between base year and subsequent years
-* Drew 'PersistPlot' and summarised my insights from the graph in bulletpoints 
-* To look at name popularity I decided to look at the top 5 nationally per year for boys and girls respectively, but upon time series visualisation saw that the persistence was too weak over the while time series to generate useful plots. I therefore decided to identify the top 10 names per decade and visualise those in a heatmap. 
+* Drew 'PersistPlot' and summarised my insights from the graph in bullet points 
+* After this requested initial rank-correlation analysis it would be useful to see which names were the most popular 
+* To look at name popularity I decided to look at the top 5 nationally per year for boys and girls respectively, but upon time series visualisation saw that the persistence was too weak over the while time series to generate useful plots. I therefore decided to identify the top 10 names per decade and visualise those in a heat map. 
 * Used function 'top_n_names' to create 'pop_names'
 * Created the function 'top_n_names_per_decade' that takes 'pop_names' and 'top_n' as inputs and filters the top 25 names per decade & gender combination and used this to create 'decade_top_names'
-* Created the function *** that takes *** as an input and ***
+* Created the function 'popular_names_heatmap' that takes 'decadal_df' as an input and creates a heat map plot to display distributions for popular names over the decades
+* Drew 'PopNamesMap' and summarised my insights from the graph in bullet points
+* Next I was interested in knowing if people name babies after famous actors/ actresses who play popular movie characters
+* I define popular as a movie that scores above average on TMDB
+* To explore this question I created a function 'get_popular_movies' that take 'HBO_credits' and 'HBO_titles' as inputs and determines which movies got above average TMDB scores
+* I then manually filtered the combined 'babies_after_actors' data frame and generated two tables 'female_actors_table' and 'male_actors_table' that depict the top 10 baby names per decade are related to actors/ actresses' names from popular movies released during that decade
+* I then summarised my insights from the tables in bullet points and decided not to generate reproducible plots to reprint to this Readme since the results were not of an interesting nature
 
-#### Plot number 1 
-```{r, warning =  FALSE, fig.align = 'center', fig.cap = "Persistence of National Top 25 Baby Names (1910-2014).\\label{Figure1}", fig.ext = 'png', fig.height = 5, fig.width = 10}
+## Issues encountered 
+* I wrote a function to silently collate the rds files, but upon its creation saw that many of the columns then became unusable by containing an abundance of NAs, I decided to read in each file seperately by adapting the code provided in the assignment. 
+
+\newpage
+## Plots, graphs and tables reprinted
+```{r, warning =  FALSE, fig.align = 'center', fig.cap = "Persistence of National Top 25 Baby Names (1910-2014).", fig.ext = 'png', fig.height = 5, fig.width = 10}
 top_names <- Baby_names %>% 
   top_n_names(n = 25)
 SpearCorr <- calculate_correlations(top_names, target_year = 2000, future_years = 3)
@@ -97,13 +107,7 @@ PersistPlot
 
 ```
 
-### Popular names 
-* After this requested initial rank-correlation analysis it would be useful to see which names were the most popular 
-* I created a function 'top_n_names_per_decade' that I use to determine to top 10 boy and girl names respectively per decade
-* I then created a function 'popular_names_heatmap' that generates a heatmap to illustrate persistance of the top 10 names in each decade. 
-
-#### Plot number 2
-```{r, warning =  FALSE, fig.align = 'center', fig.cap = "Persistence of National Top 10 Baby Names per decade (1910-2014).\\label{Figure2}", fig.ext = 'png', fig.height = 20, fig.width = 10}
+```{r, warning =  FALSE, fig.align = 'center', fig.cap = "Persistence of National Top 10 Baby Names per decade (1910-2014)", fig.ext = 'png', fig.height = 20, fig.width = 10}
 pop_names <- Baby_names %>% 
   top_n_names(n = 10)
 decade_top_names <- top_n_names_per_decade(pop_names, top_n = 10)
@@ -111,20 +115,6 @@ PopNamesMap <- popular_names_heatmap(decade_top_names)
 PopNamesMap
 
 ```
-
-### Do movies determine popular names 
-* TMDB stands for The Movie Database. The percentage is a score given to that movie or TV show by the database users on a 10-star scale. This can give you an idea of how other viewers feel about the show.
-* Do people name babies after famous actors/ actresses who play popular movie characters? Define popular as a movie that scores above average on TMDB. 
-* To explore this question I created a function 'get_popular_movies' that determines which movies got above average TMDB scores 
-*
-
-#### Plot 3 
-
-### Issues encountered 
-* I wrote a function to silently collate the rds files, but upon its creation saw that many of the columns then became unusable by containing an abundance of NAs, I decided to read in each file seperately by adapting the code provided in the assignment. 
-
-\newpage
-## Plots, graphs and tables reprinted
 
 \newpage
 # QUESTION 2: Music Taste  
@@ -158,6 +148,38 @@ df_billboard_100 <- read_rds(glue::glue("{location}charts.rds"))
 
 \newpage
 ## Plots, graphs and tables reprinted
+```{r basic tables, fig.align = 'center', fig.cap = "Table of Basic Summary Stats", fig.ext = 'png', fig.height = 5, fig.width = 7}
+
+# Data 
+df_metcol <- merge_datasets(df_metallica, df_coldplay)
+duplicate_words <- c("Remastered", "Remix","Rerecorded", "Re-recorded", "Deluxe", "Live", "Edit", "Edition", "Prospekt")
+df_metcol_unique <- df_metcol %>%
+    filter(is.na(name) | map_lgl(name, no_duplicate_words)) %>% 
+    filter(is.na(album) | map_lgl(album, no_duplicate_words)) 
+df_metcol_unique <- df_metcol_unique %>%
+    mutate(month_year = floor_date(as.Date(release_date), "month")) 
+
+# Plot 
+table_summary <- draw_table_summary(df_metcol_unique)
+table_summary
+
+```
+
+```{r stacked bar graph, fig.align = 'center', fig.cap = "Table of Best Albums Stats", fig.ext = 'png', fig.height = 5, fig.width = 7}
+
+# Plot 
+stack_plot <- draw_stack(df_stack)
+stack_plot
+
+```
+
+```{r, fig.align = 'center', fig.cap = "Table of Best Albums Stats", fig.ext = 'png', fig.height = 5, fig.width = 7}
+
+# Plot 
+table_best_albums <- draw_best_albums_table(df_metcol_unique)
+table_best_albums
+
+```
 
 \newpage
 # QUESTION 3: Netflix 

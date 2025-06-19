@@ -144,6 +144,11 @@ male_actors_table
 
 ```
 
+# Do popular movies influence popular baby names? 
+## Insights from Tables above:
+* TMDB = The Movie Database: The percentage score for a movie or TV show is by database users on a 10-star scale. 
+* This analysis was less informative since the most popular baby names, Mary for females and James for males, that coincide with actor names were shown already be popular prior to the movie release dates when looking at the heat map.  
+
 
 
 
