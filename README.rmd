@@ -70,7 +70,9 @@ HBO_titles <- read_rds("Question1/data/US_Baby_names/HBO_titles.rds")
 HBO_credits <- read_rds("Question1/data/US_Baby_names/HBO_credits.rds")
 ```
 
-## Thought process explained 
+## Process explained 
+* Created the function *** that takes *** as an input and ***
+* Created the function *** that takes *** as an input and ***
 * I decided to look at naming trends nationally for the US since this was in line with the clients request to start by showing a time-series representation of the Spearman rank-correlation between each year’s 25 most popular boys’ and girls’ names
 and that of the next 3 years and meant that substantial wrangling work was already done in this format. 
 * To look at name popularity I decided to look at the top 5 nationally per year for boys and girls respectively, but upon time series visualisation saw that the persistence was too weak over the while time series to generate useful plots. I therefore decided to identify the top 10 names per decade and visualise those in a heatmap. 
@@ -120,6 +122,9 @@ PopNamesMap
 * I wrote a function to silently collate the rds files, but upon its creation saw that many of the columns then became unusable by containing an abundance of NAs, I decided to read in each file seperately by adapting the code provided in the assignment. 
 
 \newpage
+## Plots, graphs and tables reprinted
+
+\newpage
 # QUESTION 2: Music Taste  
 
 ## Load data 
@@ -128,6 +133,11 @@ PopNamesMap
 ```
 
 ## Process explained
+* Created the function *** that takes *** as an input and ***
+* Created the function *** that takes *** as an input and ***
+
+\newpage
+## Plots, graphs and tables reprinted
 
 \newpage
 # QUESTION 3: Netflix 
@@ -142,6 +152,68 @@ df_movies <-  read_csv(glue::glue("{location}netflix_movies.csv"))
 
 ## Process explained
 * Wrote a short introduction with 1 reference 
+* Created the function 'add_main_genre' that takes 'df_titles' as an input and identifies the main genre as the first entry in df_titles and stores it in a new column 'main_genre' 
+* Created the function 'counts_genre' that takes 'df_titles' as an input and generates the genre distribution by counting the occurences in Netflix data
+* Created the function 'get_top_n_genres' that takes 'df_titles' and 'n' as inputs and calculates the top n genres by average audience score on IMDB
+* Created the function 'draw_genre_distribution' that takes 'genre_distribution' as an input and creates a bar plot of the distribution of genres on Netflix 
+* Created the function 'draw_top_n_genres' that takes 'top_10_genres' as an input and creates a bar plot of the top 10 genres by average audience score on IMDB
+* Created a duration data frame by combining 'df_titles' and 'df_movies'
+* Created the function 'get_duration_distribution' that takes 'df_duration' as an input and generates the distribution of duration by summing occurrences in Netflix data in bins of 10 minutes 
+* Created the function 'get_top_n_durations' that takes 'df_duration' as an input and calculates the top n durations by average audience score on IMDB
+* Created the function 'draw_duration_distribution' that takes 'duration_distribution' as an input and creates a barplot of the distribution of durations on Netflix
+* Created the function 'draw_top_n_durations' that takes 'top_10_durations' as an input and create a bar plot of the top 10 durations by average audience score on IMDB
+* Created the function *** that takes *** as an input and ***
+* Created the function *** that takes *** as an input and ***
+* Drew 'genre_distribution_plot', 'top_n_genres_plot', 'duration_distribution_plot' and 'top_n_durations_plot' (as depicted below) 
+* Discussed my findings in a brief summary 
+
+\newpage
+## Plots, graphs and tables reprinted 
+```{r, fig.align = 'center', fig.cap = "Distribution of genres on Netflix", fig.ext = 'png', fig.height = 5, fig.width = 7}
+# Data
+df_titles <- add_main_genre(df_titles)
+genre_distribution <- counts_genre(df_titles)
+
+# Plot 
+genre_distribution_plot <- draw_genre_distribution(genre_distribution)
+genre_distribution_plot
+
+```
+```{r, fig.align = 'center', fig.cap = "Top genres according to audience", fig.ext = 'png', fig.height = 5, fig.width = 7}
+
+# Data 
+top_10_genres <- get_top_n_genres(df_titles, 10)
+
+# Plot 
+top_n_genres_plot <- draw_top_n_genres(top_10_genres)
+top_n_genres_plot
+
+```
+
+```{r, fig.align = 'center', fig.cap = "Distribution of durations on Netflix", fig.ext = 'png', fig.height = 5, fig.width = 7}
+
+# Data
+df_duration <- left_join(df_titles, df_movies, by = "title") %>% 
+    filter(!is.na(imdb_score)) %>%
+    mutate(minutes = sub(" min", "", duration))
+duration_distribution <- get_duration_distribution(df_duration)
+
+# Plot  
+duration_distribution_plot <- draw_duration_distribution(duration_distribution)
+duration_distribution_plot
+
+```
+
+```{r, fig.align = 'center', fig.cap = "Top genres according to audience", fig.ext = 'png', fig.height = 5, fig.width = 7}
+
+# Data 
+top_10_durations <- get_top_n_durations(df_duration, 10)
+
+# Plot
+top_n_durations_plot <- draw_top_n_durations(top_10_durations)
+top_n_durations_plot
+
+```
 
 \newpage
 # QUESTION 4: Billionaires 
@@ -158,9 +230,17 @@ df_billions <- "Question4/data/Billions/billionaires.csv" %>% read_csv_with_col_
 * Created the function 'read_csv_with_col_type' that takes 'csv_file' as an input and then reads in a CSV document with its specific column types
 * Wrote the introduction with 2 references  
 * Wrote the exploration goals
-* Created the functions 'counts_new_us' and 'counts_new_other' which take the data frame 'df_billions' as input and counts the amount of new billionaires & bilionaires by inheritance per decade in the US and other countries respectively
-* Created the function 'draw_first_claim' that takes 'df' and 'input_title' as inputs to create a grouped barchart of the counts of new vs. inherited wealth per decade 
+* Created the functions 'counts_new_us' and 'counts_new_other' which take the data frame 'df_billions' as input and counts the amount of new billionaires & billionaires by inheritance per decade in the US and other countries respectively
+* Created the function 'draw_first_claim' that takes 'df_us_billions' and 'input_title' as inputs to create a grouped bar chart of the counts of new vs. inherited wealth per decade 
 * Drew 'us_plot_first_claim' (as depicted below) and discussed my findings
+* Drew 'other_plot_first_claim' (as depicted below) and discussed my findings
+* Created the function 'counts_software' that takes 'df_billions' and 'software_words' as inputs to count the amount of new billionaires through software vs. consumer services (per decade)
+* Created the function 'draw_second_claim_software' that takes 'df_software_billions' as an input to create a lollipop plot of the amount of new billionaires through software vs. consumer services (per decade)
+* Drew 'draw_second_claim_software' (as depicted below) and discussed my findings
+* Wrote the conclusion
+
+\newpage
+## Plots, graphs and tables reprinted
 ```{r, fig.align = 'center', fig.cap = "New vs. inherited wealth per decade (US)", fig.ext = 'png', fig.height = 5, fig.width = 7}
 
 # Data 
@@ -171,7 +251,7 @@ us_plot_first_claim <- draw_first_claim(df_us_billions, input_title = "Counts of
 us_plot_first_claim
 
 ```
-* Drew 'other_plot_first_claim' (as depicted below) and discussed my findings
+
 ```{r, fig.align = 'center', fig.cap = "New vs. inherited wealth per decade (other countries)", fig.ext = 'png', fig.height = 5, fig.width = 7}
 
 # Data 
@@ -182,9 +262,7 @@ other_plot_first_claim <- draw_first_claim(df_other_billions, input_title = "Cou
 other_plot_first_claim
 
 ```
-* Created the function 'counts_software' that takes 'df' and 'software_words' as inputs to count the amount of new billionaires through software vs. consumer services (per decade)
-* Created the function 'draw_second_claim_software' that takes 'df' as an input to create a lollipop plot of the amount of new billionaires through software vs. consumer services (per decade)
-* Drew 'draw_second_claim_software' (as depicted below) and discussed my findings
+
 ```{r, fig.align = 'center', fig.cap = "New Billionaires from Software vs Consumer Services (per decade)", fig.ext = 'png', fig.height = 5, fig.width = 12}
 
 # Data 
@@ -194,11 +272,12 @@ df_software_billions <- counts_software(df_billions, c("software","technology"))
 software_plot_second_claim <- draw_second_claim_software(df_software_billions)
 software_plot_second_claim
 ```
-* Wrote the conclusion
-
 \newpage
 # QUESTION 5: Health 
 
 ## Process explained 
 * Read the question at 1am & thought it looked really nice
-* Decided to use my remaining hours to iron out issues in my previous questions 
+* Decided to use my remaining hours to iron out issues in my previous questions
+
+\newpage
+## Plots, graphs and tables reprinted

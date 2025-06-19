@@ -1,4 +1,4 @@
-# GOAL: Generate distribution of duration by summing occurences in Netflix data in bins of 10 minutes 
+# GOAL: Generate distribution of duration by summing occurrences in Netflix data in bins of 10 minutes
 
 get_duration_distribution <- function(df) {
   duration_distribution <- df %>%
