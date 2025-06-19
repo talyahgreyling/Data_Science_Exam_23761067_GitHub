@@ -167,6 +167,9 @@ table_summary
 
 ```{r stacked bar graph, fig.align = 'center', fig.cap = "Table of Best Albums Stats", fig.ext = 'png', fig.height = 5, fig.width = 7}
 
+# Data
+df_stack <- get_stack_df(df_metcol_unique)
+
 # Plot 
 stack_plot <- draw_stack(df_stack)
 stack_plot

@@ -39,15 +39,15 @@ gc() # garbage collection
 ```
 
     ##           used (Mb) gc trigger (Mb) max used (Mb)
-    ## Ncells  556585 29.8    1239218 66.2   702048 37.5
-    ## Vcells 1059798  8.1    8388608 64.0  1927558 14.8
+    ## Ncells  556706 29.8    1239564 66.2   702048 37.5
+    ## Vcells 1060497  8.1    8388608 64.0  1927558 14.8
 
 ``` r
 options(scipen = 999) #suppress scientific notation
 options(dplyr.summarise.inform=F) # suppress messages
 
 # Load neccessary libraries 
-pacman::p_load(dplyr, ggplot2, tidyverse, stringr, purrr, lubridate, gt, fmsb, hrbrthemes) ############## update 
+pacman::p_load(dplyr, ggplot2, tidyverse, stringr, purrr, lubridate, gt, fmsb, hrbrthemes, knitr) ############## update 
 
 # Source in all functions: 
 list.files('Question1/code/', full.names = T, recursive = T) %>% .[grepl('.R', .)] %>% as.list() %>% walk(~source(.))
@@ -63,73 +63,63 @@ list.files('Question5/code/', full.names = T, recursive = T) %>% .[grepl('.R', .
 
 ## Process explained
 
--   Created the function \*\*\* that takes \*\*\* as an input and \*\*\*
--   Created the function \*\*\* that takes \*\*\* as an input and \*\*\*
+-   Wrote the introduction
 -   I decided to look at naming trends nationally for the US since this
     was in line with the clients request to start by showing a
     time-series representation of the Spearman rank-correlation between
     each year’s 25 most popular boys’ and girls’ names and that of the
-    next 3 years and meant that substantial wrangling work was already
-    done in this format.
+    next 3 years and meant that wrangling work was already done in this
+    format.
+-   Created the function ‘top_n_names’ that takes ‘n’ as an input and
+    filters the top 25 names (by frequency) per year & gender
+    combination and used it to create ‘top_names’
+-   Created the function ‘calculate_correlations’ that takes
+    ‘top_names’, ‘target_year’ and ‘future_years’ as an input and
+    calculates the Spearman correlation between a year and its future
+    years
+-   Created the function ‘name_persistence’ that takes ‘top_names’ and
+    ‘future_years’ as an input and applies the above mentioned
+    correlation analysis to all years
+-   Created the function ‘plot_name_persistence’ that takes
+    ‘corr_results’, ‘gender_colors’ and ‘smooth_span’ as inputs and
+    create a smooth line graph of the persistence of national top 25
+    baby names (1910-2014) using the Spearman rank correlation between
+    base year and subsequent years
+-   Drew ‘PersistPlot’ and summarised my insights from the graph in
+    bullet points
+-   After this requested initial rank-correlation analysis it would be
+    useful to see which names were the most popular
 -   To look at name popularity I decided to look at the top 5 nationally
     per year for boys and girls respectively, but upon time series
     visualisation saw that the persistence was too weak over the while
     time series to generate useful plots. I therefore decided to
-    identify the top 10 names per decade and visualise those in a
-    heatmap.
--   Lastly
-
-### Time-series representation of the Spearman rank-correlation
-
--   I created a function ‘top_n_names’ that filters and ranks the baby
-    names by year & gender (boys vs girls).
--   Thereafter I created a function ‘calculate_correlations’ that
-    computes the Spearman Rank Correlation for a specific target year
--   Then I created a function ‘name_persistence’ that applies this
-    correlation calculation to all years such that the output can be
-    visually represented.
--   Lastly, the function ‘plot_name_persistence’ uses geom_smooth to fit
-    a series of lines that represent the rank-correlation over time
-
-#### Plot number 1
-
-<img src="README_files/figure-markdown_github/unnamed-chunk-3-1.png" alt="Persistence of National Top 25 Baby Names (1910-2014).\label{Figure1}"  />
-<p class="caption">
-Persistence of National Top 25 Baby Names (1910-2014).
-</p>
-
-### Popular names
-
--   After this requested initial rank-correlation analysis it would be
-    useful to see which names were the most popular
--   I created a function ‘top_n_names_per_decade’ that I use to
-    determine to top 10 boy and girl names respectively per decade
--   I then created a function ‘popular_names_heatmap’ that generates a
-    heatmap to illustrate persistance of the top 10 names in each
-    decade.
-
-#### Plot number 2
-
-<img src="README_files/figure-markdown_github/unnamed-chunk-4-1.png" alt="Persistence of National Top 10 Baby Names per decade (1910-2014).\label{Figure2}"  />
-<p class="caption">
-Persistence of National Top 10 Baby Names per decade (1910-2014).
-</p>
-
-### Do movies determine popular names
-
--   TMDB stands for The Movie Database. The percentage is a score given
-    to that movie or TV show by the database users on a 10-star scale.
-    This can give you an idea of how other viewers feel about the show.
--   Do people name babies after famous actors/ actresses who play
-    popular movie characters? Define popular as a movie that scores
-    above average on TMDB.
+    identify the top 10 names per decade and visualise those in a heat
+    map.
+-   Used function ‘top_n_names’ to create ‘pop_names’
+-   Created the function ‘top_n_names_per_decade’ that takes ‘pop_names’
+    and ‘top_n’ as inputs and filters the top 25 names per decade &
+    gender combination and used this to create ‘decade_top_names’
+-   Created the function ‘popular_names_heatmap’ that takes ‘decadal_df’
+    as an input and creates a heat map plot to display distributions for
+    popular names over the decades
+-   Drew ‘PopNamesMap’ and summarised my insights from the graph in
+    bullet points
+-   Next I was interested in knowing if people name babies after famous
+    actors/ actresses who play popular movie characters
+-   I define popular as a movie that scores above average on TMDB
 -   To explore this question I created a function ‘get_popular_movies’
-    that determines which movies got above average TMDB scores
--   
+    that take ‘HBO_credits’ and ‘HBO_titles’ as inputs and determines
+    which movies got above average TMDB scores
+-   I then manually filtered the combined ‘babies_after_actors’ data
+    frame and generated two tables ‘female_actors_table’ and
+    ‘male_actors_table’ that depict the top 10 baby names per decade are
+    related to actors/ actresses’ names from popular movies released
+    during that decade
+-   I then summarised my insights from the tables in bullet points and
+    decided not to generate reproducible plots to reprint to this Readme
+    since the results were not of an interesting nature
 
-#### Plot 3
-
-### Issues encountered
+## Issues encountered
 
 -   I wrote a function to silently collate the rds files, but upon its
     creation saw that many of the columns then became unusable by
@@ -137,6 +127,16 @@ Persistence of National Top 10 Baby Names per decade (1910-2014).
     seperately by adapting the code provided in the assignment.
 
 ## Plots, graphs and tables reprinted
+
+<img src="README_files/figure-markdown_github/unnamed-chunk-3-1.png" alt="Persistence of National Top 25 Baby Names (1910-2014)."  />
+<p class="caption">
+Persistence of National Top 25 Baby Names (1910-2014).
+</p>
+
+<img src="README_files/figure-markdown_github/unnamed-chunk-4-1.png" alt="Persistence of National Top 10 Baby Names per decade (1910-2014)"  />
+<p class="caption">
+Persistence of National Top 10 Baby Names per decade (1910-2014)
+</p>
 
 # QUESTION 2: Music Taste
 
@@ -181,6 +181,1001 @@ Persistence of National Top 10 Baby Names per decade (1910-2014).
 
 ## Plots, graphs and tables reprinted
 
+<div id="tzmgzaqiae" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#tzmgzaqiae table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#tzmgzaqiae thead, #tzmgzaqiae tbody, #tzmgzaqiae tfoot, #tzmgzaqiae tr, #tzmgzaqiae td, #tzmgzaqiae th {
+  border-style: none;
+}
+
+#tzmgzaqiae p {
+  margin: 0;
+  padding: 0;
+}
+
+#tzmgzaqiae .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#tzmgzaqiae .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#tzmgzaqiae .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#tzmgzaqiae .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#tzmgzaqiae .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#tzmgzaqiae .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#tzmgzaqiae .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#tzmgzaqiae .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#tzmgzaqiae .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#tzmgzaqiae .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#tzmgzaqiae .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#tzmgzaqiae .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#tzmgzaqiae .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#tzmgzaqiae .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#tzmgzaqiae .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#tzmgzaqiae .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#tzmgzaqiae .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#tzmgzaqiae .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#tzmgzaqiae .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#tzmgzaqiae .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#tzmgzaqiae .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#tzmgzaqiae .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#tzmgzaqiae .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#tzmgzaqiae .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#tzmgzaqiae .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#tzmgzaqiae .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#tzmgzaqiae .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#tzmgzaqiae .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#tzmgzaqiae .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#tzmgzaqiae .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#tzmgzaqiae .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#tzmgzaqiae .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#tzmgzaqiae .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#tzmgzaqiae .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#tzmgzaqiae .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#tzmgzaqiae .gt_left {
+  text-align: left;
+}
+
+#tzmgzaqiae .gt_center {
+  text-align: center;
+}
+
+#tzmgzaqiae .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#tzmgzaqiae .gt_font_normal {
+  font-weight: normal;
+}
+
+#tzmgzaqiae .gt_font_bold {
+  font-weight: bold;
+}
+
+#tzmgzaqiae .gt_font_italic {
+  font-style: italic;
+}
+
+#tzmgzaqiae .gt_super {
+  font-size: 65%;
+}
+
+#tzmgzaqiae .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#tzmgzaqiae .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#tzmgzaqiae .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#tzmgzaqiae .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#tzmgzaqiae .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#tzmgzaqiae .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#tzmgzaqiae .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#tzmgzaqiae .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#tzmgzaqiae div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    <tr class="gt_heading">
+      <td colspan="6" class="gt_heading gt_title gt_font_normal" style>Table 1: Basic Summary Statistics for Coldplay and Metallica Albums</td>
+    </tr>
+    <tr class="gt_heading">
+      <td colspan="6" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border" style>(SD = Standard Deviation)</td>
+    </tr>
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="Band">Band</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Average-Popularity">Average Popularity</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="SD:-Energy">SD: Energy</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="SD:-Danceability">SD: Danceability</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="SD:-Acousticness">SD: Acousticness</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="SD:-Tempo">SD: Tempo</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="Band" class="gt_row gt_left">Coldplay</td>
+<td headers="Average Popularity" class="gt_row gt_right">54.30909</td>
+<td headers="SD: Energy" class="gt_row gt_right">0.2267164</td>
+<td headers="SD: Danceability" class="gt_row gt_right">0.1416568</td>
+<td headers="SD: Acousticness" class="gt_row gt_right">0.3613990</td>
+<td headers="SD: Tempo" class="gt_row gt_right">27.20810</td></tr>
+    <tr><td headers="Band" class="gt_row gt_left">Metallica</td>
+<td headers="Average Popularity" class="gt_row gt_right">46.78571</td>
+<td headers="SD: Energy" class="gt_row gt_right">0.1364489</td>
+<td headers="SD: Danceability" class="gt_row gt_right">0.1126203</td>
+<td headers="SD: Acousticness" class="gt_row gt_right">0.0953021</td>
+<td headers="SD: Tempo" class="gt_row gt_right">28.32309</td></tr>
+  </tbody>
+  
+  
+</table>
+</div>
+
+<img src="README_files/figure-markdown_github/stacked bar graph-1.png" alt="Table of Best Albums Stats"  />
+<p class="caption">
+Table of Best Albums Stats
+</p>
+
+<div id="xauqtjwadn" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#xauqtjwadn table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#xauqtjwadn thead, #xauqtjwadn tbody, #xauqtjwadn tfoot, #xauqtjwadn tr, #xauqtjwadn td, #xauqtjwadn th {
+  border-style: none;
+}
+
+#xauqtjwadn p {
+  margin: 0;
+  padding: 0;
+}
+
+#xauqtjwadn .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#xauqtjwadn .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#xauqtjwadn .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#xauqtjwadn .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#xauqtjwadn .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#xauqtjwadn .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#xauqtjwadn .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#xauqtjwadn .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#xauqtjwadn .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#xauqtjwadn .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#xauqtjwadn .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#xauqtjwadn .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#xauqtjwadn .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#xauqtjwadn .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#xauqtjwadn .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#xauqtjwadn .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#xauqtjwadn .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#xauqtjwadn .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#xauqtjwadn .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#xauqtjwadn .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#xauqtjwadn .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#xauqtjwadn .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#xauqtjwadn .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#xauqtjwadn .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#xauqtjwadn .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#xauqtjwadn .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#xauqtjwadn .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#xauqtjwadn .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#xauqtjwadn .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#xauqtjwadn .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#xauqtjwadn .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#xauqtjwadn .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#xauqtjwadn .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#xauqtjwadn .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#xauqtjwadn .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#xauqtjwadn .gt_left {
+  text-align: left;
+}
+
+#xauqtjwadn .gt_center {
+  text-align: center;
+}
+
+#xauqtjwadn .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#xauqtjwadn .gt_font_normal {
+  font-weight: normal;
+}
+
+#xauqtjwadn .gt_font_bold {
+  font-weight: bold;
+}
+
+#xauqtjwadn .gt_font_italic {
+  font-style: italic;
+}
+
+#xauqtjwadn .gt_super {
+  font-size: 65%;
+}
+
+#xauqtjwadn .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#xauqtjwadn .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#xauqtjwadn .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#xauqtjwadn .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#xauqtjwadn .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#xauqtjwadn .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#xauqtjwadn .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#xauqtjwadn .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#xauqtjwadn div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    <tr class="gt_heading">
+      <td colspan="5" class="gt_heading gt_title gt_font_normal gt_bottom_border" style>Table 2: Best performing albums for Coldplay and Metallica</td>
+    </tr>
+    
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="Album">Album</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Release-Date">Release Date</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Popularity">Popularity</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Danceability">Danceability</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Acousticness">Acousticness</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr class="gt_group_heading_row">
+      <th colspan="5" class="gt_group_heading" scope="colgroup" id="Coldplay">Coldplay</th>
+    </tr>
+    <tr class="gt_row_group_first"><td headers="Coldplay  Album" class="gt_row gt_left">Music Of The Spheres</td>
+<td headers="Coldplay  Release Date" class="gt_row gt_right">2021-10-15</td>
+<td headers="Coldplay  Popularity" class="gt_row gt_right">63.25000</td>
+<td headers="Coldplay  Danceability" class="gt_row gt_right">0.4190750</td>
+<td headers="Coldplay  Acousticness" class="gt_row gt_right">0.375251833</td></tr>
+    <tr><td headers="Coldplay  Album" class="gt_row gt_left">Viva La Vida or Death and All His Friends</td>
+<td headers="Coldplay  Release Date" class="gt_row gt_right">2008-05-26</td>
+<td headers="Coldplay  Popularity" class="gt_row gt_right">23.00000</td>
+<td headers="Coldplay  Danceability" class="gt_row gt_right">0.4920000</td>
+<td headers="Coldplay  Acousticness" class="gt_row gt_right">0.950000000</td></tr>
+    <tr><td headers="Coldplay  Album" class="gt_row gt_left">Everyday Life</td>
+<td headers="Coldplay  Release Date" class="gt_row gt_right">2019-11-22</td>
+<td headers="Coldplay  Popularity" class="gt_row gt_right">18.50000</td>
+<td headers="Coldplay  Danceability" class="gt_row gt_right">0.4696667</td>
+<td headers="Coldplay  Acousticness" class="gt_row gt_right">0.578299667</td></tr>
+    <tr class="gt_group_heading_row">
+      <th colspan="5" class="gt_group_heading" scope="colgroup" id="Metallica">Metallica</th>
+    </tr>
+    <tr class="gt_row_group_first"><td headers="Metallica  Album" class="gt_row gt_left">Metallica</td>
+<td headers="Metallica  Release Date" class="gt_row gt_right">1991-08-12</td>
+<td headers="Metallica  Popularity" class="gt_row gt_right">63.91667</td>
+<td headers="Metallica  Danceability" class="gt_row gt_right">0.5522500</td>
+<td headers="Metallica  Acousticness" class="gt_row gt_right">0.006146083</td></tr>
+    <tr><td headers="Metallica  Album" class="gt_row gt_left">Metallica Through The Never (Music From The Motion Picture)</td>
+<td headers="Metallica  Release Date" class="gt_row gt_right">2013-01-01</td>
+<td headers="Metallica  Popularity" class="gt_row gt_right">41.00000</td>
+<td headers="Metallica  Danceability" class="gt_row gt_right">0.1240000</td>
+<td headers="Metallica  Acousticness" class="gt_row gt_right">0.834000000</td></tr>
+    <tr><td headers="Metallica  Album" class="gt_row gt_left">Lulu</td>
+<td headers="Metallica  Release Date" class="gt_row gt_right">2011-11-01</td>
+<td headers="Metallica  Popularity" class="gt_row gt_right">19.30000</td>
+<td headers="Metallica  Danceability" class="gt_row gt_right">0.3271000</td>
+<td headers="Metallica  Acousticness" class="gt_row gt_right">0.091511900</td></tr>
+  </tbody>
+  
+  
+</table>
+</div>
 # QUESTION 3: Netflix
 
 ## Load data
@@ -226,22 +1221,22 @@ Persistence of National Top 10 Baby Names per decade (1910-2014).
 
 ## Plots, graphs and tables reprinted
 
-<img src="README_files/figure-markdown_github/unnamed-chunk-7-1.png" alt="Distribution of genres on Netflix"  />
+<img src="README_files/figure-markdown_github/unnamed-chunk-8-1.png" alt="Distribution of genres on Netflix"  />
 <p class="caption">
 Distribution of genres on Netflix
 </p>
 
-<img src="README_files/figure-markdown_github/unnamed-chunk-8-1.png" alt="Top genres according to audience"  />
+<img src="README_files/figure-markdown_github/unnamed-chunk-9-1.png" alt="Top genres according to audience"  />
 <p class="caption">
 Top genres according to audience
 </p>
 
-<img src="README_files/figure-markdown_github/unnamed-chunk-9-1.png" alt="Distribution of durations on Netflix"  />
+<img src="README_files/figure-markdown_github/unnamed-chunk-10-1.png" alt="Distribution of durations on Netflix"  />
 <p class="caption">
 Distribution of durations on Netflix
 </p>
 
-<img src="README_files/figure-markdown_github/unnamed-chunk-10-1.png" alt="Top genres according to audience"  />
+<img src="README_files/figure-markdown_github/unnamed-chunk-11-1.png" alt="Top genres according to audience"  />
 <p class="caption">
 Top genres according to audience
 </p>
@@ -286,17 +1281,17 @@ Top genres according to audience
 
 ## Plots, graphs and tables reprinted
 
-<img src="README_files/figure-markdown_github/unnamed-chunk-12-1.png" alt="New vs. inherited wealth per decade (US)"  />
+<img src="README_files/figure-markdown_github/unnamed-chunk-13-1.png" alt="New vs. inherited wealth per decade (US)"  />
 <p class="caption">
 New vs. inherited wealth per decade (US)
 </p>
 
-<img src="README_files/figure-markdown_github/unnamed-chunk-13-1.png" alt="New vs. inherited wealth per decade (other countries)"  />
+<img src="README_files/figure-markdown_github/unnamed-chunk-14-1.png" alt="New vs. inherited wealth per decade (other countries)"  />
 <p class="caption">
 New vs. inherited wealth per decade (other countries)
 </p>
 
-<img src="README_files/figure-markdown_github/unnamed-chunk-14-1.png" alt="New Billionaires from Software vs Consumer Services (per decade)"  />
+<img src="README_files/figure-markdown_github/unnamed-chunk-15-1.png" alt="New Billionaires from Software vs Consumer Services (per decade)"  />
 <p class="caption">
 New Billionaires from Software vs Consumer Services (per decade)
 </p>
